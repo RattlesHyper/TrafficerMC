@@ -1,6 +1,6 @@
 {
   "name": "trafficer-mc",
-  "version": "1.0.0",
+  "version": "0.0.4",
   "description": "A minceraft minial AFK/chat tool with auto reconnect feature",
   "main": "main.js",
   "scripts": {
