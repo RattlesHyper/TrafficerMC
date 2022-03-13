@@ -1,0 +1,274 @@
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: rgb(36, 36, 36);
+    color: rgb(255, 255, 255);
+    font-family: Arial, Helvetica, sans-serif;
+    user-select: none;   
+}
+::-webkit-inner-spin-button, .no-spin::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+::-webkit-scrollbar {
+  background: #000000;
+  height: 5px;
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.253);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: rgba(255, 255, 255, 0.5);
+}
+
+::-webkit-scrollbar-corner {
+  background: #000000;
+}
+button {
+  cursor: pointer;
+}
+  h1 {
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 15px;
+  }
+  
+  input, select, button {
+    background: #191919;
+    color: rgba(255, 255, 255, 1);
+    border: 1px solid #101010;
+    border-radius: 10px;
+    padding: 10px;
+    outline: none;
+  }
+  button:hover {
+    background: #699969;
+  }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 42px;
+    height: 24px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(204, 204, 204);
+    -webkit-transition: .07s;
+    transition: .07s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .07s;
+    transition: .07s;
+  }
+  
+  input:checked + .slider {
+    background-color: #699969;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #699969;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 25px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+  .rhb {
+    position: absolute;
+    top: 40px;
+    left: 180px;
+  }
+  .lhb {
+    position: absolute;
+    top: 40px;
+    left: 135px;
+  }
+  .hbr {
+    position: absolute;
+    top: 40px;
+    left: 80px;
+    height: 36px;
+  }
+  .hbrt {
+    position: absolute;
+    top: 50px;
+    left: 15px;
+    height: 37px;
+  }
+  .invs {
+    position: absolute;
+    top: 80px;
+    left: 15px;
+    height: 37px;
+  }
+  .msg {
+    position: absolute;
+    top: 120px;
+    left: 15px;
+    height: 37px;
+  }
+  .afk {
+    position: absolute;
+    top: 170px;
+    left: 15px;
+    height: 37px;
+  }
+  .itm {
+    position: absolute;
+    top: 200px;
+    right: 15px;
+  }
+  .afkon {
+    position: absolute;
+    top: 167px;
+    left: 90px;
+    border-radius: 25px;
+  }
+  .invimg {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    height: 299px;
+    width: 300px;
+  }
+  .largechestimg {
+    position: absolute;
+    height: 300px;
+    bottom: 5px;
+    right: 305px;
+  }
+  .spmd {
+    position: absolute;
+    right: -80px;
+    width: 55px;
+  }
+  .btnspamstart {
+    position: absolute;
+    right: -140px;
+    width: 55px;
+  }
+  .btnspamstop {
+    position: absolute;
+    right: -200px;
+    width: 55px;
+  }
+  .h2tit {
+    position: absolute;
+    top: 0px;
+    left:130px;
+    font-size: 13px;
+  }
+  .spambtn {
+    position: absolute;
+    top: 127px;
+    left: 530px;
+    border-radius: 25px;
+  }
+  .spmtxt {
+    position: absolute;
+    top: 113px;
+    left: 485px;
+  }
+  .invslotbox {
+    width: 60px;
+  }
+  .reconbtn {
+    position: absolute;
+    top: 197px;
+    left: 137px;
+  }
+  .autorecoontext {
+    position: absolute;
+    top: 200px;
+    left: 15px;
+  }
+  .imgshowbtn {
+    position: absolute;
+    top: 190px;
+    right: 190px;
+    width: 60px;
+  }
+  .disreconbtns {
+    position: absolute;
+    top: 190px;
+    right: 260px;
+  }
+  .reconbtns {
+    position: absolute;
+    top: 190px;
+    right: 355px;
+  }
+  .chatrecivebox {
+    scroll-behavior: smooth;
+    font-size: 15px;
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    height: 290px;
+    width: 320px;
+    border:2px solid rgb(69, 69, 69);
+    overflow: scroll;
+    user-select: text;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    scroll-behavior: auto;
+  }
+  .healthbar {
+    width: 20px;
+    position:absolute;
+    right: 105px;
+    top: 150px;
+  }
+  .foodbar {
+    width: 19px;
+    position: absolute;
+    top: 147px;
+    right: 37px;
+  }
+  .healthtxt {
+    position: absolute;
+    top: 135px;
+    right: 85px;
+  }
+  .foodtxt {
+    position: absolute;
+    top: 135px;
+    right: 15px;
+  }

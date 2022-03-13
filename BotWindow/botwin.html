@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<head>
+  <title id="hitit">Bot Control Panel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body style="font-size: 15px;">
+  <h1 >Game State :</h1><h2 class="h2tit" id="h2tit">Connecting...</h2>
+  <div >
+    <div>
+      <img class="healthbar" src="../assets/botwindow/player/HealthHeart.png"><p class="healthtxt" id="healthhp">0</p>
+      <img class="foodbar" src="../assets/botwindow/player/Hunger.webp"><p class="foodtxt" id="foodhp">0</p>
+    </div>
+    <p>
+      <label class="hbrt" >Hotbar</label>
+      <select class="hbr" id="hotbar">
+        <option value="0">1</option>
+        <option value="1">2</option>
+        <option value="2">3</option>
+        <option value="3">4</option>
+        <option value="4">5</option>
+        <option value="5">6</option>
+        <option value="6">7</option>
+        <option value="7">8</option>
+        <option value="8">9</option>
+      </select>
+    </p>
+  </div>
+    <button class="rhb" id="rclickhotbar" type="button">R Click</button><br />
+  <button class="lhb" id="sethotbar" type="button">Set</button><br />
+  <div class="invs" style="font-size: 15px;">
+    <label style="font-size: 15px;">Inventory Slot</label> <input class="invslotbox" type="number" id="inventoryslotbox"/>
+    <button id="inventoryslotl" type="button">L Click</button>
+    <button id="inventoryslotr" type="button">R Click</button>
+    <button id="inventoryslotd" type="button">Drop</button>
+    <button id="closewin" type="button">Close</button>
+    <button id="inventoryslotda" type="button">Drop All</button>
+  </div>
+  <div class="msg" style="font-size: 15px;">
+    <label style="font-size: 15px;">Message</label> <input type="text" id="chatbox" />
+    <button id="sendmsg" type="button">Send</button>
+    <input class="spmd" type="number" id="spamdelay" placeholder="Delay ms"/>
+    Default: 0
+  </div>
+  <p class="spmtxt" style="font-size: 15px;">Spam</p>
+  <div class="spambtn">
+    <label class="switch">
+      <input class="afkon" type="checkbox" id="spambtn">
+      <span class="slider round"></span>
+    </label>
+  </div>
+  <div class="afk">
+    <label >Anti AFK</label>
+  </div>
+  <div class="reconbtn">
+    <label class="switch">
+      <input type="checkbox" id="btnrecon">
+      <span class="slider round"></span>
+    </label>
+  </div>
+    <div class="autorecoontext">
+    <label >Auto Reconnect</label>
+  </div>
+  <div class="afkon">
+    <label class="switch">
+      <input class="afkon" type="checkbox" id="afkToggle">
+      <span class="slider round"></span>
+    </label>
+  </div>
+  <div class="itm">
+    <label>Window Slots example:</label><p id="invitm"></p>
+  </div>
+  <label>
+    <button id="ingshowbtn" class="imgshowbtn" type="button" onclick="showExample()">Show</button>
+  </label>
+  <div>
+    <button class="disreconbtns" id="btndiscon" type="button">Disconnect</button>
+  </div>
+  <div>
+    <button class="reconbtns" id="buttonreconnect" type="button">Reconnect</button>
+  </div>
+  
+    <ul class="chatrecivebox" id="chatmsgbox" style="scroll-behavior: smooth;"></ul>
+    
+
+  <img hidden id="invimg1" class="invimg" src="..//assets/botwindow/inventory/inventory-slots.png">
+  <img hidden id="invimg2" class="largechestimg" src="..//assets/botwindow/inventory/large-chest.png">
+  <script src="botwin.js"></script>
+</body>
+</html>
