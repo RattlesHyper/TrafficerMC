@@ -1,6 +1,6 @@
 {
   "name": "trafficer-mc",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "A minceraft minial AFK/chat tool with auto reconnect feature",
   "main": "main.js",
   "scripts": {
@@ -10,7 +10,8 @@
   "dependencies": {
     "electron-reload": "^1.5.0",
     "mineflayer": "^4.1.0",
-    "mineflayer-antiafk": "^1.1.1"
+    "mineflayer-antiafk": "^1.1.1",
+    "node-fetch": "2.0"
   },
   "devDependencies": {
     "electron": "^17.1.2",

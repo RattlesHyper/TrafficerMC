@@ -134,6 +134,13 @@ button:hover, input[type=submit]:hover {
   width: 50px;
   cursor: pointer;
 }
+.logogithub {
+  position: absolute;
+  bottom: 20px;
+  left: 220px;
+  width: 50px;
+  cursor: pointer;
+}
 .supporttext {
   position: absolute;
   bottom: 15px;

@@ -109,137 +109,11 @@ button {
   .slider.round:before {
     border-radius: 50%;
   }
-  .rhb {
-    position: absolute;
-    top: 40px;
-    left: 180px;
-  }
-  .lhb {
-    position: absolute;
-    top: 40px;
-    left: 135px;
-  }
-  .hbr {
-    position: absolute;
-    top: 40px;
-    left: 80px;
-    height: 36px;
-  }
-  .hbrt {
-    position: absolute;
-    top: 50px;
-    left: 15px;
-    height: 37px;
-  }
-  .invs {
-    position: absolute;
-    top: 80px;
-    left: 15px;
-    height: 37px;
-  }
-  .msg {
-    position: absolute;
-    top: 120px;
-    left: 15px;
-    height: 37px;
-  }
-  .afk {
-    position: absolute;
-    top: 170px;
-    left: 15px;
-    height: 37px;
-  }
-  .itm {
-    position: absolute;
-    top: 200px;
-    right: 15px;
-  }
-  .afkon {
-    position: absolute;
-    top: 167px;
-    left: 90px;
-    border-radius: 25px;
-  }
-  .invimg {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    height: 299px;
-    width: 300px;
-  }
-  .largechestimg {
-    position: absolute;
-    height: 300px;
-    bottom: 5px;
-    right: 305px;
-  }
-  .spmd {
-    position: absolute;
-    right: -80px;
-    width: 55px;
-  }
-  .btnspamstart {
-    position: absolute;
-    right: -140px;
-    width: 55px;
-  }
-  .btnspamstop {
-    position: absolute;
-    right: -200px;
-    width: 55px;
-  }
-  .h2tit {
-    position: absolute;
-    top: 0px;
-    left:130px;
-    font-size: 13px;
-  }
-  .spambtn {
-    position: absolute;
-    top: 127px;
-    left: 530px;
-    border-radius: 25px;
-  }
-  .spmtxt {
-    position: absolute;
-    top: 113px;
-    left: 485px;
-  }
-  .invslotbox {
-    width: 60px;
-  }
-  .reconbtn {
-    position: absolute;
-    top: 197px;
-    left: 137px;
-  }
-  .autorecoontext {
-    position: absolute;
-    top: 200px;
-    left: 15px;
-  }
-  .imgshowbtn {
-    position: absolute;
-    top: 190px;
-    right: 190px;
-    width: 60px;
-  }
-  .disreconbtns {
-    position: absolute;
-    top: 190px;
-    right: 260px;
-  }
-  .reconbtns {
-    position: absolute;
-    top: 190px;
-    right: 355px;
-  }
   .chatrecivebox {
     scroll-behavior: smooth;
     font-size: 15px;
     position: absolute;
-    bottom: 10px;
-    left: 15px;
+
     height: 290px;
     width: 320px;
     border:2px solid rgb(69, 69, 69);
@@ -249,26 +123,4 @@ button {
     padding: 0;
     margin: 0;
     scroll-behavior: auto;
-  }
-  .healthbar {
-    width: 20px;
-    position:absolute;
-    right: 105px;
-    top: 150px;
-  }
-  .foodbar {
-    width: 19px;
-    position: absolute;
-    top: 147px;
-    right: 37px;
-  }
-  .healthtxt {
-    position: absolute;
-    top: 135px;
-    right: 85px;
-  }
-  .foodtxt {
-    position: absolute;
-    top: 135px;
-    right: 15px;
   }

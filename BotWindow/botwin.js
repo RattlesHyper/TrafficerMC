@@ -37,10 +37,14 @@ ipcRenderer.on('startbot', (e, data) => {
       };
     });
     // chat send
+    document.getElementById('chatbox').addEventListener('keyup', (e) => {
+      if(e.key !== "Enter") return;
+      bot.chat(document.getElementById('chatbox').value);
+      document.getElementById('h2tit').innerHTML = `Message sent ${document.getElementById('chatbox').value}`;
+    })
     document.getElementById('sendmsg').addEventListener('click', () => {
-      let chatmsg = document.getElementById('chatbox').value
-      bot.chat(chatmsg);
-      document.getElementById('h2tit').innerHTML = `Message sent ${chatmsg}`;
+      bot.chat(document.getElementById('chatbox').value);
+      document.getElementById('h2tit').innerHTML = `Message sent ${document.getElementById('chatbox').value}`;
     });
     //hotbar selector
     document.getElementById('rclickhotbar').addEventListener('click', () => {
@@ -133,7 +137,7 @@ ipcRenderer.on('startbot', (e, data) => {
     //chat print
     bot.on('chat', (username, message) => {
       const chattxt = document.createElement("li");
-      chattxt.appendChild(document.createTextNode(`> ${username}>${message}`));
+      chattxt.appendChild(document.createTextNode(`<${username}> ${message}`));
       document.getElementById('chatmsgbox').appendChild(chattxt)
       document.getElementById('chatmsgbox').scrollTop = document.getElementById('chatmsgbox').scrollHeight
     });
@@ -153,14 +157,12 @@ ipcRenderer.on('startbot', (e, data) => {
     //health & food update
     let health = setInterval(() => {gethealth()}, 500);
     function gethealth() {
-      let fl = bot.food.toFixed()
-      let hp = bot.health.toFixed()
-      document.getElementById('healthhp').innerHTML = hp
-      document.getElementById('foodhp').innerHTML = fl
+      document.getElementById('healthhp').innerHTML = ` ${bot.health.toFixed()}`
+      document.getElementById('foodhp').innerHTML = ` ${bot.food.toFixed()}`
     }
   }
 });
-//show example
+//show window example
 function showExample() {
   var p1 = document.getElementById("invimg1");
   if (p1.style.display === "block") {
