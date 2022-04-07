@@ -3,7 +3,6 @@ const { app, ipcMain, dialog, ipcRenderer, BrowserWindow, Menu } = require('elec
 const Window = require('./Window');
 const { spawn } = require('child_process');
 const WindowSmall = require('./WindowSmall');
-const request = require('request-promise');
 const fetch = require('node-fetch');
 
 require('electron-reload')(__dirname)
