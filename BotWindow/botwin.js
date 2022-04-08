@@ -1,10 +1,10 @@
-const { ipcRenderer } = require('electron')
+const { ipcRenderer } = require('electron');
 const mineflayer = require('mineflayer');
 const antiafk = require("mineflayer-antiafk");
-const acts = ['rotate', 'jump', 'swingArm']
-ipcRenderer.on('startbot', (e, data) => {
+const acts = ['rotate', 'jump', 'swingArm'];
 
-  
+
+ipcRenderer.on('startbot', (e, data) => {
   //reconnect
   document.getElementById('buttonreconnect').addEventListener('click', () => {
     reconfunction();
@@ -181,5 +181,19 @@ function showExample() {
     b1.innerHTML = "Show"
   } else {
     b1.innerHTML = "Hide"
+  }
+}
+// theme change button
+
+function themeChange() {
+  var b1 = document.getElementById('themebtn');
+  if (b1.innerHTML === "Dark") {
+    b1.innerHTML = "Lite"
+    document.getElementById('stylecss').setAttribute("href", "../assets/botwindow/CSS/stylelite.css")
+    document.getElementById('themeimgbtn').setAttribute("src", "../assets/botwindow/icons/sunimg.png")
+  } else {
+    b1.innerHTML = "Dark"
+    document.getElementById('stylecss').setAttribute("href", "../assets/botwindow/CSS/style.css")
+    document.getElementById('themeimgbtn').setAttribute("src", "../assets/botwindow/icons/moonimg.png")
   }
 }

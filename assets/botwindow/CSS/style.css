@@ -1,9 +1,8 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: rgb(36, 36, 36);
-    color: rgb(255, 255, 255);
-    font-family: Arial, Helvetica, sans-serif;
+    background: #36393f;
+    color: #b9bbbe;
     user-select: none;   
 }
 ::-webkit-inner-spin-button, .no-spin::-webkit-outer-spin-button {
@@ -11,25 +10,25 @@ body {
   margin: 0 !important;
 }
 ::-webkit-scrollbar {
-  background: #000000;
+  background: #36393f;
   height: 5px;
   width: 10px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.253);
+  background: #272a2e;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+  background: #36393f;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-background: rgba(255, 255, 255, 0.5);
+background: #202225;
 }
 
 ::-webkit-scrollbar-corner {
-  background: #000000;
+  background: #36393f;
 }
 button {
   cursor: pointer;
@@ -40,15 +39,15 @@ button {
   }
   
   input, select, button {
-    background: #191919;
-    color: rgba(255, 255, 255, 1);
-    border: 1px solid #101010;
-    border-radius: 10px;
+    background: #4f545c;
+    color: #b9bbbe;
+    border: 1px solid #0000005d;
+    border-radius: 5px;
     padding: 10px;
     outline: none;
   }
   button:hover {
-    background: #699969;
+    background: rgba(79,84,92,0.6);
   }
   .switch {
     position: relative;
@@ -82,13 +81,13 @@ button {
     width: 18px;
     left: 3px;
     bottom: 3px;
-    background-color: white;
-    -webkit-transition: .07s;
-    transition: .07s;
+    background-color: #33333a;
+    -webkit-transition: 0.7s;
+    transition: 0.30s;
   }
   
   input:checked + .slider {
-    background-color: #699969;
+    background-color: #555963;
   }
   
   input:focus + .slider {
@@ -110,6 +109,7 @@ button {
     border-radius: 50%;
   }
   .chatrecivebox {
+    background: #2f3136;
     scroll-behavior: smooth;
     font-size: 15px;
     position: absolute;

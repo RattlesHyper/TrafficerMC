@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <head>
   <title id="hitit">Bot Control Panel</title>
-  <link rel="stylesheet" href="style.css">
+  <link id="stylecss" rel="stylesheet" href="../assets/botwindow/CSS/style.css">
 </head>
 <body style="font-size: 15px;">
+  <div>
+    <img id="themeimgbtn" src="../assets/botwindow/icons/moonimg.png" style="width: 30px; position: absolute; right: 5px; top: 5px;" onclick="themeChange()">
+  </div>
   <div>
     <label>Game State:</label>
     <label id="h2tit">Connecting...</label>
@@ -14,7 +17,7 @@
   </div>
   <div>
       <label class="hbrt">Hotbar</label>
-      <select class="hbr" id="hotbar">
+      <select style="height: 35px; padding: 0px;" class="hbr" id="hotbar">
         <option value="0">1</option>
         <option value="1">2</option>
         <option value="2">3</option>
@@ -33,7 +36,8 @@
       <label id="foodhp"> 0</label>
   </div>
   <div class="invs" style="font-size: 15px;">
-    <label style="font-size: 15px;">Inventory Slot</label> <input class="invslotbox" type="number" id="inventoryslotbox"/>
+    <label style="font-size: 15px;">Inventory Slot</label>
+    <input style="width: 33px;" type="number" id="inventoryslotbox"/>
     <button id="inventoryslotl" type="button">L Click</button>
     <button id="inventoryslotr" type="button">R Click</button>
     <button id="inventoryslotd" type="button" title="Drop item from selected slot">Drop</button>
@@ -57,7 +61,8 @@
   <div>
     <button class="reconbtns" id="buttonreconnect">Reconnect</button>
     <button class="disreconbtns" id="btndiscon">Disconnect</button>
-    <button id="ingshowbtn" class="imgshowbtn"onclick="showExample()" title="Window slot number example">Show</button>
+    <button id="ingshowbtn" onclick="showExample()" title="Window slot number example">Show</button>
+    <button id="themebtn" hidden>Dark</button>
   </div>
   <div>
     <img hidden id="invimg1" class="invimg" src="..//assets/botwindow/inventory/inventory-slots.png" style="position: relative;">
@@ -67,7 +72,7 @@
     <ul class="chatrecivebox" id="chatmsgbox" style="scroll-behavior: smooth; position: relative; top: 10px;"></ul> <br>
     <input type="text" id="chatbox" placeholder="Message" />
     <button id="sendmsg" type="button">Send</button>
-    <input class="spmd" type="number" id="spamdelay" placeholder="Delay (ms) Default: 0"/>
+    <input type="number" id="spamdelay" placeholder="Delay (ms) Default: 0" style="width: 130px;"/>
     <label style="position: relative; top: 2px;">Spam</label>
     <label class="switch">
       <input type="checkbox" id="spambtn">
