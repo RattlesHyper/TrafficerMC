@@ -142,8 +142,8 @@ ipcRenderer.on('startbot', (e, data) => {
       m.json.extra.forEach(e => {
         c += `<span style="color: ${e.color};">${e.text.replace('<', '&lt;').replace('>', '&gt;')}</span>`.replace(/\\n/g, '<br>')
       });
-      } else {
-        c += `<span>${m.json.text.replace('<', '&lt;').replace('>', '&gt;')}</span>`.replace(/\\n/g, '<br>').replace(/&.{1}/g, '')
+      } else if (msg.json.text) {
+        c += `<span>${m.json.text.replace('<', '&lt;').replace('>', '&gt;')}</span>`.replace(/\\n/g, '<br>').replace(/§.{1}/g, '')
       }
       t.innerHTML = c
       document.getElementById('chatmsgbox').appendChild(t)
