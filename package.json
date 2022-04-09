@@ -11,7 +11,7 @@
     "electron-reload": "^1.5.0",
     "mineflayer": "^4.1.0",
     "mineflayer-antiafk": "^1.1.1",
-    "node-fetch": "2.0"
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "electron": "^17.1.2",
