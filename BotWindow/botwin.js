@@ -135,12 +135,20 @@ ipcRenderer.on('startbot', (e, data) => {
       document.getElementById('h2tit').innerHTML = "Bot Disconnected"
     });
     //chat print
-    bot.on('chat', (username, message) => {
-      const chattxt = document.createElement("li");
-      chattxt.appendChild(document.createTextNode(`<${username}> ${message}`));
-      document.getElementById('chatmsgbox').appendChild(chattxt)
+    bot.on('message', (m) => {
+      const t = document.createElement("li");
+      var c = ''
+      if (m.json.extra instanceof Array) {
+      m.json.extra.forEach(e => {
+        c += `<span style="color: ${e.color};">${e.text.replace('<', '&lt;').replace('>', '&gt;')}</span>`.replace(/\\n/g, '<br>')
+      });
+      } else {
+        c += `<span>${m.json.text.replace('<', '&lt;').replace('>', '&gt;')}</span>`.replace(/\\n/g, '<br>').replace(/&.{1}/g, '')
+      }
+      t.innerHTML = c
+      document.getElementById('chatmsgbox').appendChild(t)
       document.getElementById('chatmsgbox').scrollTop = document.getElementById('chatmsgbox').scrollHeight
-    });
+    })
     //player join & leave message
     bot.on('playerJoined',  (player) => {
       const plyr = document.createElement("li");
