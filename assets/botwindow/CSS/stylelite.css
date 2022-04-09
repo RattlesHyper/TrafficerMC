@@ -105,7 +105,7 @@ button {
     border-radius: 50%;
   }
   .chatrecivebox {
-    background: #f2f3f5;
+    background: #2f313662;
     scroll-behavior: smooth;
     font-size: 15px;
     position: absolute;
