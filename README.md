@@ -1,7 +1,7 @@
 # TrafficerMC
 ## A Minecraft botting tool with Anti-AFK, Chat spammer, Inventory/Chest manager features.
 
-[Downlload](https://github.com/RattlesHyper/TrafficerMC/releases)
+[Download](https://github.com/RattlesHyper/TrafficerMC/releases)
 
 ## Screenshots
 ![Example Screenshot 1](https://cdn.discordapp.com/attachments/962345126536036415/962345349534593104/unknown.png)
