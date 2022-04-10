@@ -140,7 +140,7 @@ ipcRenderer.on('startbot', (e, data) => {
       var c = ''
       if (m.json.extra instanceof Array) {
       m.json.extra.forEach(e => {
-        c += `<span style="color: ${e.color};">${e.text.replace('<', '&lt;').replace('>', '&gt;')}</span>`.replace(/\\n/g, '<br>')
+        c += `<span style="color: ${element.color}; ${element.bold ? 'font-weight: bold;' : ''} ${element.italic ? 'font-style: italic;' : ''} ${element.strikethrough && element.underlined ? 'text-decoration: line-through underline' : element.strikethrough ? 'text-decoration: line-through' : element.underlined ? 'text-decoration: underline' : ''}">${element.text.replace('<', '&lt').replace('>', '&gt')}</span>`.replace(/\\n/g, '<br>')
       });
       } else if (msg.json.text) {
         c += `<span>${m.json.text.replace('<', '&lt;').replace('>', '&gt;')}</span>`.replace(/\\n/g, '<br>').replace(/§.{1}/g, '')
