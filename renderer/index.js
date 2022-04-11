@@ -1,6 +1,6 @@
 const { ipcRenderer, shell  } = require('electron')
 const fetch = require('node-fetch')
-const currentv = "0.7"
+const currentv = "0.8"
 
 document.getElementById('connect').addEventListener('click', () => {
   document.getElementById('content').innerHTML = "Connecting..."
