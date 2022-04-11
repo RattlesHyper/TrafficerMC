@@ -32,7 +32,7 @@ function main() {
       file: path.join('renderer', '../BotWindow/mbotwin.html')
     })
     windowBot.webContents.once('dom-ready', () => {
-      for(var i = 0; i < data.count; i++) {
+      for(var i = 0; i < (data.count); i++) {
         var options = {
           username: `${data.username}_${i}`,
           host: data.host,
