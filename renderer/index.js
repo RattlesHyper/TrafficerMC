@@ -1,4 +1,4 @@
-const { ipcRenderer, shell } = require('electron')
+const { ipcRenderer, shell  } = require('electron')
 const fetch = require('node-fetch')
 const currentv = "0.7"
 
@@ -11,6 +11,10 @@ document.getElementById('connect').addEventListener('click', () => {
     version: document.getElementById('version').value,
   }
   ipcRenderer.send('connect', data)
+})
+
+document.getElementById('btnMultiMode').addEventListener('click', () => {
+  ipcRenderer.send('multimode')
 })
 
 ipcRenderer.on('got-username', (e, unm) => {
@@ -38,4 +42,3 @@ function openyt() {
 function opengithub() {
   shell.openExternal('https://github.com/RattlesHyper/TrafficerMC')
 }
-

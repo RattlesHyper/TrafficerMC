@@ -30,10 +30,7 @@ ipcRenderer.on('startbot', (e, data) => {
       document.getElementById('h2tit').innerHTML = 'Spawned'
       var checkBox = document.getElementById("afkToggle");
       if (checkBox.checked == true) {
-        var checkBox = document.getElementById("afkToggle");
-        if (checkBox.checked == true) {
-          bot.afk.start();
-        };
+        bot.afk.start();
       };
     });
     // chat send
@@ -102,17 +99,14 @@ ipcRenderer.on('startbot', (e, data) => {
     document.getElementById('spambtn').addEventListener('change', () => {
       var checkBox = document.getElementById("spambtn");
       if (checkBox.checked == true) {
-        var chatSpam = setInterval(spamit, document.getElementById('spamdelay').value);
-
-        function spamit() {
-          bot.chat(document.getElementById('chatbox').value)
-        }
-      } else {};
-      document.getElementById('spambtn').addEventListener('click', () => {
+        bot.chat(document.getElementById('chatbox').value)
+        var chatSpam = setInterval(() => {bot.chat(document.getElementById('chatbox').value)}, document.getElementById('spamdelay').value);
+      }
+      document.getElementById('spambtn').addEventListener('change', () => {
         var checkBox = document.getElementById("spambtn");
         if (checkBox.checked == false) {
-          clearInterval(chatSpam);
-        } else {};
+          clearInterval(chatSpam)
+        }
       })
     });
     //kick detect
@@ -121,12 +115,12 @@ ipcRenderer.on('startbot', (e, data) => {
       document.getElementById("spambtn").checked = false;
     });
     //Auto Reconnect Toggle check
-    bot.on('end', (reason) => {
+    bot.on('end', () => {
       clearInterval(health)
       var checkBox = document.getElementById("btnrecon");
       if (checkBox.checked == true) {
         reconfunction();
-      } else {};
+      };
       document.getElementById("spambtn").checked = false;
     });
     //disconnect
