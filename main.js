@@ -1,8 +1,8 @@
 const path = require('path')
 const { app, ipcMain, dialog, ipcRenderer, BrowserWindow, Menu } = require('electron')
-const Window = require('./Window');
+const Window = require('./assets/class/window/Window');
+const WindowSmall = require('./assets/class/window/WindowSmall');
 const { spawn } = require('child_process');
-const WindowSmall = require('./WindowSmall');
 const fetch = require('node-fetch');
 
 require('electron-reload')(__dirname)

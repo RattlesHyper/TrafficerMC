@@ -87,20 +87,6 @@ class NewBot {
       document.getElementById('closewin').addEventListener('click', () => {
           this.bot.closeWindow(window)
       });
-      //drop all
-      document.getElementById('inventoryslotda').addEventListener('click', () => {
-          function tossNext() {
-              if (this.bot.inventory.items().length === 0) return
-              const item = this.bot.inventory.items()[0]
-              this.bot.tossStack(item, tossNext)
-          }
-          var drop = setInterval(() => {
-              tossNext()
-          }, 10);
-          setTimeout(() => {
-              clearInterval(drop)
-          }, 3000);
-      });
       //AFK button
       document.getElementById('afkToggle').addEventListener('change', () => {
           var checkBox = document.getElementById("afkToggle");

@@ -51,6 +51,7 @@ class NewBot {
       //login event
       this.bot.on('spawn', () => {
           document.getElementById('h2tit').innerHTML = 'Spawned'
+          sendlog("[logs] Spawned.", "#145e00")
           if (document.getElementById("afkToggle").checked == true) {
               this.bot.afk.start();
           }
@@ -85,9 +86,11 @@ class NewBot {
       //window state
       this.bot.on('windowOpen', () => {
           document.getElementById('invitm').innerHTML = 'Window Opened'
+          sendlog("[logs] Window Opened.", "#312691")
       });
       this.bot.on('windowClose', () => {
           document.getElementById('invitm').innerHTML = 'Window Closed'
+          sendlog("[logs] Window Closed.", "#312691")
       });
       //inventory slot clicker
       document.getElementById('inventoryslotr').addEventListener('click', () => {
@@ -121,15 +124,15 @@ class NewBot {
       //kick detect
       this.bot.on('kicked', (reason, loggedIn) => {
           if (loggedIn === true) {
-              sendlog("[BOT] Got Kicked!", "red")
+              sendlog("[logs] Got Kicked!", "red")
           } else {
-              sendlog("[BOT] Failed to Join!", "red")
+              sendlog("[logs] Failed to Join!", "red")
           }
       });
       //auto reconnect check
       this.bot.on('end', () => {
           if (document.getElementById("btnrecon").checked == true) {
-              sendlog("[BOT] Attempting to Reconnect.", "pink")
+              sendlog("[logs] Attempting to Reconnect.", "pink")
               this.initBot();
           };
           document.getElementById("spambtn").checked = false;
@@ -137,7 +140,7 @@ class NewBot {
       //disconnect button
       document.getElementById('btndiscon').addEventListener('click', () => {
           this.bot.quit();
-          sendlog("[BOT] Disconnected.", "red")
+          sendlog("[logs] Disconnected.", "red")
           document.getElementById('h2tit').innerHTML = "Bot Disconnected"
       });
       //chat print
@@ -157,10 +160,10 @@ class NewBot {
       });
       //player join & leave message
       this.bot.on('playerJoined', (player) => {
-          sendlog(`[BOT] ${player.username} Joined the server.`, "#03fc6b")
+          sendlog(`[logs] ${player.username} Joined the server.`, "#03fc6b")
       });
       this.bot.on('playerLeft', (player) => {
-          sendlog(`[BOT] ${player.username} Joined the server.`, "#ff6666")
+          sendlog(`[logs] ${player.username} Left the server.`, "#ff6666")
       });
       //look at position
       document.getElementById('lookPos').addEventListener('click', () => {
