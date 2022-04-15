@@ -51,9 +51,10 @@
   <div class="invs" style="font-size: 15px;">
     <label style="font-size: 15px;">Inventory Slot</label>
     <input style="width: 33px;" type="number" id="inventoryslotbox"/>
-    <button id="inventoryslotl" type="button">L Click</button>
-    <button id="inventoryslotr" type="button">R Click</button>
-    <button id="inventoryslotd" type="button" title="Drop item from selected slot">Drop</button>
+    <button id="inventoryslotl">L Click</button>
+    <button id="inventoryslotr">R Click</button>
+    <button id="inventoryslotd" title="Drops item from selected slot (L Click First)">Drop</button>
+    <button id="inventoryslotda" title="Drops everything">Drop All</button>
     <button id="closewin" type="button" title="Close Window">Close</button>
   </div>
   <div class="afk">
@@ -73,6 +74,7 @@
   <div>
     <button class="reconbtns" id="buttonreconnect">Reconnect</button>
     <button class="disreconbtns" id="btndiscon">Disconnect</button>
+    <button id="ingshowbtn" onclick="clearchat()" title="Clear Chat">Clear</button>
     <button id="ingshowbtn" onclick="showExample()" title="Window slot number example">Show</button>
     <button id="themebtn" hidden>Dark</button>
   </div>

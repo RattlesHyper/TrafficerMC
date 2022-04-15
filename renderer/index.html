@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
-
   <head>
     <meta charset="UTF-8">
     <title>TrafficerMC</title>
     <link rel="stylesheet" href="..//assets/mainwindow/CSS/style.css">
   </head>
-
   <body>
-    <a href="multimode.html"><button id="btnMultiMode" style="position: absolute; top: 0px; left: 0px;">Multi Mode</button></a>
     <label style="position: relative; top: -5px; font-size: 13px;">TrafficerMC Dashbord</label>
     <div>
       <p>Host: <input style="width: 200px;" type="text" id="host" placeholder="localhost"/></p>
       <p>Port: <input style="width: 205px;" type="number" id="port" placeholder="25565"/></p>
-      <p>Username: <input style="width: 160px;" type="text" id="username" placeholder="Username" /></p>
+      <p>Bots: <input style="width: 160px; width: 35px;" type="number" id="countbot" placeholder="Count"/>
+        Delay: <input id="joindelay" type="number" style="width: 90px;" placeholder="Default: 0">
+      </p>
+      <p>Username: <input style="width: 160px;" type="text" id="username" placeholder="Username / Email"/></p>
+      <div>
+        Password: <input style="width: 160px; width: 80px;" type="text" id="passwd" placeholder="Password"/>
+        <select id="authtype" style="padding: 0px; width: 80px; height: 35px;">
+          <option value="">Mojang</option>
+          <option value="microsoft">Microsoft</option>
+        </select>
+      </div>
       <p>
         <label>Version:</label> 
-        <select id="version" style="width: 150px;">
+        <select id="version" style="width: 200px;">
           <option value="1.18.2">1.18.2</option>
           <option value="1.18.1">1.18.1</option>
           <option value="1.18">1.18</option>
@@ -54,10 +61,9 @@
         </select>
       </p>
     </div>
-    <p style="position: absolute; top: 0px; right: 15px; font-size: 10px;">v1.0</p>
+    <p style="position: absolute; top: 0px; right: 15px; font-size: 10px;">v1.1</p>
     <p id="updateinfo" style="position: absolute; top: 10px; right: 15px; font-size: 10px;">Checking for update...</p>
-    <button id="connect" type="button">Connect</button><br />
-    <div id="content">Not connected</div> <br />
+    <button id="connect" type="button">Connect</button>
     <p class="supporttext">Support</p>
     <img onclick="opendiscord()" class="logodiscord" src="../assets/mainwindow/logo/Discord-Logo.png">
     <img onclick="openyt()" class="logoyoutube" src="../assets/mainwindow/logo/ytlogo.png">

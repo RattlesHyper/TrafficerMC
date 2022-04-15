@@ -1,27 +1,26 @@
 const { ipcRenderer, shell  } = require('electron')
 const fetch = require('node-fetch')
-const currentv = "1.0"
+const currentv = "1.1"
 
 document.getElementById('connect').addEventListener('click', () => {
-  document.getElementById('content').innerHTML = "Connecting..."
   const data = {
     host: document.getElementById('host').value,
     port: parseInt(document.getElementById('port').value),
     username: document.getElementById('username').value,
     version: document.getElementById('version').value,
+    password: document.getElementById('passwd').value,
+    auth: document.getElementById('authtype').value,
+    count: document.getElementById('countbot').value,
+    delay: document.getElementById('joindelay').value
   }
-  ipcRenderer.send('connect', data)
-})
-
-document.getElementById('btnMultiMode').addEventListener('click', () => {
-  ipcRenderer.send('multimode')
-})
-
-ipcRenderer.on('got-username', (e, unm) => {
-  document.getElementById('content').innerHTML = `${unm} Connected`
+  if(!data.count) {ipcRenderer.send('connect', data)}
+   else {
+    ipcRenderer.send('connectmulti', data)
+  }
 })
 
 ipcRenderer.on('verinfo', () => {
+setTimeout(() => {clearinfo()}, 15*1000);
 fetch("https://pastebin.com/raw/YnTvkAcX", {method: 'GET'})
 .then(response => response.text())
 .then(result => {
@@ -33,6 +32,9 @@ fetch("https://pastebin.com/raw/YnTvkAcX", {method: 'GET'})
 });
 })
 
+function clearinfo() {
+  document.getElementById('updateinfo').style.display = "none"
+}
 function opendiscord() {
   shell.openExternal('https://discord.gg/m6b8Pw4NR8')
 }

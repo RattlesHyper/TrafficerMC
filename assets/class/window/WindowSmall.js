@@ -8,7 +8,6 @@ const defaultProps = {
   autoHideMenuBar: true,
   show: false,
   devTools: false,
-  backgroundColor: "#66CD00",
   webPreferences: {
     nodeIntegration: true,
     contextIsolation: false
