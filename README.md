@@ -18,8 +18,8 @@
 #### Join official [Discord](https://discord.gg/m6b8Pw4NR8)
 
 ## Screenshots
-![Screenshot 1](https://cdn.discordapp.com/attachments/963491992506073108/963492031987081266/unknown.png) ![Screenshot 2](https://cdn.discordapp.com/attachments/963491992506073108/963492385407516743/unknown.png)
-![Screenshot 3](https://cdn.discordapp.com/attachments/963491992506073108/963493893985419345/unknown.png)
+![Screenshot 1](https://cdn.discordapp.com/attachments/963491992506073108/964350881665531914/screenshot.jpg)
+![Screenshot 2](https://cdn.discordapp.com/attachments/963491992506073108/963493893985419345/unknown.png)
 
 ## Video
 [![](https://cdn.discordapp.com/attachments/962345126536036415/962355332263317554/hqdefault.jpg)](https://www.youtube.com/watch?v=eAe9m-d-el0&t=2s)
