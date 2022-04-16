@@ -37,6 +37,7 @@ function newBot(data) {
     bot.once('login', () => {
         document.getElementById('h2tit').innerHTML = 'Logged in'
         document.getElementById('hitit').innerHTML = `Bot Control Panel (${bot.username})`
+        if(data.loginMsg) {bot.chat(data.loginMsg); sendlog(`[logs] Join Message sent.`, "#34abeb")}
     });
     //login event
     bot.on('spawn', () => {

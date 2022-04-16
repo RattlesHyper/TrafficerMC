@@ -29,6 +29,7 @@ function newBot(options) {
     bot.once('login', () => {
         sendlog(`[${options.username}] Logged in`, "green")
         botcount += 1
+        if(options.loginMsg) {bot.chat(options.loginMsg); sendlog(`[${options.username}] Join Message sent.`, "#34abeb")}
     });
     //spawn event
     bot.on('spawn', () => {

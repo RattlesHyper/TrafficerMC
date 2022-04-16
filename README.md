@@ -15,7 +15,7 @@
 - (ETC)
 
 ## Click here to [Download](https://github.com/RattlesHyper/TrafficerMC/releases)
-#### Join official [Discord](https://discord.gg/m6b8Pw4NR8)
+[![Discord](https://img.shields.io/discord/935341227400904734.svg?color=%237289da&label=discord&logo=discord&style=flat-square)](https://discord.gg/m6b8Pw4NR8)
 
 ## Screenshots
 ![Screenshot 1](https://cdn.discordapp.com/attachments/963491992506073108/964350881665531914/screenshot.jpg)

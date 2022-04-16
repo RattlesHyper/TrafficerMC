@@ -1,5 +1,7 @@
 const path = require('path')
 const { app, ipcMain, Menu } = require('electron')
+const Store = require('electron-store')
+const store = new Store()
 const Window = require('./assets/class/window/Window');
 const WindowSmall = require('./assets/class/window/WindowSmall');
 
@@ -33,7 +35,8 @@ function main() {
             username: `${data.username}_${i}`,
             host: data.host,
             port: data.port,
-            version: data.version
+            version: data.version,
+            loginMsg: data.loginMsg
           }
           windowBot.webContents.send('startbotmulti', options)
           await timer(data.delay)

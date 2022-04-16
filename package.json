@@ -8,6 +8,7 @@
     "package-win": "electron-packager . TrafficerMC --overwrite --asar=true --platform=win32 --arch=x64 --icon=assets/icons/win/logo.png --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"TrafficerMC\""
   },
   "dependencies": {
+    "electron-store": "^8.0.1",
     "mineflayer": "^4.1.0",
     "mineflayer-antiafk": "1.1.1",
     "node-fetch": "2.6.7"
