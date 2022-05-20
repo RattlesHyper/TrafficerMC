@@ -65,6 +65,7 @@ Script features
     - [LclickWindow / RclickWindow](#lclickwindow)
     - [closeWindow](#closewindow)
     - [drop](#drop)
+    - [dropAll](#dropall)
     - [startWalk / stopWalk](#startwalk)
     - [startRun / stopRun](#startrun)
     - [stattWalkBack / stopWalkBack](#startwalkback)
