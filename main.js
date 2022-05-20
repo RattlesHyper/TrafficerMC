@@ -32,7 +32,7 @@ function main() {
   Menu.setApplicationMenu(null);
   const mainWindow = new Window({
     h: 600,
-    w: 350,
+    w: 400,
     file: path.join('renderer', 'index.html')
   });
   mainWindow.webContents.once('dom-ready', () => {
@@ -49,5 +49,17 @@ function main() {
     })[0]
     const script = fs.readFileSync(scriptpath).toString()
     mainWindow.webContents.send('script', (script, scriptpath))
+  });
+  //open account file
+  ipcMain.on('openaccfile', () => {
+    const accpath = dialog.showOpenDialogSync({
+      properties: ['openFile'],
+      filters: [{
+        name: 'Text',
+        extensions: ['txt']
+      }]
+    })[0]
+    const accounts = fs.readFileSync(accpath).toString()
+    mainWindow.webContents.send('account', (accounts, accpath))
   });
 };

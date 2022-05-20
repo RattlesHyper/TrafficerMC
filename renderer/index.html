@@ -1,79 +1,72 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>TrafficerMC</title>
-    <link rel="stylesheet" href="..//assets/mainwindow/CSS/style.css">
-  </head>
-  <body>
-    <label style="position: relative; top: -5px; font-size: 13px;">TrafficerMC Dashbord</label>
-    <div>
-      <p>Host: <input style="width: 200px;" type="text" id="host" placeholder="localhost"/></p>
-      <p>Port: <input style="width: 205px;" type="number" id="port" placeholder="25565"/></p>
-      <p>Username: <input style="width: 160px;" type="text" id="username" placeholder="Username / Email"/></p>
-      <div>
-        Password: <input style="width: 160px; width: 80px;" type="text" id="passwd" placeholder="Password"/>
-        <select id="authtype" style="padding: 0px; width: 80px; height: 35px;">
-          <option value="">Mojang</option>
-          <option value="microsoft">Microsoft</option>
-        </select>
-      </div>
-      <p>Bots: <input style="width: 160px; width: 35px;" type="number" id="countbot" placeholder="Count"/>
-        Delay: <input id="joindelay" type="number" style="width: 90px;" placeholder="Default: 0">
-      </p>
-      <p>Join Message: <input id="loginMsg" placeholder="Sends after connecting" style="width: 135px;"></p>
+   <head>
+      <title>TrafficerMC</title>
+      <link rel="stylesheet" href="..//assets/mainwindow/CSS/style.css">
+   </head>
+   <body>
+      <center><label style="position: relative; top: -5px; font-size: 20px;">TrafficerMC Dashbord</label></center>
+      <p>Host: <input style="width: 200px;" type="text" id="host" placeholder="localhost"/> Port: <input style="width: 45px;" type="number" id="port" placeholder="25565"/></p>
+      <p>Username: <input style="width: 260px;" type="text" id="username" placeholder="Username / Email"/></p>
       <p>
-        <label>Version:</label> 
-        <select id="version" style="width: 200px;">
-          <option value="1.18.2">1.18.2</option>
-          <option value="1.18.1">1.18.1</option>
-          <option value="1.18">1.18</option>
-          <option value="1.17.1">1.17.1</option>
-          <option value="1.17">1.17</option>
-          <option value="1.16.5">1.16.5</option>
-          <option value="1.16.4">1.16.4</option>
-          <option value="1.16.3">1.16.3</option>
-          <option value="1.16.2">1.16.2</option>
-          <option value="1.16.1">1.16.1</option>
-          <option value="1.16">1.16</option>
-          <option value="1.15.2">1.15.2</option>
-          <option value="1.15.1">1.15.1</option>
-          <option value="1.15">1.15</option>
-          <option value="1.14.4">1.14.4</option>
-          <option value="1.14.3">1.14.3</option>
-          <option value="1.14.1">1.14.1</option>
-          <option value="1.14">1.14</option>
-          <option value="1.13.2">1.13.2</option>
-          <option value="1.13.1">1.13.1</option>
-          <option value="1.13">1.13</option>
-          <option value="1.12.2">1.12.2</option>
-          <option value="1.12.1">1.12.1</option>
-          <option value="1.12">1.12</option>
-          <option value="1.11.2">1.11.2</option>
-          <option value="1.11">1.11</option>
-          <option value="1.10.2">1.10.2</option>
-          <option value="1.10.1">1.10.1</option>
-          <option value="1.10">1.10</option>
-          <option value="1.9.4">1.9.4</option>
-          <option value="1.9.2">1.9.2</option>
-          <option value="1.9">1.9</option>
-          <option value="1.8.9">1.8.9</option>
-          <option value="1.7.10">1.7.10</option>
-        </select>
+         <label>Password: <input style="width: 180px;" type="text" id="passwd" placeholder="Leave empty if cracked"/></label>
+         <select id="authtype" style="padding: 0px; width: 80px; height: 35px;">
+            <option value="">Mojang</option>
+            <option value="microsoft">Microsoft</option>
+         </select>
       </p>
-      <div>
-        <p id="filestate">Script: No file selected</p>
-        <button id="fileselectbtn" style="position: absolute; right: 35px; top: 380px;">Open</button>
-      </div>
+      <p id="accfilestate">Accounts: No account file selected</p>
+      <button id="accfileselectbtn" style="position: absolute; right: 15px; top: 190px;">Select</button>
+      <p><label>Bots: <input style="width: 110px;" type="number" id="countbot" placeholder="Count"/></label> <label style="position: relative; left: 10px;" >Delay: <input id="joindelay" type="number" style="width: 110px;" placeholder=" Default: 0"></label></p>
+      <p>Join Message: <input id="loginMsg" placeholder="Sends after connecting" style="width: 235px;"></p>
+      <p>
+         <label>Version:</label> 
+         <select id="version" style="width: 105px;">
+            <option value="">Auto</option>
+            <option value="1.18.2">1.18.2</option>
+            <option value="1.18.1">1.18.1</option>
+            <option value="1.18">1.18</option>
+            <option value="1.17.1">1.17.1</option>
+            <option value="1.17">1.17</option>
+            <option value="1.16.5">1.16.5</option>
+            <option value="1.16.4">1.16.4</option>
+            <option value="1.16.3">1.16.3</option>
+            <option value="1.16.2">1.16.2</option>
+            <option value="1.16.1">1.16.1</option>
+            <option value="1.16">1.16</option>
+            <option value="1.15.2">1.15.2</option>
+            <option value="1.15.1">1.15.1</option>
+            <option value="1.15">1.15</option>
+            <option value="1.14.4">1.14.4</option>
+            <option value="1.14.3">1.14.3</option>
+            <option value="1.14.1">1.14.1</option>
+            <option value="1.14">1.14</option>
+            <option value="1.13.2">1.13.2</option>
+            <option value="1.13.1">1.13.1</option>
+            <option value="1.13">1.13</option>
+            <option value="1.12.2">1.12.2</option>
+            <option value="1.12.1">1.12.1</option>
+            <option value="1.12">1.12</option>
+            <option value="1.11.2">1.11.2</option>
+            <option value="1.11">1.11</option>
+            <option value="1.10.2">1.10.2</option>
+            <option value="1.10.1">1.10.1</option>
+            <option value="1.10">1.10</option>
+            <option value="1.9">1.9</option>
+            <option value="1.8">1.8.x</option>
+         </select>
+      </p>
+      <p id="filestate">Script: No script file selected</p>
+      <button id="fileselectbtn" style="position: absolute; right: 15px; top: 370px;">Select</button>
       <p id="fildir"></p>
-    </div>
-    <p style="position: absolute; top: 0px; right: 15px; font-size: 10px;">v1.3</p>
-    <p id="updateinfo" style="position: absolute; top: 10px; right: 15px; font-size: 10px;">Checking for update...</p>
-    <button id="connect" type="button">Connect</button>
-    <p class="supporttext">Support</p>
-    <img onclick="opendiscord()" class="logodiscord" src="../assets/mainwindow/logo/Discord-Logo.png">
-    <img onclick="openyt()" class="logoyoutube" src="../assets/mainwindow/logo/ytlogo.png">
-    <img onclick="opengithub()" class="logogithub" src="../assets/mainwindow/logo/github.png">
-    <script src="./index.js"></script>
-  </body>
+      <p style="position: absolute; top: 0px; right: 15px; font-size: 10px;">v1.4</p>
+      <p id="updateinfo" style="position: absolute; top: 15px; right: 15px; font-size: 10px;">Checking for update...</p>
+      <center><button id="connect" type="button">Connect</button></center>
+      <p style="position: absolute; bottom: 0px; right: 0px; font-size: 10px;" >Check GitHub for user guide.</p>
+      <p class="supporttext">Support</p>
+      <img onclick="opendiscord()" class="logodiscord" src="../assets/mainwindow/logo/Discord-Logo.png">
+      <img onclick="openyt()" class="logoyoutube" src="../assets/mainwindow/logo/ytlogo.png">
+      <img onclick="opengithub()" class="logogithub" src="../assets/mainwindow/logo/github.png">
+      <script src="./index.js"></script>
+   </body>
 </html>

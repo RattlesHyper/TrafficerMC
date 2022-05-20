@@ -7,11 +7,12 @@ const store = new Store()
 const { EventEmitter } = require('events')
 const execmd = new EventEmitter()
 var script = store.get('script')
+var accounts = store.get('accounts')
 let botcount = 0;
 let joindata = ""
 ipcRenderer.on('startbotmulti', (e, data) => {
     joindata = data
-    startmultibot(joindata)
+    if(accounts) {startaccountfile()} else {startmultibot()}
     setInterval(() => {
         document.getElementById('invitm').innerHTML = botcount
     }, 500);
@@ -19,9 +20,12 @@ ipcRenderer.on('startbotmulti', (e, data) => {
 function newBot(options) {
     const bot = mineflayer.createBot({
       username: options.username,
+      password: options.password,
+      auth: options.auth,
       host: options.host,
       port: options.port,
-      version: options.version
+      version: options.version,
+      loginMsg: options.loginMsg
     });
     // load plugins
     bot.loadPlugin(antiafk);
@@ -183,6 +187,14 @@ function newBot(options) {
         execmd.on('stopsneak', () => {bot.setControlState('sneak', false)});
         execmd.on('stopmove', () => {bot.clearControlStates(); document.getElementById("togglewalk").checked = false});
         execmd.on('disconnect', () => {bot.quit()});
+        execmd.on('dropall', () => {
+          tossNext()
+          function tossNext() {
+            if (bot.inventory.items().length === 0) return
+            const item = bot.inventory.items()[0]
+            bot.tossStack(item, tossNext)
+          }
+        });
 };
 //disconnect
 document.getElementById('btndiscon').addEventListener('click', () => {
@@ -244,7 +256,7 @@ function clearchat() {
     document.getElementById('chatmsgbox').innerHTML = ''
 }
   //script controler
-  async function startscript(script) {
+  async function startscript() {
     const s = fs.readFileSync(script.path)
     let c = 0
     for (var i = 0; i < s.toString().split(/\r?\n/).length; i++) {
@@ -268,18 +280,36 @@ function clearchat() {
     }
   }
   //multi bot
-  async function startmultibot(data) {
-    for (var i = 0; i < (data.count); i++) {
+  async function startmultibot() {
+    for (var i = 0; i < (joindata.count); i++) {
         var options = {
-          username: `${data.username}_${i}`,
-          host: data.host,
-          port: data.port,
-          version: data.version,
-          loginMsg: data.loginMsg
+          username: `${joindata.username}_${i}`,
+          host: joindata.host,
+          port: joindata.port,
+          version: joindata.version,
+          loginMsg: joindata.loginMsg
         }
         newBot(options)
-        await timer(data.delay)
+        await timer(joindata.delay)
       }
+  }
+  // account file method
+  async function startaccountfile() {
+    const s = fs.readFileSync(accounts.path)
+    for (var i = 0; i < (joindata.count ?? s.toString().split(/\r?\n/).length); i++) {
+      const args = s.toString().split(/\r?\n/)[i].slice().trim().split(/ +/g);
+      var options = {
+        username: args.shift(),
+        password: args.shift(1),
+        auth: args.shift(2),
+        host: joindata.host,
+        port: joindata.port,
+        version: joindata.version,
+        loginMsg: joindata.loginMsg
+      }
+      newBot(options)
+      await timer(joindata.delay)
+    }
   }
   //delay function
   function timer(ms) {return new Promise(res => setTimeout(res, ms ?? 1000))}

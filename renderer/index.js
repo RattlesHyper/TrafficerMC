@@ -2,9 +2,10 @@ const { ipcRenderer, shell } = require('electron')
 const fetch = require('node-fetch')
 const Store = require('electron-store')
 const store = new Store()
-const currentv = "1.3"
-let userData = store.get('data')
-let userScript = store.get('script')
+const currentv = "1.4"
+const userData = store.get('data')
+const userScript = store.get('script')
+const userAccount = store.get('accounts')
 document.getElementById('connect').addEventListener('click', () => {
   const data = {
     host: document.getElementById('host').value,
@@ -24,6 +25,7 @@ document.getElementById('connect').addEventListener('click', () => {
   }
   store.set('data', data)
 });
+//script select button
 document.getElementById('fileselectbtn').addEventListener('click', () => {
   if (document.getElementById('fileselectbtn').innerHTML === "Clear") {
     clearScript()
@@ -31,11 +33,19 @@ document.getElementById('fileselectbtn').addEventListener('click', () => {
     ipcRenderer.send('openfile')
   }
 });
+//account select button
+document.getElementById('accfileselectbtn').addEventListener('click', () => {
+  if (document.getElementById('accfileselectbtn').innerHTML === "Clear") {
+    clearAccount()
+  } else {
+    ipcRenderer.send('openaccfile')
+  }
+});
+
 ipcRenderer.on('verinfo', () => {
   setData()
-  if (userScript) {
-    setScript()
-  }
+  if(userScript) {setScript()}
+  if(userAccount) {setAccount()}
   setTimeout(() => {
     clearinfo()
   }, 15 * 1000);
@@ -51,6 +61,7 @@ ipcRenderer.on('verinfo', () => {
       }
     })
 });
+// main to renderer path
 ipcRenderer.on('script', (script, scriptpath) => {
   const scr = {
     script: script,
@@ -58,7 +69,16 @@ ipcRenderer.on('script', (script, scriptpath) => {
   }
   store.set('script', scr)
   setScript(scriptpath)
-})
+});
+ipcRenderer.on('account', (accounts, accpath) => {
+  const acc = {
+    accounts: accounts,
+    path: accpath
+  }
+  store.set('accounts', acc)
+  setAccount(accpath)
+});
+
 // cleat version info
 function clearinfo() {
   document.getElementById('updateinfo').style.display = "none"
@@ -89,14 +109,22 @@ function setData() {
 }
 //restore user script
 function setScript(path) {
-  document.getElementById('filestate').innerHTML = "Script: File selected"
   document.getElementById('fileselectbtn').innerHTML = "Clear"
-  document.getElementById('fildir').innerHTML = path ?? userScript.path
+  document.getElementById('filestate').innerHTML = `Script: ${path ?? userScript.path}`
+}
+//restore user accounts
+function setAccount(path) {
+  document.getElementById('accfileselectbtn').innerHTML = "Clear"
+  document.getElementById('accfilestate').innerHTML = `Script: ${path ?? userAccount.path}`
 }
 //clear user script
 function clearScript() {
   store.delete('script')
-  document.getElementById('filestate').innerHTML = "Script: No file selected"
-  document.getElementById('fildir').innerHTML = ""
-  document.getElementById('fileselectbtn').innerHTML = "Open"
+  document.getElementById('filestate').innerHTML = "Script: No script file selected"
+  document.getElementById('fileselectbtn').innerHTML = "Select"
+}
+function clearAccount() {
+  store.delete('accounts')
+  document.getElementById('accfilestate').innerHTML = "Accounts: No account file selected"
+  document.getElementById('accfileselectbtn').innerHTML = "Select"
 }

@@ -1,11 +1,17 @@
 {
-  "name": "trafficer-mc",
-  "version": "1.0.0",
-  "description": "A minceraft minial AFK/chat tool with auto reconnect feature",
+  "name": "trafficermc",
+  "author": "RattlesHyper <undefined@gmail.com>",
+  "maintainer": "RattlesHyper",
+  "version": "1.4.0",
+  "description": "A Minecraft botting tool with Anti-AFK, Chat spammer, Inventory/Chest manager features.",
+  "license": "ISC",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "package-win": "electron-packager . TrafficerMC --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/logo.png --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"TrafficerMC\""
+    "winx64": "electron-builder build --win --x64",
+    "winx86": "electron-builder build --win --ia32",
+    "linux64": "electron-builder build --linux --x64",
+    "linux86": "electron-builder build --linux --ia32"
   },
   "dependencies": {
     "electron-store": "^8.0.1",
@@ -13,7 +19,22 @@
     "node-fetch": "2.6.7"
   },
   "devDependencies": {
-    "electron": "^17.1.2",
-    "electron-packager": "^15.4.0"
+    "electron": "^18.2.2",
+    "electron-builder": "^23.0.3"
+  },
+  "build": {
+    "appId": "com.rattleshyper.trafficermc",
+    "productName": "TrafficerMC",
+    "copyright": "Copyright © 2022 RattlesHyper",
+    "win": {
+      "target": "portable",
+      "publisherName": "RattlesHyper",
+      "icon": "assets/icons/win/icon.png"
+    },
+    "linux": {
+      "target": [
+        "zip"
+      ]
+    }
   }
 }

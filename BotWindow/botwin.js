@@ -1,13 +1,13 @@
 const { ipcRenderer } = require('electron');
-  const mineflayer = require('mineflayer');
-  const antiafk = require('../assets/botwindow/plugins/antiafk');
-  const Store = require('electron-store')
-  const fs = require('fs')
-  const store = new Store()
-  const { EventEmitter } = require('events')
-  const execmd = new EventEmitter()
-  var script = store.get('script')
-  let joindata = ""
+const mineflayer = require('mineflayer');
+const antiafk = require('../assets/botwindow/plugins/antiafk');
+const Store = require('electron-store')
+const fs = require('fs')
+const store = new Store()
+const { EventEmitter } = require('events')
+const execmd = new EventEmitter()
+var script = store.get('script')
+let joindata = ""
   ipcRenderer.on('startbot', (e, data) => {
     joindata = data
     newBot(joindata)
@@ -210,6 +210,14 @@ const { ipcRenderer } = require('electron');
     execmd.on('stopsneak', () => {bot.setControlState('sneak', false)});
     execmd.on('stopmove', () => {bot.clearControlStates(); document.getElementById("togglewalk").checked = false});
     execmd.on('disconnect', () => {bot.quit()});
+    execmd.on('dropall', () => {
+      tossNext()
+      function tossNext() {
+        if (bot.inventory.items().length === 0) return
+        const item = bot.inventory.items()[0]
+        bot.tossStack(item, tossNext)
+      }
+    });
   };
   //disconnect button
   document.getElementById('btndiscon').addEventListener('click', () => {

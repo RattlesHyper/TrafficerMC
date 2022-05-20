@@ -18,6 +18,7 @@
 - Window state
 - MultiMode
 - [Scripting](#scripting)
+- [Account File](#accountfile)
 - Minecraft 1.7.10 - 1.18.2 support
 - (ETC)
 
@@ -145,6 +146,8 @@ Script features
     clickWindow 10 1
     Drop
     ```
+    ### DropAll
+    ` DropAll` Drops Everything from inventory.
 
     ### startWalk
     ` startWalk ` Starts walking forword.
@@ -209,3 +212,31 @@ Script features
     delay 1200
     chat Hello
     ```
+
+    # AccountFile
+
+    ## Account File format
+
+    Account file must be a ` .txt ` file.
+    
+    And you must set bot count. That many accounts will join.
+
+    You can leave the Username & Password empty while using account file.
+
+    ## Inside account file
+
+    First argument: Username / Email
+
+    Second argument: Password (Leave empty if cracked)
+
+    Third argument: Auth Type [mojang / microsoft]. (Leave empty if mojang)
+
+    Example:
+
+    ```
+    Username Password microsoft
+    Username Password
+    Email Password microsoft
+    Username
+    ```
+
