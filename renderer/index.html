@@ -1,72 +1,152 @@
 <!DOCTYPE html>
-<html>
+<html style="user-select: none;" >
    <head>
       <title>TrafficerMC</title>
-      <link rel="stylesheet" href="..//assets/mainwindow/CSS/style.css">
+      <link href="../assets/CSS/style.css" rel="stylesheet">
    </head>
    <body>
-      <center><label style="position: relative; top: -5px; font-size: 20px;">TrafficerMC Dashbord</label></center>
-      <p>Host: <input style="width: 200px;" type="text" id="host" placeholder="localhost"/> Port: <input style="width: 45px;" type="number" id="port" placeholder="25565"/></p>
-      <p>Username: <input style="width: 260px;" type="text" id="username" placeholder="Username / Email"/></p>
-      <p>
-         <label>Password: <input style="width: 180px;" type="text" id="passwd" placeholder="Leave empty if cracked"/></label>
-         <select id="authtype" style="padding: 0px; width: 80px; height: 35px;">
-            <option value="">Mojang</option>
-            <option value="microsoft">Microsoft</option>
-         </select>
-      </p>
-      <p id="accfilestate">Accounts: No account file selected</p>
-      <button id="accfileselectbtn" style="position: absolute; right: 15px; top: 190px;">Select</button>
-      <p><label>Bots: <input style="width: 110px;" type="number" id="countbot" placeholder="Count"/></label> <label style="position: relative; left: 10px;" >Delay: <input id="joindelay" type="number" style="width: 110px;" placeholder=" Default: 0"></label></p>
-      <p>Join Message: <input id="loginMsg" placeholder="Sends after connecting" style="width: 235px;"></p>
-      <p>
-         <label>Version:</label> 
-         <select id="version" style="width: 105px;">
-            <option value="">Auto</option>
-            <option value="1.18.2">1.18.2</option>
-            <option value="1.18.1">1.18.1</option>
-            <option value="1.18">1.18</option>
-            <option value="1.17.1">1.17.1</option>
-            <option value="1.17">1.17</option>
-            <option value="1.16.5">1.16.5</option>
-            <option value="1.16.4">1.16.4</option>
-            <option value="1.16.3">1.16.3</option>
-            <option value="1.16.2">1.16.2</option>
-            <option value="1.16.1">1.16.1</option>
-            <option value="1.16">1.16</option>
-            <option value="1.15.2">1.15.2</option>
-            <option value="1.15.1">1.15.1</option>
-            <option value="1.15">1.15</option>
-            <option value="1.14.4">1.14.4</option>
-            <option value="1.14.3">1.14.3</option>
-            <option value="1.14.1">1.14.1</option>
-            <option value="1.14">1.14</option>
-            <option value="1.13.2">1.13.2</option>
-            <option value="1.13.1">1.13.1</option>
-            <option value="1.13">1.13</option>
-            <option value="1.12.2">1.12.2</option>
-            <option value="1.12.1">1.12.1</option>
-            <option value="1.12">1.12</option>
-            <option value="1.11.2">1.11.2</option>
-            <option value="1.11">1.11</option>
-            <option value="1.10.2">1.10.2</option>
-            <option value="1.10.1">1.10.1</option>
-            <option value="1.10">1.10</option>
-            <option value="1.9">1.9</option>
-            <option value="1.8">1.8.x</option>
-         </select>
-      </p>
-      <p id="filestate">Script: No script file selected</p>
-      <button id="fileselectbtn" style="position: absolute; right: 15px; top: 370px;">Select</button>
-      <p id="fildir"></p>
-      <p style="position: absolute; top: 0px; right: 15px; font-size: 10px;">v1.4</p>
-      <p id="updateinfo" style="position: absolute; top: 15px; right: 15px; font-size: 10px;">Checking for update...</p>
-      <center><button id="connect" type="button">Connect</button></center>
-      <p style="position: absolute; bottom: 0px; right: 0px; font-size: 10px;" >Check GitHub for user guide.</p>
-      <p class="supporttext">Support</p>
-      <img onclick="opendiscord()" class="logodiscord" src="../assets/mainwindow/logo/Discord-Logo.png">
-      <img onclick="openyt()" class="logoyoutube" src="../assets/mainwindow/logo/ytlogo.png">
-      <img onclick="opengithub()" class="logogithub" src="../assets/mainwindow/logo/github.png">
-      <script src="./index.js"></script>
+      <div class="flex flex-col m-5">
+            <h1 class="text-4xl font-bold mx-auto">TrafficerMC Dashbord</h1>
+
+            <div class="flex">
+               <div class="m-1 w-full">
+                  <div class="form-control">
+                     <label class="label">
+                        <span class="label-text">Host</span>
+                     </label>
+                     <input type="text" placeholder="localhost" id="host" class="input input-bordered input-sm" />
+                  </div>
+               </div>
+               
+               <div class="m-1 w-full">
+                  <div class="form-control">
+                     <label class="label">
+                        <span class="label-text">Port</span>
+                     </label>
+                     <input type="number" placeholder="25565" id="port" class="input input-bordered input-sm" />
+                  </div>
+               </div>
+            </div>
+
+            <div class="m-1">
+               <div class="form-control">
+                  <label class="label">
+                     <span class="label-text">Username / Email</span>
+                  </label>
+                  <input type="text" placeholder="Username / example@example.com" id="username" class="input input-bordered input-sm" />
+               </div>
+            </div>
+            
+            <div class="flex">
+               <div class="m-1 w-full">
+                  <div class="form-control">
+                     <label class="label">
+                        <span class="label-text">Password</span>
+                     </label>
+                     <input id="passwd" type="password" placeholder="Leave empty when using cracked" id="username" class="input input-bordered input-sm" />
+                  </div>
+               </div>
+               <select id="authtype" class="select select-bordered select-sm mt-auto m-1">
+                  <option>Mojang</option>
+                  <option value="microsoft">Microsoft</option>
+                </select>
+            </div>
+
+            <div class="flex m-1 justify-between">
+               <p class="m-1 text-error" id="accfilestate">Accounts: No file selected</p>
+               <button class="btn btn-sm btn-error btn-outline" id="accfileselectbtn">Select</button>
+            </div>
+
+            <div class="flex">
+               <div class="m-1 w-full">
+                  <div class="form-control">
+                     <label class="label">
+                        <span class="label-text">Bots</span>
+                     </label>
+                     <input id="countbot" type="number" placeholder="Leave empty if 1 bot" id="host" class="input input-bordered input-sm" />
+                  </div>
+               </div>
+               
+               <div class="m-1 w-full">
+                  <div class="form-control">
+                     <label class="label">
+                        <span class="label-text">Delay (in ms)</span>
+                     </label>
+                     <input id="joindelay" type="number" placeholder="1000" id="port" class="input input-bordered input-sm" />
+                  </div>
+               </div>
+            </div>
+
+            <div class="m-1">
+               <div class="form-control">
+                  <label class="label">
+                     <span class="label-text">Join message</span>
+                  </label>
+                  <input id="loginMsg" type="text" placeholder="hello!" id="port" class="input input-bordered input-sm" />
+               </div>
+            </div>
+
+            <div class="flex m-1 justify-between">
+               <p id="filestate" class="m-1 text-error">Script: No file selected</p>
+               <button id="fileselectbtn" class="btn btn-sm btn-error btn-outline">Select</button>
+            </div>
+
+            <div class="flex m-3 justify-center">
+               <button id="connect" class="btn btn-success btn-outline mx-2">Connect</button>
+               <select id="version" class="select select-bordered mx-2">
+                  <option value="">Auto</option>
+                  <option value="1.18.2">1.18.2</option>
+                  <option value="1.18.1">1.18.1</option>
+                  <option value="1.18">1.18</option>
+                  <option value="1.17.1">1.17.1</option>
+                  <option value="1.17">1.17</option>
+                  <option value="1.16.5">1.16.5</option>
+                  <option value="1.16.4">1.16.4</option>
+                  <option value="1.16.3">1.16.3</option>
+                  <option value="1.16.2">1.16.2</option>
+                  <option value="1.16.1">1.16.1</option>
+                  <option value="1.16">1.16</option>
+                  <option value="1.15.2">1.15.2</option>
+                  <option value="1.15.1">1.15.1</option>
+                  <option value="1.15">1.15</option>
+                  <option value="1.14.4">1.14.4</option>
+                  <option value="1.14.3">1.14.3</option>
+                  <option value="1.14.1">1.14.1</option>
+                  <option value="1.14">1.14</option>
+                  <option value="1.13.2">1.13.2</option>
+                  <option value="1.13.1">1.13.1</option>
+                  <option value="1.13">1.13</option>
+                  <option value="1.12.2">1.12.2</option>
+                  <option value="1.12.1">1.12.1</option>
+                  <option value="1.12">1.12</option>
+                  <option value="1.11.2">1.11.2</option>
+                  <option value="1.11">1.11</option>
+                  <option value="1.10.2">1.10.2</option>
+                  <option value="1.10.1">1.10.1</option>
+                  <option value="1.10">1.10</option>
+                  <option value="1.9">1.9</option>
+                  <option value="1.8">1.8.x</option>
+                </select>
+         </div>
+
+         <div style="position: absolute; bottom: 30px;">
+            <span class="label-text">Version: v1.5</span>
+         </div>
+
+         <div style="position: absolute; bottom: 50px;">
+            <span class="label-text" id="updateinfo">Checking for updates...</span>
+         </div>
+         <div style="position: absolute; bottom: 10px;">
+            <span class="label-text" id="updateinfo">Check GitHub for Documentation</span>
+         </div>
+
+         <div style="position: absolute; bottom: 10px; right: 5px;">
+            <button class="btn btn-sm" onclick="openyt()">YouTube</button>
+            <button class="btn btn-sm" onclick="opendiscord()">Discord</button>
+            <button class="btn btn-sm" onclick="opengithub()">GitHub</button>
+         </div>
+
+      </div>
    </body>
+   <script src="./index.js"></script>
 </html>

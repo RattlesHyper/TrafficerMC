@@ -1,6 +1,6 @@
 const { ipcRenderer } = require('electron');
 const mineflayer = require('mineflayer');
-const antiafk = require('../assets/botwindow/plugins/antiafk');
+const antiafk = require('../assets/plugins/antiafk');
 const Store = require('electron-store')
 const fs = require('fs')
 const store = new Store()
@@ -26,8 +26,8 @@ let joindata = ""
     bot.loadPlugin(antiafk);
     // health & food update
     bot.on('health', () => {
-      document.getElementById('healthhp').innerHTML = ` ${bot.health.toFixed()}`
-      document.getElementById('foodhp').innerHTML = ` ${bot.food.toFixed()}`
+      document.getElementById('healthhp').innerHTML = `${bot.health.toFixed()} ❤`
+      document.getElementById('foodhp').innerHTML = `${bot.food.toFixed()} 🍗`
     })
     // new bot winwow
     bot.once('login', () => {
@@ -219,17 +219,8 @@ let joindata = ""
       }
     });
   };
-  //disconnect button
-  document.getElementById('btndiscon').addEventListener('click', () => {
-    execmd.emit('disconnect');
-    sendlog("[logs] Disconnected.", "red")
-    document.getElementById('h2tit').innerHTML = "Bot Disconnected"
-  });
-  //reconnect
-  execmd.on('reconnect', () => {newBot(joindata)}); //script
-  document.getElementById('buttonreconnect').addEventListener('click', () => {
-    newBot(joindata)
-  });
+  //script reconnect thing
+  execmd.on('reconnect', () => {newBot(joindata)});
   //show window example
   function showExample() {
     var p1 = document.getElementById("invimg1");
@@ -251,31 +242,14 @@ let joindata = ""
       b1.innerHTML = "Hide"
     }
   }
-  // theme change button
-  function themeChange() {
-    var b1 = document.getElementById('themebtn');
-    if (b1.innerHTML === "Dark") {
-      b1.innerHTML = "Lite"
-      document.getElementById('stylecss').setAttribute("href", "../assets/botwindow/CSS/stylelite.css")
-      document.getElementById('themeimgbtn').setAttribute("src", "../assets/botwindow/icons/sunimg.png")
-    } else {
-      b1.innerHTML = "Dark"
-      document.getElementById('stylecss').setAttribute("href", "../assets/botwindow/CSS/style.css")
-      document.getElementById('themeimgbtn').setAttribute("src", "../assets/botwindow/icons/moonimg.png")
-    }
-  }
   //send logs to chat box
   function sendlog(textToLog, color) {
     const chatboxid = document.getElementById('chatmsgbox')
-    var ele = document.createElement("li");
+    ele = document.createElement("li");
     ele.style.color = color
-    ele.appendChild(document.createTextNode(textToLog));
+    ele.appendChild(document.createTextNode(textToLog))
     chatboxid.appendChild(ele)
     chatboxid.scrollTop = document.getElementById('chatmsgbox').scrollHeight
-  }
-  //clear chat
-  function clearchat() {
-    document.getElementById('chatmsgbox').innerHTML = ''
   }
   //script controler
   async function startscript(script) {
@@ -301,5 +275,19 @@ let joindata = ""
       c += 1
     }
   }
+    //clear chat
+  function clearchat() {
+    document.getElementById('chatmsgbox').innerHTML = ''
+  }
+    //disconnect button
+    function btnDc() {
+      execmd.emit('disconnect');
+      sendlog("[logs] Disconnected.", "red")
+      document.getElementById('h2tit').innerHTML = "Bot Disconnected"
+    }
+    //reconnect
+    function btnRc() {
+      newBot(joindata)
+    }
   //delay function
-  function timer(ms) {return new Promise(res => setTimeout(res, ms ?? 1000))}
+  function timer(ms) {return new Promise(res => setTimeout(res, ms ? ms: 1000))}

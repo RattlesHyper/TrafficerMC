@@ -2,10 +2,10 @@ const { ipcRenderer, shell } = require('electron')
 const fetch = require('node-fetch')
 const Store = require('electron-store')
 const store = new Store()
-const currentv = "1.4"
 const userData = store.get('data')
 const userScript = store.get('script')
 const userAccount = store.get('accounts')
+// main connect button
 document.getElementById('connect').addEventListener('click', () => {
   const data = {
     host: document.getElementById('host').value,
@@ -41,7 +41,7 @@ document.getElementById('accfileselectbtn').addEventListener('click', () => {
     ipcRenderer.send('openaccfile')
   }
 });
-
+//version info & more
 ipcRenderer.on('verinfo', () => {
   setData()
   if(userScript) {setScript()}
@@ -49,16 +49,10 @@ ipcRenderer.on('verinfo', () => {
   setTimeout(() => {
     clearinfo()
   }, 15 * 1000);
-  fetch("https://pastebin.com/raw/YnTvkAcX", {
-      method: 'GET'
-    })
+  fetch("https://raw.githubusercontent.com/RattlesHyper/TrafficerMC/main/VERSION", {method: 'GET'})
     .then(response => response.text())
     .then(result => {
-      if (result === currentv) {
-        document.getElementById('updateinfo').innerHTML = "Up to date!"
-      } else {
-        document.getElementById('updateinfo').innerHTML = `Update available Version: ${result}`
-      }
+        document.getElementById('updateinfo').innerHTML = `Active Version: v${result}`
     })
 });
 // main to renderer path
@@ -111,20 +105,28 @@ function setData() {
 function setScript(path) {
   document.getElementById('fileselectbtn').innerHTML = "Clear"
   document.getElementById('filestate').innerHTML = `Script: ${path ?? userScript.path}`
+  document.getElementById("fileselectbtn").className = "btn btn-sm btn-outline"
+  document.getElementById('filestate').className = "m-1 text"
 }
 //restore user accounts
 function setAccount(path) {
   document.getElementById('accfileselectbtn').innerHTML = "Clear"
-  document.getElementById('accfilestate').innerHTML = `Script: ${path ?? userAccount.path}`
+  document.getElementById('accfilestate').innerHTML = `Accounts: ${path ?? userAccount.path}`
+  document.getElementById("accfileselectbtn").className = "btn btn-sm btn-outline"
+  document.getElementById('accfilestate').className = "m-1 text"
 }
 //clear user script
 function clearScript() {
   store.delete('script')
   document.getElementById('filestate').innerHTML = "Script: No script file selected"
   document.getElementById('fileselectbtn').innerHTML = "Select"
+  document.getElementById("fileselectbtn").className = "btn btn-sm btn-error btn-outline"
+  document.getElementById('filestate').className = "m-1 text-error"
 }
 function clearAccount() {
   store.delete('accounts')
   document.getElementById('accfilestate').innerHTML = "Accounts: No account file selected"
   document.getElementById('accfileselectbtn').innerHTML = "Select"
+  document.getElementById("accfileselectbtn").className = "btn btn-sm btn-error btn-outline"
+  document.getElementById('accfilestate').className = "m-1 text-error"
 }

@@ -1,6 +1,6 @@
 const { ipcRenderer } = require('electron');
 const mineflayer = require('mineflayer');
-const antiafk = require('../assets/botwindow/plugins/antiafk');
+const antiafk = require('../assets/plugins/antiafk');
 const Store = require('electron-store')
 const fs = require('fs')
 const store = new Store()
@@ -14,7 +14,7 @@ ipcRenderer.on('startbotmulti', (e, data) => {
     joindata = data
     if(accounts) {startaccountfile()} else {startmultibot()}
     setInterval(() => {
-        document.getElementById('invitm').innerHTML = botcount
+        document.getElementById('botCount').innerHTML = botcount
     }, 500);
 });
 function newBot(options) {
@@ -197,51 +197,21 @@ function newBot(options) {
         });
 };
 //disconnect
-document.getElementById('btndiscon').addEventListener('click', () => {
-    execmd.emit('disconnect');
-    botcount = 0
-  });
+function btnDc() {
+  execmd.emit('disconnect');
+  botcount = 0
+  sendlog("[System] Disconnected all bots.", "red")
+}
   //reconnect
-  document.getElementById('buttonreconnect').addEventListener('click', () => {
-    startmultibot(joindata)
-  })
+  function btnRc() {
+    if(accounts) {startaccountfile()} else {startmultibot(joindata)}
+    sendlog("[System] Attempting to Reconnect.", "pink")
+  }
+ //script reconnect thing
   execmd.on('reconnect', () => {
-    sendlog("[Script] Reconnect not supported in MultiMode.")
-  }); //script
-//show window example
-function showExample() {
-    var p1 = document.getElementById("invimg1");
-    if (p1.style.display === "block") {
-        p1.style.display = "none";
-    } else {
-        p1.style.display = "block";
-    }
-    var p2 = document.getElementById("invimg2");
-    if (p2.style.display === "block") {
-        p2.style.display = "none";
-    } else {
-        p2.style.display = "block";
-    }
-    var b1 = document.getElementById('ingshowbtn');
-    if (b1.innerHTML === "Hide") {
-        b1.innerHTML = "Show"
-    } else {
-        b1.innerHTML = "Hide"
-    }
-}
-// theme change button
-function themeChange() {
-    var b1 = document.getElementById('themebtn');
-    if (b1.innerHTML === "Dark") {
-        b1.innerHTML = "Lite"
-        document.getElementById('stylecss').setAttribute("href", "../assets/botwindow/CSS/stylelite.css")
-        document.getElementById('themeimgbtn').setAttribute("src", "../assets/botwindow/icons/sunimg.png")
-    } else {
-        b1.innerHTML = "Dark"
-        document.getElementById('stylecss').setAttribute("href", "../assets/botwindow/CSS/style.css")
-        document.getElementById('themeimgbtn').setAttribute("src", "../assets/botwindow/icons/moonimg.png")
-    }
-}
+    if(accounts) {startaccountfile()} else {startmultibot(joindata)}
+    sendlog("[Script] Attempting to Reconnect.", "pink")
+  });
 //send logs to chat box
 function sendlog(textToLog, color) {
     const chatboxid = document.getElementById('chatmsgbox')
@@ -312,4 +282,4 @@ function clearchat() {
     }
   }
   //delay function
-  function timer(ms) {return new Promise(res => setTimeout(res, ms ?? 1000))}
+  function timer(ms) {return new Promise(res => setTimeout(res, ms ? ms: 1000))}

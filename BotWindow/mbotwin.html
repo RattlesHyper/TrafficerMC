@@ -1,95 +1,138 @@
 <!DOCTYPE html>
-<head>
-  <title id="hitit">Bot Control Panel</title>
-  <link id="stylecss" rel="stylesheet" href="../assets/botwindow/CSS/style.css">
-</head>
-<body style="font-size: 15px;">
-  <div>
-    <img id="themeimgbtn" src="../assets/botwindow/icons/moonimg.png" style="width: 30px; position: absolute; right: 5px; top: 5px;" onclick="themeChange()">
-  </div>
-  <div>
-    <label>Game State:</label>
-    <label id="h2tit"></label>
-  </div>
-  <div>
-    <label>Bot Count:</label>
-    <label id="invitm">0</label>
-  </div>
-  <div>
-      <label class="hbrt">Hotbar</label>
-      <select style="height: 35px; padding: 0px;" class="hbr" id="hotbar">
-        <option value="0">1</option>
-        <option value="1">2</option>
-        <option value="2">3</option>
-        <option value="3">4</option>
-        <option value="4">5</option>
-        <option value="5">6</option>
-        <option value="6">7</option>
-        <option value="7">8</option>
-        <option value="8">9</option>
-      </select>
-      <button id="rclickhotbar">R Click</button>
-      <button id="sethotbar">Set</button>
-      <label>Look At</label>
-      <select id="lookvalue">
-        <option value="180">North</option>
-        <option value="0">South</option>
-        <option value="-90">East</option>
-        <option value="90">West</option>
-      </select>
-      <button id="lookPos">Look</button>
-      <label style="position: relative; top: px;">Walk</label>
-      <label style="position: relative; top: -3px;" class="switch">
-        <input type="checkbox" id="togglewalk">
-        <span class="slider round"></span>
-      </label>
-  </div>
-  <div class="invs" style="font-size: 15px;">
-    <label style="font-size: 15px;">Inventory Slot</label>
-    <input style="width: 33px;" type="number" id="inventoryslotbox"/>
-    <button id="inventoryslotl" type="button">L Click</button>
-    <button id="inventoryslotr" type="button">R Click</button>
-    <button id="inventoryslotd" title="Drops item from selected slot (L Click First)">Drop</button>
-    <button id="inventoryslotda" title="Drops everything">Drop All</button>
-    <button id="closewin" type="button" title="Close Window">Close</button>
-  </div>
-  <div class="afk">
-    <label style="position: relative; top: 4px;">Anti AFK</label>
-    <label class="switch">
-      <input class="afkon" type="checkbox" id="afkToggle">
-      <span class="slider round"></span>
-    </label>
-  </div>
-    <div class="autorecoontext">
-    <label style="position: relative; top: 4px;">Auto Reconnect</label>
-    <label class="switch">
-      <input type="checkbox" id="btnrecon">
-      <span class="slider round"></span>
-    </label>
-  </div>
-  <div>
-    <button class="reconbtns" id="buttonreconnect">Reconnect</button>
-    <button class="disreconbtns" id="btndiscon">Disconnect</button>
-    <button id="ingshowbtn" onclick="clearchat()" title="Clear Chat">Clear</button>
-    <button id="ingshowbtn" onclick="showExample()" title="Window slot number example">Show</button>
-    <button id="themebtn" hidden>Dark</button>
-  </div>
-  <div>
-    <img hidden id="invimg1" class="invimg" src="..//assets/botwindow/inventory/inventory-slots.png" style="position: relative;">
-    <img hidden id="invimg2" class="largechestimg" src="..//assets/botwindow/inventory/large-chest.png" style="position: relative;">
-  </div>
-  <div>
-    <ul class="chatrecivebox" id="chatmsgbox" style="scroll-behavior: smooth; position: relative; top: 10px;"></ul> <br>
-    <input type="text" id="chatbox" placeholder="Message" />
-    <button id="sendmsg" type="button">Send</button>
-    <input type="number" id="spamdelay" placeholder="Delay (ms) Default: 0" style="width: 130px;"/>
-    <label style="position: relative; top: 2px;">Spam</label>
-    <label class="switch">
-      <input type="checkbox" id="spambtn">
-      <span class="slider round"></span>
-    </label>
-  </div>
+<html>
+  <head>
+    <title id="hitit">Bot Control Panel</title>
+    <link href="../assets/CSS/style.css" rel="stylesheet">
+  </head>
+  <script src="./mbotwin.js"></script>
+  <body>
+    <div class="flex flex-col m-5">
 
-  <script src="mbotwin.js"></script>
-</body>
+      <div class="navbar bg-base-200">
+        <div class="flex-1">
+          <a class="btn btn-ghost normal-case text-xl">TrafficerMC</a>
+          <span class="mx-2">Game State:</span>
+          <span class="text-warning" id="h2tit"></span>
+          <span class="mx-2">Bot Count:</span>
+          <span class="text-warning" id="botCount">0</span>
+          <div class="mx-4">
+          </div>
+        </div>
+      </div>
+
+      <div class="flex my-4 justify-center">
+        <!-- controls -->
+        <div class="bg-base-200 p-4 rounded-lg mx-2">
+
+          <div class="flex">
+            <div class="form-control mx-1">
+              <label class="label">
+                <span class="label-text">Hotbar</span>
+              </label>
+              <div class="input-group">
+                <select class="select select-bordered select-sm" id="hotbar">
+                  <option value="0">1</option>
+                  <option value="1">2</option>
+                  <option value="2">3</option>
+                  <option value="3">4</option>
+                  <option value="4">5</option>
+                  <option value="5">6</option>
+                  <option value="6">7</option>
+                  <option value="7">8</option>
+                  <option value="8">9</option>
+                </select>
+                <button class="btn btn-sm" id="sethotbar">Set</button>
+                <button class="btn btn-sm" id="rclickhotbar">R Click</button>
+              </div>
+            </div>
+
+            <div class="form-control mx-1">
+              <label class="label">
+                <span class="label-text">Look At</span>
+              </label>
+              <div class="input-group">
+                <select class="select select-bordered select-sm" id="lookvalue">
+                  <option value="180">North</option>
+                  <option value="0">South</option>
+                  <option value="-90">East</option>
+                  <option value="90">West</option>
+                </select>
+                <button class="btn btn-sm" id="lookPos">Look</button>
+              </div>
+            </div>
+
+            <div class="form-control mt-auto">
+              <label class="label cursor-pointer p-1">
+                <span class="label-text">Walk</span>
+                <input type="checkbox" class="toggle mx-1" id="togglewalk" />
+              </label>
+            </div>
+
+          </div>
+
+          <div class="flex">
+            <div class="form-control mx-1">
+              <label class="label">
+                <span class="label-text">Inventory Slot</span>
+              </label>
+              <div class="input-group">
+                <input class="input input-sm input-bordered w-16" placeholder="1" type="number" id="inventoryslotbox">
+                <button class="btn btn-sm" id="inventoryslotl">L Click</button>
+                <button class="btn btn-sm" id="inventoryslotr">R Click</button>
+                <button class="btn btn-sm" id="inventoryslotd">Drop</button>
+                <button class="btn btn-sm" id="inventoryslotda">Drop All</button>
+                <button class="btn btn-sm" id="closewin">Close</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex">
+            <div class="form-control">
+              <label class="label cursor-pointer">
+                <span class="label-text">Anti AFK</span>
+                <input type="checkbox" class="toggle mx-1" id="afkToggle" />
+              </label>
+            </div>
+            <div class="form-control">
+              <label class="label cursor-pointer">
+                <span class="label-text">Auto Reconnect</span>
+                <input type="checkbox" class="toggle mx-1" id="btnrecon" />
+              </label>
+            </div>
+          </div>
+
+          <div class="btn-group mt-64">
+            <button class="btn btn-success btn-outline w-1/3" onclick="btnRc()">Reconnect</button>
+            <button class="btn btn-error btn-outline w-1/3" onclick="btnDc()">Disconnect</button>
+            <button class="btn btn-outline w-1/3" onclick="clearchat()">Clear Chat</button>
+          </div>
+
+        </div>
+
+        <!-- chat -->
+        <div class="bg-base-200 p-4 rounded-lg mx-2">
+            <ul class="h-96 w-96 bg-base-300 p-4 overflow-scroll rounded-lg" style="scroll-behavior: smooth;" id="chatmsgbox"></ul>
+
+            <div class="form-control my-2">
+              <div class="input-group">
+                <input class="input input-sm input-bordered w-full" placeholder="Message" type="text" id="chatbox">
+                <button class="btn btn-sm" id="sendmsg">Send</button>
+              </div>
+            </div>
+
+            <div class="form-control">
+              <label class="label p-0">
+                <input class="input input-sm input-bordered w-full mr-3" placeholder="Spam Delay (in ms)" type="number" id="spamdelay">
+                <input type="checkbox" class="toggle" id="spambtn" />
+              </label>
+            </div>
+            
+        </div>
+
+      </div>
+
+    </div>
+
+  </body>
+
 </html>

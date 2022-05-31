@@ -31,8 +31,8 @@ ipcMain.on('connect', (e, data) => {
 function main() {
   Menu.setApplicationMenu(null);
   const mainWindow = new Window({
-    h: 600,
-    w: 400,
+    h: 725,
+    w: 500,
     file: path.join('renderer', 'index.html')
   });
   mainWindow.webContents.once('dom-ready', () => {
