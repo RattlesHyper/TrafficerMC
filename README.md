@@ -7,38 +7,39 @@
 
 ### Click here to [Download](https://github.com/RattlesHyper/TrafficerMC/releases)
 
-# Features
+# 📦 Features
 - Anti-AFK
 - Inventory/Chest clicker
 - Chat
 - Chat Spammer
+- Anti-Anti-Spam (adds random text to bypass anti-spam)
 - Hotbar item activator
 - Auto Reconnect
 - Health and Food
-- Window state
-- MultiMode
+- Window state (open or closed)
+- MultiMode (with account file or bot set count for cracked)
 - [Scripting](#scripting)
 - [Account File](#accountfile)
-- Minecraft 1.7.10 - 1.18.2 support
+- Minecraft 1.8 - 1.18.2 support
 - (ETC)
 
-<details style="font-size: 16px">
-<summary>Screenshots and Video</summary>
+<details open style="font-size: 16px">
+<summary>📷 Screenshots and 🎞️ Video</summary>
 <br>
 
-## Screenshots
+# 📷 Screenshots
 
-![Screenshot 1](https://cdn.discordapp.com/attachments/963491992506073108/963493893985419345/unknown.png)
+![Screenshot 1](https://cdn.discordapp.com/attachments/537020502779232266/993761155879292978/unknown.png)
 
-![Screenshot 2](https://cdn.discordapp.com/attachments/963491992506073108/967230882744246352/unknown.png)
+![Screenshot 2](https://cdn.discordapp.com/attachments/537020502779232266/993588752503013426/unknown.png)
 
-## Video
+# 🎞️ Video
 
-[![](https://cdn.discordapp.com/attachments/962345126536036415/962355332263317554/hqdefault.jpg)](https://www.youtube.com/watch?v=eAe9m-d-el0&t=2s)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eAe9m-d-el0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 </details> <br>
 
-# Scripting
+# 📃 Scripting
 
 ## Script format
 
@@ -46,7 +47,7 @@ Script will start after bot spawn.
 
 You need to use ` .txt ` file. Capitalization doesnt matter.
 
-### Example
+### 💡 Example
 ```
 chat Hi
 delay 1000
@@ -56,7 +57,7 @@ disconnect
 reconnect
 loop
 ``` 
-Script features
+🔎 Script features
 
 - [Features](#scriptfeatures)
     - [Chat](#chat)
@@ -82,7 +83,7 @@ Script features
     ### chat
     ` chat <Message> ` Sends message in chat.
 
-    Example:
+    💡 Example:
     ```
     chat Hi
     chat Hello
@@ -91,7 +92,7 @@ Script features
     ### Activate
     ` Activate ` Activates/RightClick item in hand.
 
-    Example:
+    💡 Example:
     ```
     Activate
     Activate
@@ -104,7 +105,7 @@ Script features
 
     ![Horbar](https://cdn.discordapp.com/attachments/963491992506073108/967220718376996934/hotbar.jpg)
 
-    Example: 
+    💡 Example: 
     ```
     setHotbar 0
     sethotbar 3
@@ -117,7 +118,7 @@ Script features
     
     ` RclickWindow <Slot> ` Left click.
 
-    Example:
+    💡 Example:
 
     ```
     LclickWindow 10
@@ -142,7 +143,7 @@ Script features
 
     You need to click the item first to drop it.
 
-    Example:
+    💡 Example:
     ```
     clickWindow 10 1
     Drop
@@ -206,7 +207,7 @@ Script features
 
     Default delay 1000
 
-    Example:
+    💡 Example:
 
     ```
     chat Hi
@@ -220,19 +221,19 @@ Script features
 
     Account file must be a ` .txt ` file.
     
-    And you must set bot count. That many accounts will join.
+    ⚠️ And you must set bot count. That many accounts will join.
 
     You can leave the Username & Password empty while using account file.
 
     ## Inside account file
 
-    First argument: Username / Email
+    📍 First argument: Username / Email
 
-    Second argument: Password (Leave empty if cracked)
+    📍 Second argument: Password (Leave empty if cracked)
 
-    Third argument: Auth Type [mojang / microsoft]. (Leave empty if mojang)
+    📍 Third argument: Auth Type [mojang / microsoft]. (Leave empty if mojang)
 
-    Example:
+    💡 Example:
 
     ```
     Username Password microsoft
@@ -240,4 +241,3 @@ Script features
     Email Password microsoft
     Username
     ```
-

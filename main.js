@@ -1,8 +1,7 @@
-const path = require('path')
 const { app, ipcMain, dialog, Menu} = require('electron')
+const { store } = require('./assets/class/common/cfuns')
+const path = require('path')
 const fs = require('fs')
-const Store = require('electron-store')
-const store = new Store()
 const Window = require('./assets/class/window/Window');
 // app ready and quit
 app.whenReady().then(main);

@@ -55,6 +55,16 @@ background: #b3ccf550;
   background: #0E1525;
 }
 
+.dropdown-content {
+  color: rgb(255, 255, 255);
+  user-select: none;
+  position: absolute;
+  padding: 10px 10px;
+  background-color: rgb(12 19 34);
+  min-width: 500px;
+  box-shadow: 5px 5px 10px 0px rgba(0, 60, 255, 0.4);
+}
+
 html {
   line-height: 1.5;
   /* 1 */
@@ -1730,6 +1740,10 @@ body[dir="rtl"] .checkbox:checked,
 
 .w-16 {
   width: 4rem;
+}
+
+.w-custom {
+  width: 159px;
 }
 
 .w-1\/3 {

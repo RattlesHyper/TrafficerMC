@@ -52,10 +52,10 @@
               </label>
               <div class="input-group">
                 <select class="select select-bordered select-sm" id="lookvalue">
-                  <option value="180">North</option>
-                  <option value="0">South</option>
-                  <option value="-90">East</option>
-                  <option value="90">West</option>
+                  <option value="0">North</option>
+                  <option value="3">South</option>
+                  <option value="-1.5">East</option>
+                  <option value="1.5">West</option>
                 </select>
                 <button class="btn btn-sm" id="lookPos">Look</button>
               </div>
@@ -123,8 +123,11 @@
 
             <div class="form-control">
               <label class="label p-0">
-                <input class="input input-sm input-bordered w-full mr-3" placeholder="Spam Delay (in ms)" type="number" id="spamdelay">
+                <input class="input input-sm input-bordered w-custom" placeholder="Spam Delay (in ms)" type="number" id="spamdelay">
+                <span class="label-text">Spam</span>
                 <input type="checkbox" class="toggle" id="spambtn" />
+                <span class="label-text">Anti-A-S</span>
+                <input type="checkbox" class="toggle" id="antiantispam" />
               </label>
             </div>
             
