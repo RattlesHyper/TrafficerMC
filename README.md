@@ -35,7 +35,7 @@
 
 # 🎞️ Video
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/eAe9m-d-el0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![](https://cdn.discordapp.com/attachments/962345126536036415/962355332263317554/hqdefault.jpg)](https://www.youtube.com/watch?v=eAe9m-d-el0&t=2s)
 
 </details> <br>
 
