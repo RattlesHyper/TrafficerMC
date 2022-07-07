@@ -2,7 +2,7 @@
   "name": "trafficermc",
   "author": "RattlesHyper <undefined@gmail.com>",
   "maintainer": "RattlesHyper",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A Minecraft botting tool with Anti-AFK, Chat spammer, Inventory/Chest manager features.",
   "license": "ISC",
   "main": "main.js",
