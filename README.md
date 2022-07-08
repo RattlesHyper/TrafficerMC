@@ -20,11 +20,12 @@
 - MultiMode (with account file or bot set count for cracked)
 - [Scripting](#scripting)
 - [Account File](#accountfile)
+- [Linux Support](#linux)
 - Minecraft 1.8 - 1.18.2 support
 - (ETC)
 
 <details open style="font-size: 16px">
-<summary>📷 Screenshots and 🎞️ Video</summary>
+<summary>📷 Screenshots and Video</summary>
 <br>
 
 # 📷 Screenshots
@@ -39,7 +40,7 @@
 
 </details> <br>
 
-# 📃 Scripting
+# Scripting
 
 ## Script format
 
@@ -241,3 +242,23 @@ loop
     Email Password microsoft
     Username
     ```
+
+    # linux
+
+    📍 Download the Linux version.
+
+    📍 Right click on the Appimage file.
+
+    📍 Click Properties.
+
+    ![Screenshot 3](https://cdn.discordapp.com/attachments/628195877189844996/994665015829344388/unknown.png)
+
+    📍 Click Permissions
+
+    ![Screenshot 3](https://cdn.discordapp.com/attachments/628195877189844996/994665646795280494/unknown.png)
+
+    📍 And enable "Allow ecexuting file as program"
+
+    ![Screenshot 3](https://cdn.discordapp.com/attachments/628195877189844996/994666628627308574/unknown.png)
+
+    📍 Then you can run the app by double clicking on it.

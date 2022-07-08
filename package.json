@@ -33,8 +33,10 @@
     },
     "linux": {
       "target": [
-        "zip"
-      ]
+        "AppImage"
+      ],
+      "icon": "assets/icons/win/icon.png",
+      "category": "Utility"
     }
   }
 }
