@@ -251,14 +251,14 @@ loop
 
     📍 Click Properties.
 
-    ![Screenshot 3](https://cdn.discordapp.com/attachments/628195877189844996/994665015829344388/unknown.png)
+    ![Screenshot111](https://cdn.discordapp.com/attachments/628195877189844996/994665015829344388/unknown.png)
 
     📍 Click Permissions
 
-    ![Screenshot 3](https://cdn.discordapp.com/attachments/628195877189844996/994665646795280494/unknown.png)
+    ![Screenshot222](https://cdn.discordapp.com/attachments/628195877189844996/994665646795280494/unknown.png)
 
     📍 And enable "Allow ecexuting file as program"
 
-    ![Screenshot 3](https://cdn.discordapp.com/attachments/628195877189844996/994666628627308574/unknown.png)
+    ![Screenshot333](https://cdn.discordapp.com/attachments/628195877189844996/994666628627308574/unknown.png)
 
     📍 Then you can run the app by double clicking on it.
