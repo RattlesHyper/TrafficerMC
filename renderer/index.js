@@ -83,7 +83,7 @@ function opendiscord() {
 }
 
 function openyt() {
-  shell.openExternal('https://www.youtube.com/RattlesHyper/')
+  shell.openExternal('https://www.youtube.com/channel/UCrOD2iq1muNhIcRTQX0Xh6A')
 }
 
 function opengithub() {
