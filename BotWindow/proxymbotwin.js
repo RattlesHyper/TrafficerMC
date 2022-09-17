@@ -1,9 +1,13 @@
 const { ipcRenderer } = require('electron');
 const mineflayer = require('mineflayer');
+const socks = require('socks').SocksClient
+const ProxyAgent = require('proxy-agent')
 const fs = require('fs');
 const { timer, sendlog, startscript, antiafk, clearchat, startaccountfile, startmultibot, showAaccList, salt, execmd, store } = require('../assets/class/common/cfuns');
 var script = store.get('script');
 var accounts = store.get('accounts');
+var proxies = store.get('proxies');
+const proxyFile = fs.readFileSync(proxies.path).toString().split(/\r?\n/)
 let joindata = "";
 let botlist = [];
 execmd.setMaxListeners(0)
@@ -17,7 +21,33 @@ ipcRenderer.on('startbotmulti', (e, data) => {
 });
 
 function newBot(options) {
+  const rnd = Math.floor(Math.random() * proxyFile.length)
+  const proxyHost = proxyFile[rnd].split(':')[0]
+  const proxyPort = proxyFile[rnd].split(':')[1]
+
     const bot = mineflayer.createBot({
+       connect: client => {
+        socks.createConnection({
+          proxy: {
+            host: proxyHost,
+            port: parseInt(proxyPort),
+            type: options.proxyType
+          },
+          command: 'connect',
+          destination: {
+            host: options.host,
+            port: options.port
+          }
+        }, (err, info) => {
+          if (err) {
+          sendlog(`[ProxyError] ${proxyHost}:${proxyPort} [${options.username}] ${err}`, "red")
+            return;
+          }
+          client.setSocket(info.socket);
+          client.emit('connect')
+        })
+      },
+      agent: new ProxyAgent({ protocol: `socks5`, host: proxyHost, port: proxyPort }),
       username: options.username,
       password: options.password,
       auth: options.auth,

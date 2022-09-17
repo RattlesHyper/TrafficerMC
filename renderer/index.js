@@ -5,6 +5,7 @@ const store = new Store()
 const userData = store.get('data')
 const userScript = store.get('script')
 const userAccount = store.get('accounts')
+const userProxies = store.get('proxies')
 // main connect button
 document.getElementById('connect').addEventListener('click', () => {
   const data = {
@@ -12,17 +13,13 @@ document.getElementById('connect').addEventListener('click', () => {
     port: document.getElementById('port').value,
     username: document.getElementById('username').value,
     version: document.getElementById('version').value,
-    password: document.getElementById('passwd').value,
     auth: document.getElementById('authtype').value,
     count: document.getElementById('countbot').value,
     delay: document.getElementById('joindelay').value,
-    loginMsg: document.getElementById('loginMsg').value
+    loginMsg: document.getElementById('loginMsg').value,
+    proxyType: document.getElementById('proxytype').value
   }
-  if (!data.count) {
-    ipcRenderer.send('connect', data)
-  } else {
-    ipcRenderer.send('connectmulti', data)
-  }
+  ipcRenderer.send('connect', data)
   store.set('data', data)
 });
 //script select button
@@ -41,11 +38,20 @@ document.getElementById('accfileselectbtn').addEventListener('click', () => {
     ipcRenderer.send('openaccfile')
   }
 });
+//proxy select button
+document.getElementById('prxfileselectbtn').addEventListener('click', () => {
+  if (document.getElementById('prxfileselectbtn').innerHTML === "Clear") {
+    clearProxy()
+  } else {
+    ipcRenderer.send('openprxfile')
+  }
+});
 //version info & more
 ipcRenderer.on('verinfo', () => {
   setData()
   if(userScript) {setScript()}
   if(userAccount) {setAccount()}
+  if(userProxies) {setProxy()}
   setTimeout(() => {
     clearinfo()
   }, 15 * 1000);
@@ -64,6 +70,8 @@ ipcRenderer.on('script', (script, scriptpath) => {
   store.set('script', scr)
   setScript(scriptpath)
 });
+
+// account file store
 ipcRenderer.on('account', (accounts, accpath) => {
   const acc = {
     accounts: accounts,
@@ -71,6 +79,16 @@ ipcRenderer.on('account', (accounts, accpath) => {
   }
   store.set('accounts', acc)
   setAccount(accpath)
+});
+
+// proxy file store
+ipcRenderer.on('proxies', (proxies, prxpath) => {
+  const prx = {
+    proxies: proxies,
+    path: prxpath
+  }
+  store.set('proxies', prx)
+  setProxy(prxpath)
 });
 
 // cleat version info
@@ -95,7 +113,6 @@ function setData() {
   document.getElementById('port').value = userData.port
   document.getElementById('username').value = userData.username
   document.getElementById('version').value = userData.version
-  document.getElementById('passwd').value = userData.password
   document.getElementById('authtype').value = userData.auth
   document.getElementById('countbot').value = userData.count
   document.getElementById('joindelay').value = userData.delay
@@ -115,6 +132,13 @@ function setAccount(path) {
   document.getElementById("accfileselectbtn").className = "btn btn-sm btn-outline"
   document.getElementById('accfilestate').className = "m-1 text"
 }
+//restore user accounts
+function setProxy(path) {
+  document.getElementById('prxfileselectbtn').innerHTML = "Clear"
+  document.getElementById('prxfilestate').innerHTML = `Proxies: ${path ?? userProxies.path}`
+  document.getElementById("prxfileselectbtn").className = "btn btn-sm btn-outline"
+  document.getElementById('prxfilestate').className = "m-1 text"
+}
 //clear user script
 function clearScript() {
   store.delete('script')
@@ -123,10 +147,19 @@ function clearScript() {
   document.getElementById("fileselectbtn").className = "btn btn-sm btn-error btn-outline"
   document.getElementById('filestate').className = "m-1 text-error"
 }
+//clear selected account file
 function clearAccount() {
   store.delete('accounts')
-  document.getElementById('accfilestate').innerHTML = "Accounts: No account file selected"
+  document.getElementById('accfilestate').innerHTML = "Accounts: No file selected"
   document.getElementById('accfileselectbtn').innerHTML = "Select"
   document.getElementById("accfileselectbtn").className = "btn btn-sm btn-error btn-outline"
   document.getElementById('accfilestate').className = "m-1 text-error"
+}
+//clear selected proxy file
+function clearProxy() {
+  store.delete('proxies')
+  document.getElementById('prxfilestate').innerHTML = "Proxies: No file selected (proxy:port)"
+  document.getElementById('prxfileselectbtn').innerHTML = "Select"
+  document.getElementById("prxfileselectbtn").className = "btn btn-sm btn-error btn-outline"
+  document.getElementById('prxfilestate').className = "m-1 text-error"
 }

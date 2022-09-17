@@ -16,7 +16,9 @@
   "dependencies": {
     "electron-store": "^8.0.1",
     "mineflayer": "^4.1.0",
-    "node-fetch": "2.6.7"
+    "node-fetch": "2.6.7",
+    "proxy-agent": "^5.0.0",
+    "socks": "^2.7.0"
   },
   "devDependencies": {
     "electron": "^18.2.2",

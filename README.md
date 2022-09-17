@@ -9,15 +9,18 @@
 
 # 📦 Features
 - Anti-AFK
-- Inventory/Chest clicker
+- KillAura
+- Look
+- Walk
+- Inventory/Chest Clicker
 - Chat
 - Chat Spammer
 - Anti-Anti-Spam (adds random text to bypass anti-spam)
-- Hotbar item activator
+- Hotbar Item Activator
 - Auto Reconnect
-- Health and Food
-- Window state (open or closed)
-- MultiMode (with account file or bot set count for cracked)
+- Health & Food
+- Window state (opened or closed)
+- MultiMode (with account file or bot set count)
 - [Scripting](#scripting)
 - [Account File](#accountfile)
 - [Linux Support](#linux)
@@ -64,7 +67,7 @@ loop
     - [Chat](#chat)
     - [Activate](#activate)
     - [setHotbar](#sethotbar)
-    - [LclickWindow / RclickWindow](#lclickwindow)
+    - [LclickWindow / RclickWindow](#clickwindow)
     - [closeWindow](#closewindow)
     - [drop](#drop)
     - [dropAll](#dropall)
@@ -112,12 +115,12 @@ loop
     sethotbar 3
     ```
 
-    ### LclickWindow
+    ### clickWindow
     Left and Right click on window item.
 
-    ` LclickWindow <Slot> ` Right click.
+    ` LclickWindow <Slot> ` Left click.
     
-    ` RclickWindow <Slot> ` Left click.
+    ` RclickWindow <Slot> ` Right click.
 
     💡 Example:
 

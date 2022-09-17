@@ -4,18 +4,24 @@
     <title id="hitit">Bot Control Panel</title>
     <link href="../assets/CSS/style.css" rel="stylesheet">
   </head>
-  <script src="./botwin.js"></script>
+  <script src="./proxymbotwin.js"></script>
   <body>
     <div class="flex flex-col m-5">
 
       <div class="navbar bg-base-200">
         <div class="flex-1">
-          <a class="btn btn-ghost normal-case text-xl">TrafficerMC</a>
+          <a class="btn btn-ghost normal-case text-xl">TrafficerMC Plus</a>
           <span class="mx-2">Game State:</span>
-          <span class="text-warning" id="h2tit">Connecting...</span>
+          <span class="text-warning" id="h2tit"></span>
+          <span class="mx-2">Bot Count:</span>
+          <div class="" style="position: sticky;">
+            <button onclick="showAaccList()" class="select select-bordered select-sm text-warning" id="botCount">0</button>
+            <div id="divBotCount" class="dropdown-content" style="display: none;" >
+              <center><a style="font-size: 11px;" >Click on name to disconnect</a></center>
+              <ul id="joinedAccList"></ul>
+            </div>
+          </div>
           <div class="mx-4">
-            <div class="badge badge-error badge-outline" id="healthhp">? ❤</div>
-            <div class="badge badge-warning badge-outline" id="foodhp">? 🍗</div>
           </div>
         </div>
       </div>
@@ -74,7 +80,6 @@
             <div class="form-control mx-1">
               <label class="label">
                 <span class="label-text">Inventory Slot</span>
-                <span class="label-text" id="invitm">(Window State)</span>
               </label>
               <div class="input-group">
                 <input class="input input-sm input-bordered w-16" placeholder="1" type="number" id="inventoryslotbox">
@@ -109,8 +114,7 @@
               </label>
             </div>
           </div>
-
-          <div class="flex">
+                    <div class="flex">
             <div class="form-control">
               <label class="label cursor-pointer">
                 <span class="label-text">Attack Delay</span>

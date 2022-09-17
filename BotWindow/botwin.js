@@ -1,9 +1,10 @@
 const { ipcRenderer } = require('electron');
 const mineflayer = require('mineflayer');
 const fs = require('fs');
-const { timer, sendlog, startscript, antiafk, clearchat, btnDc, btnRc, salt, execmd, store } = require('../assets/class/common/cfuns');
+const { timer, sendlog, startscript, antiafk, clearchat, btnDc, btnRc, salt, togglAllOff, execmd, store } = require('../assets/class/common/cfuns');
 var script = store.get('script');
 let joindata = "";
+execmd.setMaxListeners(0)
 ipcRenderer.on('startbot', (e, data) => {
   joindata = data
   newBot(joindata)
@@ -12,12 +13,18 @@ ipcRenderer.on('startbot', (e, data) => {
 function newBot(data) {
   const bot = mineflayer.createBot({
     username: data.username,
-    password: data.password,
     auth: data.auth,
     host: data.host,
     port: data.port,
-    version: data.version
+    version: data.version,
+    onMsaCode: function (data) {
+      sendlog("First time signing in. Please authenticate now: To sign in, use a web browser to open the page https://www.microsoft.com/link and enter the code: "+ data.user_code +" to authenticate.", "#34abeb")
+    }
   });
+  // error log
+  bot.on('error', (err) => {
+    sendlog(`[error] ${err}`, "red")
+  })
   // load plugins
   bot.loadPlugin(antiafk);
   // health & food update
@@ -29,16 +36,16 @@ function newBot(data) {
   bot.once('login', () => {
     document.getElementById('h2tit').innerHTML = 'Logged in'
     document.getElementById('hitit').innerHTML = `Bot Control Panel (${bot.username})`
-    if (data.loginMsg) {
-      bot.chat(data.loginMsg);
-      sendlog(`[logs] Join Message sent.`, "#34abeb")
-    }
   });
   //login event
   bot.once('spawn', () => {
     if (script) {
       startscript(script);
       sendlog("[logs] Script started.", "#03fcd7")
+    }
+    if (data.loginMsg) {
+      bot.chat(data.loginMsg);
+      sendlog(`[logs] Join Message sent.`, "#34abeb")
     }
   })
   bot.on('spawn', () => {
@@ -148,7 +155,7 @@ function newBot(data) {
       sendlog("[logs] Attempting to Reconnect.", "pink")
       newBot(data)
     };
-    document.getElementById("spambtn").checked = false;
+    togglAllOff()
   });
   //chat print
   bot.on('message', (m) => {
@@ -180,11 +187,56 @@ function newBot(data) {
   document.getElementById('togglewalk').addEventListener('change', () => {
     if (document.getElementById("togglewalk").checked == true) {
       bot.setControlState('forward', true)
+      bot.setControlState('sprint', true)
     }
     if (document.getElementById("togglewalk").checked == false) {
       bot.setControlState('forward', false)
+      bot.setControlState('sprint', false)
     }
   });
+      //look
+      document.getElementById('lookLock').addEventListener('change', () => {
+        var lookBtn = document.getElementById("lookLock");
+        var look = setInterval(() => {
+            if (lookBtn.checked == false) clearInterval(look);
+            const entity = bot.nearestEntity(e => e.type === 'player')
+            bot.lookAt(entity.position.offset(0, entity.height, 0), true)
+          }, 0)
+    })
+    //killaura toggle
+    document.getElementById('kaPlayer').addEventListener('change', () => {
+      var kaBtn = document.getElementById("kaPlayer");
+      var kaPlayer = setInterval(() => {
+          if (kaBtn.checked == false) clearInterval(kaPlayer);
+          const entity = bot.nearestEntity(e => e.type === 'player')
+          if (entity && entity.position.distanceTo(bot.entity.position) < document.getElementById('atkrng').value) {
+              if (document.getElementById('kaLook').checked) bot.lookAt(entity.position.offset(0, entity.height, 0), true)
+              bot.attack(entity)
+          }
+      }, document.getElementById('atkdel').value);
+  })
+  document.getElementById('kaMobs').addEventListener('change', () => {
+      var kaBtn = document.getElementById("kaMobs");
+      var kaMobs = setInterval(() => {
+          if (kaBtn.checked == false) clearInterval(kaMobs);
+          const entity = bot.nearestEntity(e => e.kind === 'Hostile mobs')
+          if (entity && entity.position.distanceTo(bot.entity.position) < document.getElementById('atkrng').value) {
+              if (document.getElementById('kaLook').checked) bot.lookAt(entity.position.offset(0, entity.height, 0), true)
+              bot.attack(entity)
+          }
+      }, document.getElementById('atkdel').value);
+  })
+  document.getElementById('kaAnimal').addEventListener('change', () => {
+      var kaBtn = document.getElementById("kaAnimal");
+      var kaAnimal = setInterval(() => {
+          if (kaBtn.checked == false) clearInterval(kaAnimal);
+          const entity = bot.nearestEntity(e => e.kind === 'Passive mobs')
+          if (entity && entity.position.distanceTo(bot.entity.position) < document.getElementById('atkrng').value) {
+              if (document.getElementById('kaLook').checked) bot.lookAt(entity.position.offset(0, entity.height, 0), true)
+              bot.attack(entity)
+          }
+      }, document.getElementById('atkdel').value);
+  })
     //script listeners
     execmd.on('chat', (o) => {bot.chat(o)});
     execmd.on('activate', () => {bot.activateItem()});

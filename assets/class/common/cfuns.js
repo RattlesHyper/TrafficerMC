@@ -12,7 +12,7 @@ function timer(ms) {
   function sendlog(textToLog, color) {
 	const chatboxid = document.getElementById('chatmsgbox')
 	ele = document.createElement("li");
-	ele.style.color = color
+	if(color) ele.style.color = color
 	ele.appendChild(document.createTextNode(textToLog))
 	chatboxid.appendChild(ele)
 	chatboxid.scrollTop = document.getElementById('chatmsgbox').scrollHeight
@@ -106,5 +106,12 @@ function salt(length) {
 	}
 	return result;
   }
+// disable toggled things
+function togglAllOff() {
+    const checkboxIds = ['spambtn', 'kaPlayer', 'kaMobs', 'kaAnimal']
+    checkboxIds.forEach(id => {
+      document.getElementById(id).checked = false;
+    });
+  }
 
-module.exports = { timer, sendlog, startscript, antiafk, clearchat, btnDc, btnRc, startaccountfile, startmultibot, showAaccList, salt, execmd, store }
+module.exports = { timer, sendlog, startscript, antiafk, clearchat, btnDc, btnRc, startaccountfile, startmultibot, showAaccList, salt, togglAllOff, execmd, store }
