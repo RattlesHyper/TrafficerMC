@@ -94,55 +94,70 @@
 
           <div class="flex">
             <div class="form-control">
-              <label class="label cursor-pointer">
-                <span class="label-text">Anti AFK</span>
+              <label class="label">
+                <span class="label-text m-1">Anti AFK</span>
                 <input type="checkbox" class="toggle mx-1" id="afkToggle" />
               </label>
             </div>
             <div class="form-control">
-              <label class="label cursor-pointer">
-                <span class="label-text">Auto Reconnect</span>
+              <label class="label">
+                <span class="label-text m-1">Auto Reconnect</span>
                 <input type="checkbox" class="toggle mx-1" id="btnrecon" />
               </label>
             </div>
           </div>
 
-          <div class="flex">
+          <div class="flex btn btn-disabled">
             <div class="form-control">
-              <label class="label cursor-pointer">
-                KillAura ⚔️
+              <label class="label text-xl">
+                KillAura
               </label>
             </div>
           </div>
-                    <div class="flex">
+
+          <div class="flex label">
             <div class="form-control">
-              <label class="label cursor-pointer">
-                <span class="label-text">Attack Delay</span>
-                <input class="input input-sm input-bordered w-16" placeholder="ms" type="number" min="0" id="atkdel">
-                <span class="label-text p-1">Target Range</span>
+              <label class="label">
+                <span class="label-text mx-2">Attack Delay</span>
+                <input class="input input-sm input-bordered" style="width: 5pc;" placeholder="ms" type="number" min="0" id="atkdel">
+              </label>
+            </div>
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text mx-2">Range</span>
                 <input class="input input-sm input-bordered w-16" placeholder="1" type="number" min="0" id="atkrng">
-                <span class="label-text">LockOn</span>
-                <input type="checkbox" class="toggle mx-1" id="lookLock" />
+              </label>
+            </div>
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text mx-2">LockOn</span>
+                <input type="checkbox" class="toggle" id="lookLock" />
               </label>
             </div>
           </div>
 
           <div class="flex">
             <div class="form-control">
-              <label class="label cursor-pointer">
-                <span class="label-text p-1">Look</span>
+              <label class="label">
+                <span class="label-text">Look</span>
                 <input type="checkbox" class="toggle mx-1" id="kaLook" />
+              </label>
+            </div>
+            <div class="form-control">
+              <label class="label">
                 <span class="label-text">Player</span>
                 <input type="checkbox" class="toggle mx-1" id="kaPlayer" />
+              </label>
+            </div>
+            <div class="form-control">
+              <label class="label">
                 <span class="label-text">Mobs</span>
                 <input type="checkbox" class="toggle mx-1" id="kaMobs" />
-                <span class="label-text">Animal</span>
-                <input type="checkbox" class="toggle mx-1" id="kaAnimal" />
               </label>
             </div>
           </div>
 
-          <div class="btn-group p-4">
+          <div class="btn-group p-4 m-5 ">
             <button class="btn btn-success btn-outline w-1/3" onclick="btnRc()">Reconnect</button>
             <button class="btn btn-error btn-outline w-1/3" onclick="btnDc()">Disconnect</button>
             <button class="btn btn-outline w-1/3" onclick="clearchat()">Clear Chat</button>

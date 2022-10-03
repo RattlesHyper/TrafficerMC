@@ -37,6 +37,11 @@ ploxxy#6090 */
 */
 
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 ::-webkit-scrollbar {
   background: #0E1525;
   width: 5px;

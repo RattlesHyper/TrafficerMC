@@ -3,8 +3,8 @@ const { BrowserWindow } = require('electron')
 class Window extends BrowserWindow {
   constructor ({ file, h, w }) {
     super({
-      height: h ?? 680,
-      width: w ?? 960,
+      height: h ?? 661,
+      width: w ?? 965,
       resizable: false,
       autoHideMenuBar: true,
       show: false,

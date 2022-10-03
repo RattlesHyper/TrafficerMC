@@ -117,6 +117,7 @@ function setData() {
   document.getElementById('countbot').value = userData.count
   document.getElementById('joindelay').value = userData.delay
   document.getElementById('loginMsg').value = userData.loginMsg
+  document.getElementById('proxytype').value = userData.proxyType
 }
 //restore user script
 function setScript(path) {

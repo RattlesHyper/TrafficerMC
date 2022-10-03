@@ -17,6 +17,7 @@ ipcRenderer.on('startbotmulti', (e, data) => {
 });
 
 function newBot(options) {
+
     const bot = mineflayer.createBot({
       username: options.username,
       password: options.password,
@@ -208,29 +209,16 @@ function newBot(options) {
       }, document.getElementById('atkdel').value);
   })
   document.getElementById('kaMobs').addEventListener('change', () => {
-      var kaBtn = document.getElementById("kaMobs");
-      if (kaBtn.checked == false) return;
-      var kaMobs = setInterval(() => {
-          if (kaBtn.checked == false) clearInterval(kaMobs);
-          const entity = bot.nearestEntity(e => e.kind === 'Hostile mobs')
-          if (entity && entity.position.distanceTo(bot.entity.position) < document.getElementById('atkrng').value) {
-              if (document.getElementById('kaLook').checked) bot.lookAt(entity.position.offset(0, entity.height, 0), true)
-              bot.attack(entity)
-          }
-      }, document.getElementById('atkdel').value);
-  })
-  document.getElementById('kaAnimal').addEventListener('change', () => {
-      var kaBtn = document.getElementById("kaAnimal");
-      if (kaBtn.checked == false) return;
-      var kaAnimal = setInterval(() => {
-          if (kaBtn.checked == false) clearInterval(kaAnimal);
-          const entity = bot.nearestEntity(e => e.kind === 'Passive mobs')
-          if (entity && entity.position.distanceTo(bot.entity.position) < document.getElementById('atkrng').value) {
-              if (document.getElementById('kaLook').checked) bot.lookAt(entity.position.offset(0, entity.height, 0), true)
-              bot.attack(entity)
-          }
-      }, document.getElementById('atkdel').value);
-  })
+    var kaBtn = document.getElementById("kaMobs");
+    var kaMobs = setInterval(() => {
+        if (kaBtn.checked == false) clearInterval(kaMobs);
+        const entity = bot.nearestEntity(e => e.type === 'mob')
+        if (entity && entity.position.distanceTo(bot.entity.position) < document.getElementById('atkrng').value) {
+            if (document.getElementById('kaLook').checked) bot.lookAt(entity.position.offset(0, entity.height, 0), true)
+            bot.attack(entity)
+        }
+    }, document.getElementById('atkdel').value);
+})
     //script listeners
     execmd.on('chat', (o) => {bot.chat(o)});
     execmd.on('activate', () => {bot.activateItem()});

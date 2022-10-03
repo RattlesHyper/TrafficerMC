@@ -10,10 +10,12 @@ var proxies = store.get('proxies');
 const proxyFile = fs.readFileSync(proxies.path).toString().split(/\r?\n/)
 let joindata = "";
 let botlist = [];
+let proxyType = 0;
 execmd.setMaxListeners(0)
 
 ipcRenderer.on('startbotmulti', (e, data) => {
     joindata = data
+    proxyType = data.proxyType
     if(accounts) {startaccountfile()} else {startmultibot()}
     setInterval(() => {
         document.getElementById('botCount').innerHTML = document.getElementById('joinedAccList').getElementsByTagName("li").length
@@ -26,28 +28,28 @@ function newBot(options) {
   const proxyPort = proxyFile[rnd].split(':')[1]
 
     const bot = mineflayer.createBot({
-       connect: client => {
+      connect: client => {
         socks.createConnection({
           proxy: {
             host: proxyHost,
             port: parseInt(proxyPort),
-            type: options.proxyType
+            type: parseInt(proxyType)
           },
           command: 'connect',
           destination: {
             host: options.host,
-            port: options.port
+            port: parseInt(options.port ? options.port : 25565)
           }
         }, (err, info) => {
           if (err) {
-          sendlog(`[ProxyError] ${proxyHost}:${proxyPort} [${options.username}] ${err}`, "red")
+            sendlog(`[ProxyError]-> [${options.username}]-> [${proxyHost}:${proxyPort}]-> ${err}`, "red")
             return;
           }
           client.setSocket(info.socket);
           client.emit('connect')
         })
       },
-      agent: new ProxyAgent({ protocol: `socks5`, host: proxyHost, port: proxyPort }),
+      agent: new ProxyAgent({ protocol: `socks${proxyType}`, host: proxyHost, port: proxyPort }),
       username: options.username,
       password: options.password,
       auth: options.auth,
@@ -238,29 +240,16 @@ function newBot(options) {
       }, document.getElementById('atkdel').value);
   })
   document.getElementById('kaMobs').addEventListener('change', () => {
-      var kaBtn = document.getElementById("kaMobs");
-      if (kaBtn.checked == false) return;
-      var kaMobs = setInterval(() => {
-          if (kaBtn.checked == false) clearInterval(kaMobs);
-          const entity = bot.nearestEntity(e => e.kind === 'Hostile mobs')
-          if (entity && entity.position.distanceTo(bot.entity.position) < document.getElementById('atkrng').value) {
-              if (document.getElementById('kaLook').checked) bot.lookAt(entity.position.offset(0, entity.height, 0), true)
-              bot.attack(entity)
-          }
-      }, document.getElementById('atkdel').value);
-  })
-  document.getElementById('kaAnimal').addEventListener('change', () => {
-      var kaBtn = document.getElementById("kaAnimal");
-      if (kaBtn.checked == false) return;
-      var kaAnimal = setInterval(() => {
-          if (kaBtn.checked == false) clearInterval(kaAnimal);
-          const entity = bot.nearestEntity(e => e.kind === 'Passive mobs')
-          if (entity && entity.position.distanceTo(bot.entity.position) < document.getElementById('atkrng').value) {
-              if (document.getElementById('kaLook').checked) bot.lookAt(entity.position.offset(0, entity.height, 0), true)
-              bot.attack(entity)
-          }
-      }, document.getElementById('atkdel').value);
-  })
+    var kaBtn = document.getElementById("kaMobs");
+    var kaMobs = setInterval(() => {
+        if (kaBtn.checked == false) clearInterval(kaMobs);
+        const entity = bot.nearestEntity(e => e.type === 'mob')
+        if (entity && entity.position.distanceTo(bot.entity.position) < document.getElementById('atkrng').value) {
+            if (document.getElementById('kaLook').checked) bot.lookAt(entity.position.offset(0, entity.height, 0), true)
+            bot.attack(entity)
+        }
+    }, document.getElementById('atkdel').value);
+})
     //script listeners
     execmd.on('chat', (o) => {bot.chat(o)});
     execmd.on('activate', () => {bot.activateItem()});

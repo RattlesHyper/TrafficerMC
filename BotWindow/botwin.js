@@ -11,8 +11,10 @@ ipcRenderer.on('startbot', (e, data) => {
 });
 
 function newBot(data) {
+  let unm = "";
+  unm = data.username.replace("(SALT)", salt(4)).replace("(SALT)", salt(4)).replace("(SALT)", salt(4)).replace("(SALT)", salt(4))
   const bot = mineflayer.createBot({
-    username: data.username,
+    username: unm,
     auth: data.auth,
     host: data.host,
     port: data.port,
@@ -219,18 +221,7 @@ function newBot(data) {
       var kaBtn = document.getElementById("kaMobs");
       var kaMobs = setInterval(() => {
           if (kaBtn.checked == false) clearInterval(kaMobs);
-          const entity = bot.nearestEntity(e => e.kind === 'Hostile mobs')
-          if (entity && entity.position.distanceTo(bot.entity.position) < document.getElementById('atkrng').value) {
-              if (document.getElementById('kaLook').checked) bot.lookAt(entity.position.offset(0, entity.height, 0), true)
-              bot.attack(entity)
-          }
-      }, document.getElementById('atkdel').value);
-  })
-  document.getElementById('kaAnimal').addEventListener('change', () => {
-      var kaBtn = document.getElementById("kaAnimal");
-      var kaAnimal = setInterval(() => {
-          if (kaBtn.checked == false) clearInterval(kaAnimal);
-          const entity = bot.nearestEntity(e => e.kind === 'Passive mobs')
+          const entity = bot.nearestEntity(e => e.type === 'mob')
           if (entity && entity.position.distanceTo(bot.entity.position) < document.getElementById('atkrng').value) {
               if (document.getElementById('kaLook').checked) bot.lookAt(entity.position.offset(0, entity.height, 0), true)
               bot.attack(entity)

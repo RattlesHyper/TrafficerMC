@@ -3,7 +3,7 @@ const { store } = require('./assets/class/common/cfuns')
 const path = require('path')
 const fs = require('fs')
 const Window = require('./assets/class/window/Window');
-const userProxies = store.get('proxies')
+
 // app ready and quit
 app.whenReady().then(main);
 app.on('window-all-closed', function() {
@@ -15,7 +15,7 @@ ipcMain.on('connect', (e, data) => {
   if (!data.count || data.count <= 1) {
     openWinSingle(data)
   } else {
-    if(userProxies) {
+    if(userProxies = store.get('proxies')) {
       openWindowMultiPrx(data)
     } else {
       openWindowMulti(data)

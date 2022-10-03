@@ -10,21 +10,20 @@
 # 📦 Features
 - Anti-AFK
 - KillAura
-- Look
-- Walk
 - Inventory/Chest Clicker
 - Chat
 - Chat Spammer
 - Anti-Anti-Spam (adds random text to bypass anti-spam)
 - Hotbar Item Activator
 - Auto Reconnect
-- Health & Food
 - Window state (opened or closed)
 - MultiMode (with account file or bot set count)
 - [Scripting](#scripting)
 - [Account File](#accountfile)
 - [Linux Support](#linux)
-- Minecraft 1.8 - 1.18.2 support
+- [Proxy Support](#proxy) SOCKS4/SOCKS5
+- [Name Salt](#namesalt)
+- Minecraft 1.8 - 1.18.2 Support
 - (ETC)
 
 <details open style="font-size: 16px">
@@ -254,14 +253,41 @@ loop
 
     📍 Click Properties.
 
-    ![](https://cdn.discordapp.com/attachments/628195877189844996/994665015829344388/unknown.png)
-
     📍 Click Permissions
-
-    ![](https://cdn.discordapp.com/attachments/628195877189844996/994665646795280494/unknown.png)
 
     📍 And enable "Allow ecexuting file as program"
 
-    ![](https://cdn.discordapp.com/attachments/628195877189844996/994666628627308574/unknown.png)
-
     📍 Then you can run the app by double clicking on it.
+
+
+    # proxy
+
+    Proxy file must be a ` .txt ` file. And it's used in Random order
+
+    💡 Proxy Supports SOCKS4 & SOCKS5
+
+    ⚠️ You must chose SOCKS protocol from Dashboard
+    
+    💡 Proxy File format Example
+
+    ```
+    Proxy:Port
+    Proxy:Port
+    Proxy:Port
+    ```
+
+    # namesalt
+
+    Name Salt Randomizes the name automatically!
+
+    You can put ` (SALT) ` in the name box to get 4 random letters.
+
+    💡 Example
+
+    ```
+    (SALT)_NAME = UaiO_NAME
+    (SALT)_NAME_(SALT) = kwaW_NAME_aWad
+    (SALT)(SALT)(SALT) = UaiOaFHWHbJx
+    ```
+
+    

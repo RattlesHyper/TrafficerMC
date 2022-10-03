@@ -75,16 +75,32 @@ function timer(ms) {
   }
   //multi bot
   async function startmultibot() {
-	for (var i = 0; i < (joindata.count); i++) {
-	  var options = {
-		username: `${joindata.username}_${i}`,
-		host: joindata.host,
-		port: joindata.port,
-		version: joindata.version,
-		loginMsg: joindata.loginMsg
-	  }
-	  newBot(options)
-	  await timer(joindata.delay)
+	if(joindata.username.includes("(SALT)")) {
+		for (var i = 0; i < (joindata.count); i++) {
+			let unm = "";
+			unm = joindata.username.replace("(SALT)", salt(4)).replace("(SALT)", salt(4)).replace("(SALT)", salt(4)).replace("(SALT)", salt(4))
+			var options = {
+			  username: unm,
+			  host: joindata.host,
+			  port: joindata.port,
+			  version: joindata.version,
+			  loginMsg: joindata.loginMsg
+			}
+			newBot(options)
+			await timer(joindata.delay)
+		  }
+	} else {
+		for (var i = 0; i < (joindata.count); i++) {
+			var options = {
+			  username: `${joindata.username}_${i}`,
+			  host: joindata.host,
+			  port: joindata.port,
+			  version: joindata.version,
+			  loginMsg: joindata.loginMsg
+			}
+			newBot(options)
+			await timer(joindata.delay)
+		  }
 	}
   }
   

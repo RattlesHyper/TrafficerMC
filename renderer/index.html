@@ -37,9 +37,9 @@
                      <input type="text" placeholder="Username / example@example.com" id="username" class="input input-bordered input-sm" />
                   </div>
                </div>
-               <select id="authtype" class="select select-bordered select-sm mt-auto m-1">
-                  <option value="">Cracked</option>
-                  <option value="microsoft">Microsoft</option>
+               <select id="authtype" class="select select-bordered select-sm mt-auto m-1 btn">
+                  <option class="btn" value="">Cracked</option>
+                  <option class="btn" value="microsoft">Microsoft</option>
                 </select>
             </div>
 
@@ -50,9 +50,9 @@
 
             <div class="flex m-1 justify-between">
                <p class="m-1 text-error" id="prxfilestate">Proxies: No file selected (proxy:port)</p>
-               <select id="proxytype" class="select select-bordered select-sm">
-                  <option value="4">socks4</option>
-                  <option value="5">socks5</option>
+               <select id="proxytype" class="select select-bordered select-sm btn">
+                  <option value="4" class="btn">SOCKS4</option>
+                  <option value="5" class="btn">SOCKS5</option>
                 </select>
                <button class="btn btn-sm btn-error btn-outline" id="prxfileselectbtn">Select</button>
             </div>
@@ -92,58 +92,58 @@
             </div>
 
             <div class="flex m-3 justify-center">
-               <button id="connect" class="btn btn-success btn-outline mx-2">Connect</button>
-               <select id="version" class="select select-bordered mx-2">
-                  <option value="">Version Auto</option>
-                  <option value="1.18.2">1.18.2</option>
-                  <option value="1.18.1">1.18.1</option>
-                  <option value="1.18">1.18</option>
-                  <option value="1.17.1">1.17.1</option>
-                  <option value="1.17">1.17</option>
-                  <option value="1.16.5">1.16.5</option>
-                  <option value="1.16.4">1.16.4</option>
-                  <option value="1.16.3">1.16.3</option>
-                  <option value="1.16.2">1.16.2</option>
-                  <option value="1.16.1">1.16.1</option>
-                  <option value="1.16">1.16</option>
-                  <option value="1.15.2">1.15.2</option>
-                  <option value="1.15.1">1.15.1</option>
-                  <option value="1.15">1.15</option>
-                  <option value="1.14.4">1.14.4</option>
-                  <option value="1.14.3">1.14.3</option>
-                  <option value="1.14.1">1.14.1</option>
-                  <option value="1.14">1.14</option>
-                  <option value="1.13.2">1.13.2</option>
-                  <option value="1.13.1">1.13.1</option>
-                  <option value="1.13">1.13</option>
-                  <option value="1.12.2">1.12.2</option>
-                  <option value="1.12.1">1.12.1</option>
-                  <option value="1.12">1.12</option>
-                  <option value="1.11.2">1.11.2</option>
-                  <option value="1.11">1.11</option>
-                  <option value="1.10.2">1.10.2</option>
-                  <option value="1.10.1">1.10.1</option>
-                  <option value="1.10">1.10</option>
-                  <option value="1.9">1.9</option>
-                  <option value="1.8">1.8.x</option>
+               <button id="connect" class="btn btn-success btn-outline mx-2 btn-sm">Connect</button>
+               <select id="version" class="select btn-outline btn select-sm">
+                  <option class="btn" value="">Version Auto</option>
+                  <option class="btn" value="1.18.2">1.18.2</option>
+                  <option class="btn" value="1.18.1">1.18.1</option>
+                  <option class="btn" value="1.18">1.18</option>
+                  <option class="btn" value="1.17.1">1.17.1</option>
+                  <option class="btn" value="1.17">1.17</option>
+                  <option class="btn" value="1.16.5">1.16.5</option>
+                  <option class="btn" value="1.16.4">1.16.4</option>
+                  <option class="btn" value="1.16.3">1.16.3</option>
+                  <option class="btn" value="1.16.2">1.16.2</option>
+                  <option class="btn" value="1.16.1">1.16.1</option>
+                  <option class="btn" value="1.16">1.16</option>
+                  <option class="btn" value="1.15.2">1.15.2</option>
+                  <option class="btn" value="1.15.1">1.15.1</option>
+                  <option class="btn" value="1.15">1.15</option>
+                  <option class="btn" value="1.14.4">1.14.4</option>
+                  <option class="btn" value="1.14.3">1.14.3</option>
+                  <option class="btn" value="1.14.1">1.14.1</option>
+                  <option class="btn" value="1.14">1.14</option>
+                  <option class="btn" value="1.13.2">1.13.2</option>
+                  <option class="btn" value="1.13.1">1.13.1</option>
+                  <option class="btn" value="1.13">1.13</option>
+                  <option class="btn" value="1.12.2">1.12.2</option>
+                  <option class="btn" value="1.12.1">1.12.1</option>
+                  <option class="btn" value="1.12">1.12</option>
+                  <option class="btn" value="1.11.2">1.11.2</option>
+                  <option class="btn" value="1.11">1.11</option>
+                  <option class="btn" value="1.10.2">1.10.2</option>
+                  <option class="btn" value="1.10.1">1.10.1</option>
+                  <option class="btn" value="1.10">1.10</option>
+                  <option class="btn" value="1.9">1.9</option>
+                  <option class="btn" value="1.8">1.8.x</option>
                 </select>
          </div>
 
          <div style="position: absolute; bottom: 30px;">
-            <span class="label-text">Version: v1.7</span>
+            <span class="label-text">Version: v1.8</span>
          </div>
 
          <div style="position: absolute; bottom: 50px;">
-            <span class="label-text" id="updateinfo">Checking for updates...</span>
+            <span class="label-text text-error" id="updateinfo">Checking for updates...</span>
          </div>
          <div style="position: absolute; bottom: 10px;">
             <span class="label-text" id="updateinfo">Check GitHub for Documentation</span>
          </div>
 
          <div style="position: absolute; bottom: 10px; right: 5px;">
-            <button class="btn btn-sm" onclick="openyt()">YouTube</button>
-            <button class="btn btn-sm" onclick="opendiscord()">Discord</button>
-            <button class="btn btn-sm" onclick="opengithub()">GitHub</button>
+            <button class="btn btn-sm btn-outline" onclick="openyt()">YouTube</button>
+            <button class="btn btn-sm btn-outline" onclick="opendiscord()">Discord</button>
+            <button class="btn btn-sm btn-outline" onclick="opengithub()">GitHub</button>
          </div>
 
       </div>
