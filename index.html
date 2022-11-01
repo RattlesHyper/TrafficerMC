@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link rel="stylesheet" href="./assets/style/style.css">
+      <script src="./assets/js/htmlcontrol.js"></script>
+   </head>
+   <body>
+      <div class="titlebar draggable">
+         <div class=" center-elements">
+            <img class="icon-sm"src="./assets/icons/app/icon.png">
+            <label>TrafficerMC</label>
+            <label id="topBarVersion" class="p-1"></label>
+         </div>
+         <div class="nodrag center-elements">
+            <img id="btnMinimize" class="btn minimize" src="./assets/icons/app/minus.svg">
+            <img id="btnClose" class="btn close" src="./assets/icons/app/x.svg">
+         </div>
+      </div>
+      <div class="sidebar tablink" >
+         <div class="p-4 flex tablink tab-selected" onclick="openTab(event,'general')">
+            <img class="btn" src="./assets/icons/app/home.svg">
+            <label class="p-1">General</label>
+         </div>
+         <div class="p-4 flex tablink" onclick="openTab(event,'botting')" id="tabBtnBotting">
+            <img class="btn" src="./assets/icons/app/user.svg">
+            <label class="p-1">Botting</label>
+         </div>
+         <div class="p-4 flex tablink" onclick="openTab(event,'settings')">
+            <img class="btn" src="./assets/icons/app/settings.svg">
+            <label class="p-1">Settings</label>
+         </div>
+         <div class="p-4 flex tablink" onclick="openTab(event,'plugins')">
+            <img class="btn" src="./assets/icons/app/sliders.svg">
+            <label class="p-1">Plugins</label>
+         </div>
+         <div class="p-4 flex tablink" onclick="openTab(event,'about')">
+            <img class="btn" src="./assets/icons/app/info.svg">
+            <label class="p-1">About</label>
+         </div>
+      </div>
+      <div class="contentArea">
+         <div id="general" class="sideBtn">
+            <div class="flex p-4">
+               <span class="label">
+               <label class="label-text">Username:</label>
+               </span>
+               <input id="botUsename" class="input" type="text" placeholder="(SALT) random 4 letters">
+               <span class="label">
+               <label class="label-text">Auth type:</label>
+               </span>
+               <select id="botAuthType" class="select">
+                  <option value="">Cracked</option>
+                  <option value="microsoft">Microsoft</option>
+               </select>
+            </div>
+            <div class="flex p-4">
+               <span class="label">
+               <label class="label-text">Server address:</label>
+               </span>
+               <input id="botConnectIp" class="input" type="text" placeholder="localhost:25565">
+               <select id="botversion" class="select">
+                  <option value="">Version Auto</option>
+                  <option value="1.19">1.19</option>
+                  <option value="1.18.2">1.18.2</option>
+                  <option value="1.18.1">1.18.1</option>
+                  <option value="1.18">1.18</option>
+                  <option value="1.17.1">1.17.1</option>
+                  <option value="1.17">1.17</option>
+                  <option value="1.16.5">1.16.5</option>
+                  <option value="1.16.4">1.16.4</option>
+                  <option value="1.16.3">1.16.3</option>
+                  <option value="1.16.2">1.16.2</option>
+                  <option value="1.16.1">1.16.1</option>
+                  <option value="1.16">1.16</option>
+                  <option value="1.15.2">1.15.2</option>
+                  <option value="1.15.1">1.15.1</option>
+                  <option value="1.15">1.15</option>
+                  <option value="1.14.4">1.14.4</option>
+                  <option value="1.14.3">1.14.3</option>
+                  <option value="1.14.1">1.14.1</option>
+                  <option value="1.14">1.14</option>
+                  <option value="1.13.2">1.13.2</option>
+                  <option value="1.13.1">1.13.1</option>
+                  <option value="1.13">1.13</option>
+                  <option value="1.12.2">1.12.2</option>
+                  <option value="1.12.1">1.12.1</option>
+                  <option value="1.12">1.12</option>
+                  <option value="1.11.2">1.11.2</option>
+                  <option value="1.11">1.11</option>
+                  <option value="1.10.2">1.10.2</option>
+                  <option value="1.10.1">1.10.1</option>
+                  <option value="1.10">1.10</option>
+                  <option value="1.9">1.9</option>
+                  <option value="1.8">1.8.x</option>
+               </select>
+            </div>
+            <div class="flex p-4">
+               <span class="label">
+               <label class="label-text">Max accounts:</label>
+               </span>
+               <input id="botCount" class="input" type="number" min="1" placeholder="1">
+            </div>
+            <div class="flex p-4">
+               <span class="label">
+               <label class="label-text">Join delay:</label>
+               </span>
+               <input id="joinDelay" class="input" type="number" min="0" placeholder="1000 (ms)">
+            </div>
+            <div class="flex p-4">
+               <span class="label">
+               <label class="label-text">Join message:</label>
+               </span>
+               <input id="joinMessage" class="input" type="text" min="0" placeholder="/register">
+            </div>
+            <div class="flex flex-colum p-4">
+               <span class="">
+               <button id="btnStart" class="button" onclick="document.getElementById('tabBtnBotting').click()">Start</button>
+               </span>
+               <span class="">
+               <button id="btnStop" class="button">Stop</button>
+               </span>
+            </div>
+         </div>
+         <div id="botting" class="sideBtn" style="display:none">
+            <div class="flex">
+               <div class="pl-4">
+                  <ul id="botList" class="flex-colum" style="height: 11pc; width:15pc;"></ul>
+                  <ul class="flex-colum input-group funcBtnLink" style="height: 16pc; width:15pc">
+                     <button class="button funcBtnLink button-selected" onclick="openFuncs(event,'controls')">Controls</button>
+                     <button class="button funcBtnLink" onclick="openFuncs(event,'chat')">Chat</button>
+                     <button class="button funcBtnLink" onclick="openFuncs(event,'spam')">Spam</button>
+                     <button class="button funcBtnLink" onclick="openFuncs(event,'setHotbatSlot')">Set hotbar slot</button>
+                     <button class="button funcBtnLink" onclick="openFuncs(event,'clickWindow')">Click window</button>
+                     <button class="button funcBtnLink" onclick="openFuncs(event,'moveDirection')">Control move</button>
+                     <button class="button funcBtnLink" onclick="openFuncs(event,'look')">Look</button>
+                     <button class="button funcBtnLink" onclick="openFuncs(event,'drop')">Drop</button>
+                     <button class="button funcBtnLink" onclick="openFuncs(event,'antiafk')">Anti-AFK</button>
+                  </ul>
+               </div>
+               <div class="bottingContentArea pl-4">
+                  <hr>
+                  <div id="controls" class="functsBtn" >
+                     <div class="input-group flex-colum center-elements">
+                        <span class="label">
+                        <label class="label-text">Main controls</label>
+                        </span>
+                        <div class="input-group flex-colum">
+                           <button id="btnDisconnect" class="button">Disconnect</button>
+                           <button id="btnReconnect" class="button">Reconnect</button>
+                           <button id="btnUseHeld" class="button">Use Held</button>
+                           <button id="btnCloseWin" class="button">Close Window</button>
+                           <button id="btnStartScript" class="button">Start script</button>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="chat" class="functsBtn" style="display:none">
+                     <div class="input-group flex-colum center-elements">
+                        <span class="label">
+                        <label class="label-text">Send message</label>
+                        </span>
+                        <div class="input-group flex-colum">
+                           <input id="chatMessage" class="input" type="text" placeholder="Message">
+                           <button id="btnChatMessage" class="button mu-4">Send</button>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="spam" class="functsBtn" style="display:none">
+                     <div class="input-group center-elements flex-colum">
+                        <span class="label">
+                        <label class="label-text">Spam message</label>
+                        </span>
+                        <div class="input-group flex-colum">
+                           <input id="spamMessageBox" class="input" type="text" placeholder="Message">
+                           <input id="spamDelay" class="input" type="number" min="0" placeholder="Spam Delay 1000 (ms)">
+                        </div>
+                        <div class="flex center-elements mu-4">
+                           <button id="startSpam" class="button">Start</button>
+                           <button id="stopSpam" class="button">Stop</button>
+                        </div>
+                        <div class="flex mu-4">
+                           <label class="container">
+                           <label style="position: relative; top: -3px">Anti-spam</label>
+                           <input id="checkAntiSpam" type="checkbox">
+                           <span class="checkmark"></span>
+                           </label>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="setHotbatSlot" class="functsBtn" style="display:none">
+                     <div class="input-group flex-colum">
+                        <div class="center-elements">
+                           <span class="label">
+                           <label class="label-text">Set hotbar slot</label>
+                           </span>
+                        </div>
+                        <div class="input-group">
+                           <div class="input-group center-elements">
+                              <div class="flex">
+                                 <select id="hotbarSlot" class="input-sm">
+                                    <option class="button" value="0">Slot 1</option>
+                                    <option class="button" value="1">Slot 2</option>
+                                    <option class="button" value="2">Slot 3</option>
+                                    <option class="button" value="3">Slot 4</option>
+                                    <option class="button" value="4">Slot 5</option>
+                                    <option class="button" value="5">Slot 6</option>
+                                    <option class="button" value="6">Slot 7</option>
+                                    <option class="button" value="7">Slot 8</option>
+                                    <option class="button" value="8">Slot 9</option>
+                                 </select>
+                                 <button id="btnSetHotbar" class="button">Set</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="clickWindow" class="functsBtn" style="display:none">
+                     <div class="input-group flex-colum">
+                        <div class="center-elements">
+                           <span class="label">
+                           <label class="label-text">Click window slot</label>
+                           </span>
+                        </div>
+                        <div class="flex-colum input-group">
+                           <div class="flex">
+                              <input id="windowValue" type="number" class="input-sm" placeholder="Window slot">
+                              <select id="clickWindowLorR" class="select">
+                                 <option value="0" class="button">Left click</option>
+                                 <option value="1" class="button">Right click</option>
+                              </select>
+                           </div>
+                           <button id="btnWindowClick" class="button">Click</button>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="moveDirection" class="functsBtn" style="display:none">
+                     <div class="input-group flex-colum center-elements">
+                        <div>
+                           <span class="label">
+                           <label class="label-text">Control Move</label>
+                           </span>
+                        </div>
+                        <div class="input-group flex-colum">
+                           <select id="controlValue" class="input select">
+                              <option value="forward">Forward</option>
+                              <option value="back">Backwards</option>
+                              <option value="left">Left</option>
+                              <option value="right">Right</option>
+                              <option value="jump">Jump</option>
+                              <option value="sneak">Sneak</option>
+                           </select>
+                        </div>
+                        <div class="input-group mu-4">
+                           <button id="startControl" class="button">Start</button>
+                           <button id="stopControl" class="button">Stop</button>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="look" class="functsBtn" style="display:none">
+                     <div class="input-group flex-colum center-elements">
+                        <span class="label">
+                        <label class="label-text">Look at direction</label>
+                        </span>
+                        <div class="flex">
+                           <select id="lookValue" class="input-sm select">
+                              <option value="0">North</option>
+                              <option value="3">South</option>
+                              <option value="-1.5">East</option>
+                              <option value="1.5">West</option>
+                           </select>
+                           <button id="setLook" class="button">Set</button>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="drop" class="functsBtn" style="display:none">
+                     <div class="input-group flex-colum center-elements">
+                        <span class="label">
+                        <label class="label-text">Drop items</label>
+                        </span>
+                        <div class="input-group flex-colum ">
+                           <input id="dropValue" class="input" type="number" placeholder="Inventory slot (Empty = all)">
+                           <button id="btnDrop" class="button">Drop</button>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="antiafk" class="functsBtn" style="display:none">
+                     <div class="input-group flex-colum center-elements">
+                        <span class="label">
+                        <label class="label-text">Anti-AFK</label>
+                        </span>
+                        <div class="input-group flex-colum">
+                           <button id="loadAntiAfk" class="button">Load Plugin</button>
+                           <button id="startAfk" class="button">Start</button>
+                           <button id="stopAfk" class="button">Stop</button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="flex-colum pl-4">
+                  <ul id="chatBox" style="height: 25pc; width:20pc; user-select: text;"></ul>
+                  <button class="button" onclick="clearChat()">Clear logs</button>
+               </div>
+            </div>
+         </div>
+         <div id="settings" class="sideBtn p-4" style="display: none;">
+            <div class="flex">
+               <div class="border" >
+                  <span class="label" style="position: relative; top:-25px">
+                  <label class="label-text">Bot settings</label>
+                  </span>
+                  <div class="flex">
+                     <label class="container">
+                     <label style="position: relative; top: -3px">Linear</label>
+                     </label>
+                     <input id="linearValue" type="number" min="0" class="input-sm m-1" placeholder="delay (0ms)">
+                  </div>
+                  <div class="flex">
+                     <label class="container">
+                     <label style="position: relative; top: -3px">Auto reconnect</label>
+                     <input id="checkboxAutoRc" type="checkbox">
+                     <span class="checkmark"></span>
+                     </label>
+                     <input id="reconDelay" type="number" min="0" class="input-sm m-1" placeholder="delay (0ms)">
+                  </div>
+                  <label class="container">
+                  <label style="position: relative; top: -3px">Sprint</label>
+                  <input id="checkboxSprint" type="checkbox">
+                  <span class="checkmark"></span>
+                  </label>
+                  <div class="flex">
+                     <label class="container">
+                     <label>Script file</label>
+                     <input id="scriptCheck" type="checkbox">
+                     <span class="checkmark"></span>
+                     </label>
+                     <input id="scriptPath" type="file" accept=".txt" class="input">
+                  </div>
+                  <div class="flex">
+                     <label class="container">
+                     <label>Account file</label>
+                     <input id="accountFileCheck" type="checkbox">
+                     <span class="checkmark"></span>
+                     </label>
+                     <input id="accountFilePath" type="file" accept=".txt" class="input">
+                  </div>
+               </div>
+
+               <div class="border m-4" style="width: 275px;">
+                  <span class="label" style="position: relative; top:-25px">
+                  <label class="label-text">App settings</label>
+                  </span>
+                  <div class="flex">
+                     <label class="container">
+                     <label style="position: relative; top: -3px">Connect sound</label>
+                     <input id="connectSound" type="checkbox">
+                     <span class="checkmark"></span>
+                     </label>
+                  </div>
+                  <label class="container">
+                  <label style="position: relative; top: -3px">Disconnect sound</label>
+                  <input id="disconnectSound" type="checkbox">
+                  <span class="checkmark"></span>
+                  </label>
+                  <label class="container">
+                  <label style="position: relative; top: -3px">Error sound</label>
+                  <input id="errorSound" type="checkbox">
+                  <span class="checkmark"></span>
+                  </label>
+               </div>
+
+            </div>
+
+            <div class="border mu-4" style="width: 424px;">
+               <span class="label" style="position: relative; top:-25px">
+               <label class="label-text">Proxy settings</label>
+               </span>
+               <div class="flex">
+                  <label class="container">
+                  <label>Proxy file</label>
+                  <input id="useProxy" type="checkbox">
+                  <span class="checkmark"></span>
+                  </label>
+                  <input id="proxyFilePath" type="file" accept=".txt" class="input"> 
+               </div>
+               <label class="container">
+               <label style="position: relative; top: -3px">Random proxy order</label>
+               <input id="proxyOrderRnd" type="checkbox">
+               <span class="checkmark"></span>
+               </label>
+               <label class="container">
+               <label style="position: relative; top: -3px">Proxy type</label>
+               <select id="proxyType" class="select button">
+                  <option value="4">SOCKS 4</option>
+                  <option value="5">SOCKS 5</option>
+               </select>
+               </label>
+            </div>
+         </div>
+         <div id="plugins" class="sideBtn" style="display:none">
+            <div class="flex mu-4">
+               <div class="m-4">
+                  <div class="flex ">
+                     <button class="button">Reload</button>
+                     <span class="label">
+                     <label class="label-text btn">Plugins</label>
+                     <input id="design" type="file" class="m-1" webkitdirectory = "true" directory/>
+                     </span>
+                  </div>
+                  <ul class="border" style="height:350px; width:600px">
+                     <li>Coming Soon</li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <div id="about" class="sideBtn" style="width: 800px; display:none">
+            <div class="m-4">
+               <h1 class="color-white">Info</h1>
+               <label>Author: RattlesHyper</label>
+               <div class="flex">
+                  <label>Version:</label>
+                  <label id="aboutPageVersion" class="m-1"></label>
+               </div>
+               <hr class="mu-4">
+               <div class="flex center-elements">
+                  <img src="./assets/icons/app/icon.png" style="width: 50px;">
+                  <h1 class="color-white">TrafficerMC</h1>
+               </div>
+               <div class="flex center-elements">
+                  <img class="icon" src="./assets/icons/app/discord.svg" onclick="{shell.openExternal('https://discord.gg/m6b8Pw4NR8')}">
+                  <img class="icon" src="./assets/icons/app//youtube.svg" onclick="{shell.openExternal('https://youtube.com/rattleshyper')}">
+                  <img class="icon" src="./assets/icons/app/github.svg" style="width: 40px;" onclick="{shell.openExternal('https://github.com/RattlesHyper/TrafficerMC')}">
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="downbar flex">
+         <span class="label"><img src="./assets/icons/app/user.svg" class="icon-sm"><label>Bots:</label><label id="downbarBotCount" class="m-1">0</label></span>
+         <span id="outdatedVersion" class="label" style="display:none"><img src="./assets/icons/app/alert-triangle.svg" class="icon-sm error-icon"><label class="m-1 error-text">Outdated version</label></span>
+      </div>
+   </body>
+   <script src="./assets/js/botMain.js"></script>
+</html>

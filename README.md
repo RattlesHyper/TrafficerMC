@@ -9,22 +9,18 @@
 
 # 📦 Features
 - Anti-AFK
-- KillAura
 - Inventory/Chest Clicker
 - Chat
-- Chat Spammer
-- Anti-Anti-Spam (adds random text to bypass anti-spam)
-- Hotbar Item Activator
+- Chat Spammer + Anti Spam
 - Auto Reconnect
-- Window state (opened or closed)
-- MultiMode (with account file or bot set count)
 - [Scripting](#scripting)
 - [Account File](#accountfile)
-- [Linux Support](#linux)
 - [Proxy Support](#proxy) SOCKS4/SOCKS5
 - [Name Salt](#namesalt)
-- Minecraft 1.8 - 1.18.2 Support
-- (ETC)
+- [Linux Support](#linux)
+- [Manual Build & Run Guide](#build)
+- Minecraft 1.8 - 1.19 Support
+- (And so many more featutrs, I'm too lazy to write them all)
 
 <details open style="font-size: 16px">
 <summary>📷 Screenshots and Video</summary>
@@ -32,9 +28,11 @@
 
 # 📷 Screenshots
 
-![Screenshot 1](https://cdn.discordapp.com/attachments/537020502779232266/993761155879292978/unknown.png)
+![Screenshot 1](https://cdn.discordapp.com/attachments/937393739490537493/1036899237654446100/unknown.png)
 
-![Screenshot 2](https://cdn.discordapp.com/attachments/537020502779232266/993588752503013426/unknown.png)
+![Screenshot 2](https://cdn.discordapp.com/attachments/937393739490537493/1036899922781417502/unknown.png)
+
+![Screenshot 3](https://cdn.discordapp.com/attachments/937393739490537493/1036900465478217738/unknown.png)
 
 # 🎞️ Video
 
@@ -57,30 +55,21 @@ delay 1000
 LlickWindow 10
 delay 5000
 disconnect
-reconnect
-loop
 ``` 
 🔎 Script features
 
 - [Features](#scriptfeatures)
     - [Chat](#chat)
-    - [Activate](#activate)
+    - [Use Held Item](#useheld)
     - [setHotbar](#sethotbar)
-    - [LclickWindow / RclickWindow](#clickwindow)
+    - [Click Inventory Item](#winclick)
     - [closeWindow](#closewindow)
     - [drop](#drop)
-    - [dropAll](#dropall)
-    - [startWalk / stopWalk](#startwalk)
-    - [startRun / stopRun](#startrun)
-    - [stattWalkBack / stopWalkBack](#startwalkback)
-    - [startWalkRight / stopWalkRight](#startwalkright)
-    - [startWalkLeft / stopWalkLeft](#startwalkleft)
-    - [startJump / stopJump](#startjump)
-    - [startSneak / stopSneak](#startsneak)
-    - [stopMove](#stopmove)
+    - [Control Movement](#control)
+    - [Anti-Afk](#anti-afk)
     - [Disconnect](#disconnect)
     - [Reconnect](#reconnect)
-    - [Loop](#loop)
+    - [Loop](#startscript)
     - [Delay](#delay)
 
     ### chat
@@ -92,17 +81,11 @@ loop
     chat Hello
     ```
 
-    ### Activate
-    ` Activate ` Activates/RightClick item in hand.
-
-    💡 Example:
-    ```
-    Activate
-    Activate
-    ```
+    ### Useheld
+    ` useheld ` Uses Held item in hand.
 
     ### setHotbar
-    ` setHotbar <Hotbar Slot Number> ` Sets Hotbar to selected slot.
+    ` sethotbar <Hotbar Slot Number> ` Sets Hotbar to selected slot.
 
     Minecraft hotbar starts at 0
 
@@ -114,18 +97,18 @@ loop
     sethotbar 3
     ```
 
-    ### clickWindow
-    Left and Right click on window item.
+    ### WinClick 
+    ` winclick ` lets you Left and Right click on window item.
 
-    ` LclickWindow <Slot> ` Left click.
-    
-    ` RclickWindow <Slot> ` Right click.
+    Right click ` <Item Slot> 0`
+
+    Left click ` <Item Slot> 1`
 
     💡 Example:
 
     ```
-    LclickWindow 10
-    RclickWindow 12
+    winclick 36 0
+    winclick 36 1
     ```
 
     Window Slots Example:
@@ -142,55 +125,32 @@ loop
     ` closeWindow ` Closes open window.
 
     ### Drop
-    ` Drop ` Clicks outside of window to drop item.
-
-    You need to click the item first to drop it.
+    ` Drop <Invntory Slot>` Drops the slot item if none specified drops all.
 
     💡 Example:
     ```
-    clickWindow 10 1
     Drop
+    Drop 36
     ```
-    ### DropAll
-    ` DropAll` Drops Everything from inventory.
-
-    ### startWalk
-    ` startWalk ` Starts walking forword.
-
-    ` stopWalk ` Stops walking forword.
-
-    ### startRun
-    ` startRun ` Starts running forword.
-
-    ` stopRun ` Stops running forword.
-
-    ### startWalkBack
-    ` startWalkBack ` Starts walking back.
-
-    ` stopWalkBack ` Stops walking back.
-
-    ### startWalkRight
-    ` startWalkRight ` Starts walking right.
+    ### Control
+    ` startControl ` and  ` stopControl ` lets you control bots movement.
     
-    ` stopWalkRight ` Stops walking right.
+    control options: ` forward, backwards, left, right, jump, sneak, sprint `
 
-    ### startWalkLeft
-    ` startWalkLeft ` Starts walking Left.
+    💡 Example:
 
-    ` stopWalkLeft ` Stops walking Left.
+    ```
+    startControl forward
+    startControl jump
+    stopControl forward
+    ```
 
-    ### startJump
-    ` starJump ` Starts Jumping.
+    ### Anti-AFK
+    You must load plugin with ` loadAntiAfk `
 
-    ` stopJump ` Stops Jumping.
+    ` afkOn ` Anti-AFK enabled
 
-    ### startSneak
-    ` starSneak ` Starts Sneaking.
-
-    ` stopSneak ` Stops Sneaking.
-
-    ### stopMove
-    ` stopMove ` Stops all movement.
+    ` afkOff ` Anti-AFK disabled
 
     ### Disconnect
     ` Disconnect ` Discommects Bot.
@@ -200,13 +160,13 @@ loop
 
     (Currently not supported in MultiMode)
 
-    ### Loop
-    ` Loop ` Script Starts over from line 1
+    ### StartScript
+    ` startScript ` Script Starts again with script command. works as loop.
 
     ### Delay 
     ` Delay ` Adds delay to next task.
 
-    Delay is count by ms ` 1sec = 1000 `
+    Delay is count by ms ` 1 sec = 1000 `
 
     Default delay 1000
 
@@ -290,4 +250,31 @@ loop
     (SALT)(SALT)(SALT) = UaiOaFHWHbJx
     ```
 
-    
+    # Build
+
+    This is a guide for those who wanna build or run it with the source code.
+
+    You need to download [NodeJs](https://nodejs.org/en/download/) before following the steps.
+
+    Open Powershell or Terminal in a folder
+
+    1 ` git clone https://github.com/RattlesHyper/TrafficerMC ` clones the repo
+
+    2 ` npm install ` installs the dependencies
+
+    3 ` npm start ` starts the application
+
+    Build commands.
+
+    ` npm run <OSxArch> ` builds and puts the build in /dist folder
+
+
+    OScArch options.
+
+    `winx64` for Windows x64
+
+    `winx86` for Windows x86
+
+    `linux64` for linux x64
+
+    `linux86` for linux x86
