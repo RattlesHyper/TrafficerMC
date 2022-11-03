@@ -223,3 +223,32 @@ botApi.on("error", (name, err)=> {
 })
 
 process.on('uncaughtException', (err) => {sendLog(`<li> <img src="./assets/icons/app/alert-triangle.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(11%) sepia(92%) saturate(6480%) hue-rotate(360deg) brightness(103%) contrast(113%)"> [Internal Error] ${err}</li>`)})
+
+idBtnStart.addEventListener('click', () => {
+    let upt = 0
+
+    idBtnDc.addEventListener('click', () => {
+        upt = 0
+        clearInterval(botUptime)
+    })
+
+    idBtnStart.addEventListener('click', () => {
+        upt = 0
+        clearInterval(botUptime)
+    })
+    
+let botUptime = setInterval(() => {
+    upt += 1
+    idUptime.innerHTML = convertTime(upt)
+}, 1000);
+})
+
+function convertTime(number) {
+    return `${formatTime(Math.floor(number / 60))}:${formatTime(number % 60)}`;
+}
+
+function formatTime(time) {
+    if (10 > time)
+      return "0" + time;
+    return time;
+}
