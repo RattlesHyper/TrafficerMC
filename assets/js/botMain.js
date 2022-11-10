@@ -1,6 +1,7 @@
 const { ipcRenderer, shell, safeStorage } = require("electron")
 const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer } = require( __dirname + '/assets/js/cf.js')
 const antiafk = require( __dirname +  '/assets/plugins/antiafk')
+let currentTime = Date.now()
 
 //ids
 let idVersion = document.getElementById('topBarVersion')
@@ -225,30 +226,28 @@ botApi.on("error", (name, err)=> {
 process.on('uncaughtException', (err) => {sendLog(`<li> <img src="./assets/icons/app/alert-triangle.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(11%) sepia(92%) saturate(6480%) hue-rotate(360deg) brightness(103%) contrast(113%)"> [Internal Error] ${err}</li>`)})
 
 idBtnStart.addEventListener('click', () => {
-    let upt = 0
-
-    idBtnDc.addEventListener('click', () => {
-        upt = 0
-        clearInterval(botUptime)
-    })
 
     idBtnStart.addEventListener('click', () => {
-        upt = 0
+        currentTime = Date.now()
         clearInterval(botUptime)
+        idUptime.innerHTML = getTime(currentTime)
     })
     
 let botUptime = setInterval(() => {
-    upt += 1
-    idUptime.innerHTML = convertTime(upt)
+    idUptime.innerHTML = getTime(currentTime)
 }, 1000);
 })
+
+function getTime(from) {
+    const calc = Date.now() - from
+    return convertTime((calc / 1000).toFixed())
+}
 
 function convertTime(number) {
     return `${formatTime(Math.floor(number / 60))}:${formatTime(number % 60)}`;
 }
 
 function formatTime(time) {
-    if (10 > time)
-      return "0" + time;
+    if (10 > time) return "0" + time;
     return time;
 }
