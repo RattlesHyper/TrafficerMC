@@ -70,6 +70,7 @@ disconnect
     - [Disconnect](#disconnect)
     - [Reconnect](#reconnect)
     - [Loop](#startscript)
+    - [Anti-Afk](#anti-afk)
     - [Delay](#delay)
 
     ### chat
@@ -146,7 +147,6 @@ disconnect
     ```
 
     ### Anti-AFK
-    You must load plugin with ` loadAntiAfk `
 
     ` afkOn ` Anti-AFK enabled
 

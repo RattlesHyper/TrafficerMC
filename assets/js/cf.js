@@ -5,7 +5,7 @@ const ProxyAgent = require('proxy-agent')
 const botApi = new EventEmitter()
 const fetch = require('node-fetch')
 const fs = require('fs')
-const currentVersion = "1.9"
+const currentVersion = "1.9.1"
 
 //bot connect method
 function connectBot() {

@@ -1,4 +1,4 @@
-const { ipcRenderer, shell, safeStorage } = require("electron")
+const { ipcRenderer, shell } = require("electron")
 const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer } = require( __dirname + '/assets/js/cf.js')
 const antiafk = require( __dirname +  '/assets/plugins/antiafk')
 let currentTime = Date.now()
@@ -73,19 +73,18 @@ window.addEventListener('DOMContentLoaded', () => {
     idBtnUse.addEventListener('click', () => {exeAll("useheld")})
     idBtnClose.addEventListener('click', () => {exeAll("closewindow")})
     idBtnSpam.addEventListener('click', () => {botApi.emit("spam", idSpamMessage.value, idSpamDelay.value)})
-    idBtnSpamStop.addEventListener('click', () => {botApi.emit("stopSpam")})
+    idBtnSpamStop.addEventListener('click', () => {botApi.emit("stopspam")})
     idBtnChat.addEventListener('click', () => {exeAll("chat", idChatMessage.value)})
     idBtnSetHotbar.addEventListener('click', () => {exeAll("sethotbar", idHotbarSlot.value)})
     idBtnWinClick.addEventListener('click', () => {exeAll("winclick", idBtnWinClickSlot.value, idClickWinLoR.value)})
-    idControlStart.addEventListener('click', () => {exeAll("startControl", idControlValue.value)})
-    idControlStop.addEventListener('click', () => {exeAll("stopControl", idControlValue.value)})
+    idControlStart.addEventListener('click', () => {exeAll("startcontrol", idControlValue.value)})
+    idControlStop.addEventListener('click', () => {exeAll("stopcontrol", idControlValue.value)})
     idBtnLookAt.addEventListener('click', () => {exeAll("look", idLookValue.value)})
-    idCheckSprint.addEventListener('click', () => {exeAll("sprintCheck", idCheckSprint.checked)})
+    idCheckSprint.addEventListener('click', () => {exeAll("sprintcheck", idCheckSprint.checked)})
     idBtnDrop.addEventListener('click', () => {exeAll("drop", idDropValue.value)})
-    idBtnStartScript.addEventListener('click', () => {exeAll('startScript')})
-    idAntiAfkLoad.addEventListener('click', () => {exeAll('loadAntiAfk')})
-    idStartAfk.addEventListener('click', () => {exeAll('afkOn')})
-    idStopAfk.addEventListener('click', () => {exeAll('afkOff')})
+    idBtnStartScript.addEventListener('click', () => {exeAll('startscript')})
+    idStartAfk.addEventListener('click', () => {exeAll('afkon')})
+    idStopAfk.addEventListener('click', () => {exeAll('afkoff')})
 
     idBtnC.addEventListener('click', () => {window.close()})
     idBtnM.addEventListener('click', () => {ipcRenderer.send('minimize')})
@@ -94,6 +93,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 function newBot(options) {
     const bot = mineflayer.createBot(options)
+    let afkLoaded = false
 
     bot.once('login', ()=> {
         botApi.emit("login", bot.username)
@@ -145,13 +145,21 @@ function newBot(options) {
     botApi.on(options.username+'chat', (o) => {bot.chat(o)})
     botApi.on(options.username+'sethotbar', (o) => {bot.setQuickBarSlot(o)})
     botApi.on(options.username+'winclick', (o, i) => {if(i == 0) {bot.clickWindow(o, 0, 0)} else {bot.clickWindow(o, 1, 0)}})
-    botApi.on(options.username+'stopControl', (o) => {bot.setControlState(o, false)})
+    botApi.on(options.username+'stopcontrol', (o) => {bot.setControlState(o, false)})
     botApi.on(options.username+'look', (o) => {bot.look(o, 0)})
-    botApi.on(options.username+'sprintCheck', (o) => {bot.setControlState('sprint', o)})
-    botApi.on(options.username+'startScript', () => {startScript(bot.username, idScriptPath.files[0].path)})
-    botApi.on(options.username+'afkOn', () => {bot.afk.start()})
-    botApi.on(options.username+'afkOff', () => {bot.afk.stop()})
-    botApi.on(options.username+'loadAntiAfk', () => {bot.loadPlugin(antiafk)})
+    botApi.on(options.username+'sprintcheck', (o) => {bot.setControlState('sprint', o)})
+    botApi.on(options.username+'startscript', () => {startScript(bot.username, idScriptPath.files[0].path)})
+    
+    botApi.on(options.username+'afkon', () => {
+        if(!afkLoaded) {
+            afkLoaded = true
+            bot.loadPlugin(antiafk)
+            bot.afk.start()
+        } else {
+            bot.afk.start()
+        }
+    })
+    botApi.on(options.username+'afkoff', () => {bot.afk.stop()})
 
     botApi.on(options.username+'drop', (o) => {
         if(o) {
@@ -171,7 +179,7 @@ function newBot(options) {
         }
     })
 
-    botApi.on(options.username+'startControl', (o) => {
+    botApi.on(options.username+'startcontrol', (o) => {
         bot.setControlState(o, true)
         if(idCheckSprint.checked === true) {bot.setControlState('sprint', true)} else {bot.setControlState('sprint', false)}
     })
@@ -180,7 +188,7 @@ function newBot(options) {
 }
 
 botApi.on('spam', (msg, dl) => {
-    botApi.on('stopSpam', ()=> {clearInterval(chatSpam)})
+    botApi.on('stopspam', ()=> {clearInterval(chatSpam)})
     var chatSpam = setInterval(() => {
         if(idCheckAntiSpam.checked) {
             exeAll("chat", msg+" "+salt(5))
