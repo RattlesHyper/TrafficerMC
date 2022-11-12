@@ -4,7 +4,7 @@
   "maintainer": "RattlesHyper",
   "version": "1.9.1",
   "description": "A Minecraft botting tool with Anti-AFK, Chat spammer, Inventory/Chest manager features.",
-  "license": "ISC",
+  "license": "MIT",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
