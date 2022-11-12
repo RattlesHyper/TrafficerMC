@@ -219,7 +219,7 @@ function checkVer() {
     fetch("https://raw.githubusercontent.com/RattlesHyper/TrafficerMC/main/VERSION", {method: 'GET'})
     .then(response => response.text())
     .then(result => {
-        if(result !== currentVersion) {
+        if(result.replaceAll("\n", "") !== currentVersion) {
             outdatedVersionAlert.style.display = outdatedVersionAlert.style.display.replace("none", "")
         }
     })
