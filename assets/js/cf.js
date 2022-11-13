@@ -5,7 +5,7 @@ const ProxyAgent = require('proxy-agent')
 const botApi = new EventEmitter()
 const fetch = require('node-fetch')
 const fs = require('fs')
-const currentVersion = "1.9.1"
+const currentVersion = "1.9.2"
 
 //bot connect method
 function connectBot() {
@@ -219,7 +219,7 @@ function checkVer() {
     fetch("https://raw.githubusercontent.com/RattlesHyper/TrafficerMC/main/VERSION", {method: 'GET'})
     .then(response => response.text())
     .then(result => {
-        if(result.replaceAll("\n", "") !== currentVersion) {
+        if(result.replaceAll("\n", "").replaceAll(" ", "") !== currentVersion) {
             outdatedVersionAlert.style.display = outdatedVersionAlert.style.display.replace("none", "")
         }
     })

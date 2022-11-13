@@ -1,6 +1,7 @@
 const { ipcRenderer, shell } = require("electron")
 const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer } = require( __dirname + '/assets/js/cf.js')
 const antiafk = require( __dirname +  '/assets/plugins/antiafk')
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 let currentTime = Date.now()
 
 //ids
@@ -120,21 +121,9 @@ function newBot(options) {
         botApi.emit("error", options.username, err)
     });
     
-    bot.on('message', (m) => {
+    bot.on('messagestr', (message, messagePosition, jsonMsg) => {
         if(idBotList.getElementsByTagName("li").length <= 1) {
-            var c = ''
-            if (m.json.extra instanceof Array) {
-              m.json.extra.forEach(e => {
-                c += `<span style="color: ${e.color}; ${e.bold ? 'font-weight: bold;' : ''} ${e.italic ? 'font-style: italic;' : ''} ${e.strikethrough && e.underlined ? 'text-decoration: line-through underline' : e.strikethrough ? 'text-decoration: line-through' : e.underlined ? 'text-decoration: underline' : ''}">${e.text.replace('<', '&lt').replace('>', '&gt')}</span>`.replace(/\\n/g, '<br>')
-              });
-            } else if (m.json.text) {
-              c += `<span>${m.json.text.replace('<', '&lt;').replace('>', '&gt;')}</span>`.replace(/\\n/g, '<br>').replace(/§.{1}/g, '')
-            } else if (m.json.with) {
-                m.json.with.forEach(e => {
-                    c += ` ${e.text}`
-                })
-            }
-            sendLog(c)
+            sendLog(message)
         }
     });
 
