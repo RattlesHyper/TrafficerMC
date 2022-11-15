@@ -2,6 +2,7 @@ const { ipcRenderer, shell } = require("electron")
 const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer } = require( __dirname + '/assets/js/cf.js')
 const antiafk = require( __dirname +  '/assets/plugins/antiafk')
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
+process.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 let currentTime = Date.now()
 
 //ids
