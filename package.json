@@ -14,14 +14,16 @@
     "linux86": "electron-builder build --linux --ia32"
   },
   "dependencies": {
+    "electron-json-storage": "^4.6.0",
+    "electron-store": "^8.1.0",
     "mineflayer": "^4.1.0",
     "node-fetch": "2.6.7",
     "proxy-agent": "^5.0.0",
     "socks": "^2.7.0"
   },
   "devDependencies": {
-    "electron": "^18.2.2",
-    "electron-builder": "^23.0.3"
+    "electron": "^21.3.0",
+    "electron-builder": "^23.6.0"
   },
   "build": {
     "appId": "com.rattleshyper.trafficermc",

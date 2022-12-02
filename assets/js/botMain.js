@@ -1,7 +1,6 @@
 const { ipcRenderer, shell } = require("electron")
 const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer } = require( __dirname + '/assets/js/cf.js')
 const antiafk = require( __dirname +  '/assets/plugins/antiafk')
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 process.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 let currentTime = Date.now()
 
@@ -14,7 +13,6 @@ let idBotCount = document.getElementById('botCount')
 let idJoinDelay = document.getElementById('joinDelay')
 let idJoinMessage = document.getElementById('joinMessage')
 let idBtnStart = document.getElementById('btnStart')
-let idBtnStop = document.getElementById('btnStop')
 let idBotVersion = document.getElementById('botversion')
 let idBotList = document.getElementById('botList')
 let idBtnDc = document.getElementById('btnDisconnect')
@@ -64,13 +62,14 @@ let idCheckAntiSpam = document.getElementById('checkAntiSpam')
 let idAntiAfkLoad = document.getElementById('loadAntiAfk')
 let idStartAfk = document.getElementById('startAfk')
 let idStopAfk = document.getElementById('stopAfk')
+let antiSpamLength = document.getElementById('antiSpamLength')
 
 //button listeners
 
 window.addEventListener('DOMContentLoaded', () => {
     botApi.setMaxListeners(0)
     checkVer()
-    idBtnStart.addEventListener('click', () => {connectBot()})
+    idBtnStart.addEventListener('click', () => {connectBot(); saveData()})
     idBtnDc.addEventListener('click', () => {exeAll("disconnect")})
     idBtnUse.addEventListener('click', () => {exeAll("useheld")})
     idBtnClose.addEventListener('click', () => {exeAll("closewindow")})
@@ -87,10 +86,8 @@ window.addEventListener('DOMContentLoaded', () => {
     idBtnStartScript.addEventListener('click', () => {exeAll('startscript')})
     idStartAfk.addEventListener('click', () => {exeAll('afkon')})
     idStopAfk.addEventListener('click', () => {exeAll('afkoff')})
-
-    idBtnC.addEventListener('click', () => {window.close()})
+    idBtnC.addEventListener('click', () => {saveData(); window.close()})
     idBtnM.addEventListener('click', () => {ipcRenderer.send('minimize')})
-    idBtnStop.addEventListener('click', () => {ipcRenderer.send('stop'); window.close()})
 })
 
 function newBot(options) {
@@ -122,7 +119,7 @@ function newBot(options) {
         botApi.emit("error", options.username, err)
     });
     
-    bot.on('messagestr', (message, messagePosition, jsonMsg) => {
+    bot.on('messagestr', (message) => {
         if(idBotList.getElementsByTagName("li").length <= 1) {
             sendLog(message)
         }
@@ -132,7 +129,7 @@ function newBot(options) {
     botApi.once(options.username+'reconnect', () => {newBot(options)})
     botApi.on(options.username+'useheld', () => {bot.activateItem()})
     botApi.on(options.username+'closewindow', () => {bot.closeWindow(window)})
-    botApi.on(options.username+'chat', (o) => {bot.chat(o)})
+    botApi.on(options.username+'chat', (o) => { if(idCheckAntiSpam.checked) { bot.chat(o.replaceAll("(SALT)", salt(4))+" "+salt(antiSpamLength.value ? antiSpamLength.value : 5)) } else { bot.chat(o.replaceAll("(SALT)", salt(4))) } })
     botApi.on(options.username+'sethotbar', (o) => {bot.setQuickBarSlot(o)})
     botApi.on(options.username+'winclick', (o, i) => {if(i == 0) {bot.clickWindow(o, 0, 0)} else {bot.clickWindow(o, 1, 0)}})
     botApi.on(options.username+'stopcontrol', (o) => {bot.setControlState(o, false)})
@@ -180,12 +177,7 @@ function newBot(options) {
 botApi.on('spam', (msg, dl) => {
     botApi.on('stopspam', ()=> {clearInterval(chatSpam)})
     var chatSpam = setInterval(() => {
-        if(idCheckAntiSpam.checked) {
-            exeAll("chat", msg+" "+salt(5))
-        } else {
-            exeAll("chat", msg)
-        }
-        
+        exeAll("chat", msg)
     }, dl);
 })
 
@@ -221,10 +213,8 @@ botApi.on("error", (name, err)=> {
     }
 })
 
-process.on('uncaughtException', (err) => {sendLog(`<li> <img src="./assets/icons/app/alert-triangle.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(11%) sepia(92%) saturate(6480%) hue-rotate(360deg) brightness(103%) contrast(113%)"> [Internal Error] ${err}</li>`)})
-
+// uptime counter
 idBtnStart.addEventListener('click', () => {
-
     idBtnStart.addEventListener('click', () => {
         currentTime = Date.now()
         clearInterval(botUptime)
@@ -235,17 +225,34 @@ let botUptime = setInterval(() => {
     idUptime.innerHTML = getTime(currentTime)
 }, 1000);
 })
-
 function getTime(from) {
     const calc = Date.now() - from
     return convertTime((calc / 1000).toFixed())
 }
-
 function convertTime(number) {
     return `${formatTime(Math.floor(number / 60))}:${formatTime(number % 60)}`;
 }
-
 function formatTime(time) {
     if (10 > time) return "0" + time;
     return time;
 }
+
+// save and restore config
+ipcRenderer.on('restore', (event, data) => {
+    Object.keys(data).forEach(v => {
+        document.getElementById(v).value = data[v]
+      });
+})
+function saveData() {
+    ipcRenderer.send('config', (event, {
+        "botUsename": document.getElementById('botUsename').value,
+        "botAuthType": document.getElementById('botAuthType').value,
+        "botConnectIp": document.getElementById('botConnectIp').value,
+        "botversion": document.getElementById('botversion').value,
+        "botCount": document.getElementById('botCount').value,
+        "joinDelay": document.getElementById('joinDelay').value,
+        "joinMessage": document.getElementById('joinMessage').value
+    }))
+}
+
+process.on('uncaughtException', (err) => {sendLog(`<li> <img src="./assets/icons/app/alert-triangle.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(11%) sepia(92%) saturate(6480%) hue-rotate(360deg) brightness(103%) contrast(113%)"> [Internal Error] ${err}</li>`)})

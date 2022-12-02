@@ -46,12 +46,15 @@
                </span>
                <input id="botUsename" class="input" type="text" placeholder="(SALT) random 4 letters">
                <span class="label">
+                  <label class="pl-4">(LEGIT) Generates legit names</label>
+            </div>
+            <div class="p-4">
                <label class="label-text">Auth type:</label>
-               </span>
-               <select id="botAuthType" class="select">
-                  <option value="">Cracked</option>
-                  <option value="microsoft">Microsoft</option>
-               </select>
+            </span>
+            <select id="botAuthType" class="select input">
+               <option value="">Cracked</option>
+               <option value="microsoft">Microsoft</option>
+            </select>
             </div>
             <div class="flex p-4">
                <span class="label">
@@ -116,16 +119,17 @@
                <span class="">
                <button id="btnStart" class="button" onclick="document.getElementById('tabBtnBotting').click()">Start</button>
                </span>
-               <span class="">
-               <button id="btnStop" class="button">Stop</button>
-               </span>
             </div>
          </div>
          <div id="botting" class="sideBtn" style="display:none">
             <div class="flex">
                <div class="pl-4">
                   <ul id="botList" class="flex-colum" style="height: 11pc; width:15pc;"></ul>
-                  <ul class="flex-colum input-group funcBtnLink" style="height: 16pc; width:15pc">
+                  <ul class="input-group flex center-elements" style="position: relative; top: -12px; width:15pc;" >
+                     <button class="button" onclick="selectAll()">All</button>
+                     <button class="button" onclick="selectRemove()">None</button>
+                  </ul>
+                  <ul class="flex-colum input-group funcBtnLink" style="height: 14pc; width:15pc; position: relative; top: -20px;">
                      <button class="button funcBtnLink button-selected" onclick="openFuncs(event,'controls')">Controls</button>
                      <button class="button funcBtnLink" onclick="openFuncs(event,'chat')">Chat</button>
                      <button class="button funcBtnLink" onclick="openFuncs(event,'spam')">Spam</button>
@@ -183,6 +187,9 @@
                            <input id="checkAntiSpam" type="checkbox">
                            <span class="checkmark"></span>
                            </label>
+                        </div>
+                        <div class="input-group flex-colum">
+                           <input id="antiSpamLength" class="input" type="number" min="1" placeholder="Random letters (Default 5)">
                         </div>
                      </div>
                   </div>
@@ -308,20 +315,20 @@
                   </span>
                   <div class="flex">
                      <label class="container">
-                     <label style="position: relative; top: -3px">Linear</label>
+                     <label >Linear</label>
                      </label>
                      <input id="linearValue" type="number" min="0" class="input-sm m-1" placeholder="delay (0ms)">
                   </div>
                   <div class="flex">
                      <label class="container">
-                     <label style="position: relative; top: -3px">Auto reconnect</label>
+                     <label>Auto reconnect</label>
                      <input id="checkboxAutoRc" type="checkbox">
                      <span class="checkmark"></span>
                      </label>
                      <input id="reconDelay" type="number" min="0" class="input-sm m-1" placeholder="delay (0ms)">
                   </div>
                   <label class="container">
-                  <label style="position: relative; top: -3px">Sprint</label>
+                  <label>Sprint</label>
                   <input id="checkboxSprint" type="checkbox">
                   <span class="checkmark"></span>
                   </label>
@@ -349,18 +356,18 @@
                   </span>
                   <div class="flex">
                      <label class="container">
-                     <label style="position: relative; top: -3px">Connect sound</label>
+                     <label>Connect sound</label>
                      <input id="connectSound" type="checkbox">
                      <span class="checkmark"></span>
                      </label>
                   </div>
                   <label class="container">
-                  <label style="position: relative; top: -3px">Disconnect sound</label>
+                  <label>Disconnect sound</label>
                   <input id="disconnectSound" type="checkbox">
                   <span class="checkmark"></span>
                   </label>
                   <label class="container">
-                  <label style="position: relative; top: -3px">Error sound</label>
+                  <label>Error sound</label>
                   <input id="errorSound" type="checkbox">
                   <span class="checkmark"></span>
                   </label>
@@ -381,12 +388,12 @@
                   <input id="proxyFilePath" type="file" accept=".txt" class="input"> 
                </div>
                <label class="container">
-               <label style="position: relative; top: -3px">Random proxy order</label>
+               <label>Random proxy order</label>
                <input id="proxyOrderRnd" type="checkbox">
                <span class="checkmark"></span>
                </label>
                <label class="container">
-               <label style="position: relative; top: -3px">Proxy type</label>
+               <label>Proxy type</label>
                <select id="proxyType" class="select button">
                   <option value="4">SOCKS 4</option>
                   <option value="5">SOCKS 5</option>
