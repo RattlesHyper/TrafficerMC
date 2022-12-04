@@ -431,9 +431,9 @@
                   <h1 class="color-white">TrafficerMC</h1>
                </div>
                <div class="flex center-elements">
-                  <img class="icon" src="./assets/icons/app/discord.svg" onclick="{shell.openExternal('https://discord.gg/m6b8Pw4NR8')}">
-                  <img class="icon" src="./assets/icons/app//youtube.svg" onclick="{shell.openExternal('https://youtube.com/rattleshyper')}">
-                  <img class="icon" src="./assets/icons/app/github.svg" style="width: 40px;" onclick="{shell.openExternal('https://github.com/RattlesHyper/TrafficerMC')}">
+                  <img class="icon" src="./assets/icons/app/discord.svg" onclick="shell.openExternal('https://discord.gg/m6b8Pw4NR8')">
+                  <img class="icon" src="./assets/icons/app//youtube.svg" onclick="shell.openExternal('https://youtube.com/rattleshyper')">
+                  <img class="icon" src="./assets/icons/app/github.svg" style="width: 40px;" onclick="shell.openExternal('https://github.com/RattlesHyper/TrafficerMC')">
                </div>
             </div>
          </div>
@@ -441,7 +441,7 @@
       <div class="downbar flex">
          <span class="label"><img src="./assets/icons/app/user.svg" class="icon-sm"><label>Bots:</label><label id="downbarBotCount" class="m-1">0</label></span>
          <span class="label"><img src="./assets/icons/app/clock.svg" class="icon-sm"><label>Uptime:</label><label id="uptime" class="m-1">00:00</label></span>
-         <span id="outdatedVersion" class="label" style="display:none"><img src="./assets/icons/app/alert-triangle.svg" class="icon-sm error-icon"><label class="m-1 error-text">Outdated version</label></span>
+         <span id="outdatedVersion" class="label" style="display:none" onClick="shell.openExternal('https://github.com/RattlesHyper/TrafficerMC/releases')"><img src="./assets/icons/app/alert-triangle.svg" class="icon-sm error-icon"><label class="m-1 error-text">Outdated version</label></span>
       </div>
    </body>
    <script src="./assets/js/botMain.js"></script>
