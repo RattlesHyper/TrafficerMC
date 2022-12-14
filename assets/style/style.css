@@ -2,8 +2,9 @@ html,
 body {
     margin: 0;
     padding: 0;
+    overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
-    color: #949AA7;
+    color: rgb(var(--text-color) / var(--text-opacity))
 }
 
 input::-webkit-outer-spin-button,
@@ -18,11 +19,11 @@ input::-webkit-inner-spin-button {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #bcbcf0;
+    background: rgb(var(--button-color) / var(--button-opacity));
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #dadaff;
+    background: rgb(var(--selected-item-color) / var(--selected-item-opacity));
 }
 
 img {
@@ -34,7 +35,7 @@ img {
     width: 100%;
     height: 30px;
     box-sizing: border-box;
-    background: url("../icons/app/BackgroundSide.svg");
+    background-color: rgb(var(--topbar-color) / var(--topbar-opacity))
 }
 
 .sidebar {
@@ -43,8 +44,8 @@ img {
     width: 110px;
     height: 100%;
     box-sizing: border-box;
-    background: url("../icons/app/BackgroundSide.svg");
     user-select: none;
+    background-color: rgb(var(--sidebar-color) / var(--sidebar-opacity))
 }
 
 .downbar {
@@ -53,8 +54,7 @@ img {
     bottom: 0px;
     width: 100%;
     height: 20px;
-    background: #4554e0;
-    color: #ffffff;
+    background: rgb(var(--downbar-color) / var(--downbar-opacity));
     user-select: none;
 }
 
@@ -71,36 +71,32 @@ img {
 }
 
 input[type=file]::file-selector-button {
-    background-color: #282c345e;
-    border-color: #bcbcf031;
+    background-color: rgb(var(--button-color) / var(--button-opacity));
+    border-color: rgba(var(--button-border-color) / var(--button-border-opacity));
     padding: 5px 10px;
     border-width: 1px;
-    color: white;
     cursor: pointer;
 }
 
 input[type=file]::file-selector-button:hover {
-    background-color: #2637587c;
+    filter: brightness(150%) 
 }
 
 .button {
-    background-color: #282c345e;
-    color: white;
+    background-color: rgb(var(--button-color) / var(--button-opacity));
+    color: rgb(var(--text-color) / var(--text-opacity));
     padding: 5px 30px;
-    text-align: center;
-    font-size: 15px;
-    margin: 1px 1px;
     cursor: pointer;
     border-width: 1px;
-    border-color: #bcbcf031;
+    border-color: rgba(var(--button-border-color) / var(--button-border-opacity));
 }
 
 .button-selected {
-    background-color: #344d85;
+    filter: saturate(200%) brightness(200%);
 }
 
 .button:hover {
-    background-color: #2637587c;
+    filter: brightness(150%) 
 }
 
 .input-group {
@@ -117,12 +113,7 @@ input[type=file]::file-selector-button:hover {
     filter: brightness(0) saturate(100%) invert(75%) sepia(96%) saturate(548%) hue-rotate(3deg) brightness(108%) contrast(103%)
 }
 
-.center-nofilter {
-    height: 12pt;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
+
 
 .center-elements {
     display: inline-flex;
@@ -132,7 +123,7 @@ input[type=file]::file-selector-button:hover {
 
 .tab-selected {
     border-left: 5px solid;
-    filter: brightness(0) saturate(100%) invert(78%) sepia(35%) saturate(895%) hue-rotate(191deg) brightness(102%) contrast(90%)
+    color: rgb(var(--selected-item-color) / var(--selected-item-opacity));
 }
 
 .contentArea {
@@ -142,7 +133,6 @@ input[type=file]::file-selector-button:hover {
     left: 110px;
     width: 100%;
     height: 100%;
-    background: url('../icons/app/Background.svg');
 }
 
 .bottingContentArea {
@@ -153,7 +143,7 @@ input[type=file]::file-selector-button:hover {
 }
 
 .input {
-    color: #ffffff;
+    color: rgb(var(--text-color) / var(--text-opacity));
     position: relative;
     top: -2px;
     height: 2rem;
@@ -164,12 +154,11 @@ input[type=file]::file-selector-button:hover {
     border-top: 0px;
     border-left: 0px;
     border-right: 0px;
-    border-color: hsl(var(--bc) / var(--tw-border-opacity));
-    background-color: hsl(var(--b1) / var(--tw-bg-opacity));
+    border-color: rgb(var(--button-border-color) / var(--button-border-opacity));
+    background-color: transparent;
 }
 
 .input-sm {
-    color: #ffffff;
     position: relative;
     top: -8px;
     height: 2rem;
@@ -179,52 +168,31 @@ input[type=file]::file-selector-button:hover {
     border-top: 0px;
     border-left: 0px;
     border-right: 0px;
-    border-color: hsl(var(--bc) / var(--tw-border-opacity));
-    background-color: hsl(var(--b1) / var(--tw-bg-opacity));
+    border-color: rgb(var(--button-border-color) / var(--button-border-opacity));
+    background-color: transparent;
 }
 
 input:focus {
     outline: none;
 }
 
-input:-ms-input-placeholder,
-textarea:-ms-input-placeholder {
-    opacity: 1;
-    color: #9ca3af;
-}
-
 input::placeholder,
 textarea::placeholder {
     opacity: 1;
-    color: #9ca3af;
+    color: rgb(var(--text-color) / 0.6);
 }
 
 .select {
-    text-align: center;
-    position: relative;
-    top: -2px;
-    color: #ffffff;
-    display: inline-flex;
+    color: rgb(var(--button-text-color) / var(--button-text-opacity));
     cursor: pointer;
-    -webkit-user-select: none;
     user-select: none;
-    -webkit-appearance: none;
-    appearance: none;
-    padding-left: 1rem;
-    padding-right: 2rem;
-    font-size: 0.875rem;
-    border-width: 0px;
-    background-color: hsl(var(--b1) / var(--tw-bg-opacity));
-    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
-    background-position: calc(100% - 20px) calc(1px + 50%), calc(100% - 16px) calc(1px + 50%);
-    background-size: 4px 4px, 4px 4px;
-    background-repeat: no-repeat;
-    border-width: 1px;
-    border-top: 0px;
-    border-left: 0px;
-    border-right: 0px;
-    border-color: hsl(var(--bc) / var(--tw-border-opacity));
-    background-color: #2C313C
+    border: none;
+    height: 33px;
+    background-color: rgb(var(--button-color) / var(--button-opacity))
+}
+
+.bgimg {
+    content: var(--background-image)
 }
 
 select:focus {
@@ -246,7 +214,6 @@ select:focus {
 .label-text {
     font-size: 20px;
     line-height: 1rem;
-    color: #ffffff;
 }
 
 .error-text {
@@ -254,25 +221,25 @@ select:focus {
 }
 
 ul {
-    list-style-type: none;
-    background-color: #282c34;
-    color: white;
+    background-color: rgb(var(--ul-bg-color) / var(--ul-bg-opacity));
     padding: 0px 0px;
     font-size: 15px;
     overflow: scroll;
-    border: #000000;
+    border: rgb(var(--button-border-color) var(--button-border-opacity));
     border-style: solid;
     border-width: 1px;
     scroll-behavior: smooth;
-    opacity: 0.7;
+    opacity: var(--ul-opacity);
+}
+
+.window-bg-color {
+    background-color: rgb(var(--ul-bg-color) / var(--ul-bg-opacity));
 }
 
 ul li {
     overflow-wrap: break-word;
-    background: #282c34;
-    border: #bcbcf080;
+    border: rgb(var(--button-border-color) var(--button-border-opacity));
     border-style: solid;
-    color: #ffffff;
     border-width: 1px;
     border-top: none;
     border-left: none;
@@ -329,11 +296,6 @@ ul li {
 .border-sm {
     border: 2px solid #bac0f21a;
 }
-
-.color-white {
-    color: white;
-}
-
 .container {
     display: block;
     position: relative;
@@ -356,15 +318,18 @@ ul li {
     left: 0;
     height: 25px;
     width: 25px;
-    background-color: #282C34;
+    background-color: rgb(var(--ul-bg-color));
+    opacity: 0.5;
 }
 
 .container:hover input~.checkmark {
-    background-color: #282C34;
+    background-color: rgb(var(--ul-bg-color));
+    opacity: 1;
 }
 
 .container input:checked~.checkmark {
-    background-color: #1f0b0b;
+    background-color: rgb(var(--ul-bg-color));
+    opacity: 0.7;
 }
 
 .checkmark:after {
@@ -382,7 +347,7 @@ ul li {
     top: 5px;
     width: 5px;
     height: 10px;
-    border: solid #b8bef2;
+    border: solid rgb(var(--button-color));
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
 }
@@ -410,6 +375,28 @@ ul li {
 }
 
 .botSelected {
-    color: #00d9ff;
-    background-color: #39436b;
+    background-color: rgb(var(--selected-item-color) / var(--selected-item-opacity));
+}
+
+:root {
+    --background-image: url('../icons/app/Background.svg');
+    --text-color: 80 200 145;
+    --text-opacity: 1;
+    --button-color: 80 200 200;
+    --button-opacity: 0.5;
+    --button-text-color: 255 255 255;
+    --button-text-: 1;
+    --button-border-color: 0 35 255;
+    --button-border-opacity: 0.2;
+    --ul-opacity: 0.7;
+    --sidebar-color: 0 0 0;
+    --sidebar-opacity: 0.1;
+    --topbar-color: 0 0 0;
+    --topbar-opacity: 0.6;
+    --ul-bg-color: 0 0 0;
+    --ul-bg-opacity: 0.1;
+    --selected-item-color: 0 50 255;
+    --selected-item-opacity: 1;
+    --downbar-color: 60 80 220;
+    --downbar-opacity: 1
 }

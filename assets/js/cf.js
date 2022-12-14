@@ -254,4 +254,14 @@ function genName() {
     return name
 }
 
-module.exports = { getBotInfo, connectBot, salt, delay, addPlayer, rmPlayer, errBot, sendLog, exeAll, startScript, checkVer, genName, mineflayer, botApi }
+// load theme
+function loadTheme(file) {
+    var link = document.createElement( "link" );
+    link.href = file
+    link.type = "text/css";
+    link.rel = "stylesheet";
+
+document.getElementsByTagName( "head" )[0].appendChild( link );
+}
+
+module.exports = { getBotInfo, connectBot, salt, delay, addPlayer, rmPlayer, errBot, sendLog, exeAll, startScript, checkVer, genName, loadTheme, mineflayer, botApi }

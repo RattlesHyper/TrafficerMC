@@ -51,7 +51,7 @@
             <div class="p-4">
                <label class="label-text">Auth type:</label>
             </span>
-            <select id="botAuthType" class="select input">
+            <select id="botAuthType" class="select">
                <option value="">Cracked</option>
                <option value="microsoft">Microsoft</option>
             </select>
@@ -125,10 +125,10 @@
             <div class="flex">
                <div class="pl-4">
                   <ul id="botList" class="flex-colum" style="height: 11pc; width:15pc;"></ul>
-                  <ul class="input-group flex center-elements" style="position: relative; top: -12px; width:15pc;" >
+                  <div class=" flex center-elements" style="position: relative; top: -12px; width:15pc;" >
                      <button class="button" onclick="selectAll()">All</button>
                      <button class="button" onclick="selectRemove()">None</button>
-                  </ul>
+                  </div>
                   <ul class="flex-colum input-group funcBtnLink" style="height: 14pc; width:15pc; position: relative; top: -20px;">
                      <button class="button funcBtnLink button-selected" onclick="openFuncs(event,'controls')">Controls</button>
                      <button class="button funcBtnLink" onclick="openFuncs(event,'chat')">Chat</button>
@@ -309,7 +309,7 @@
          </div>
          <div id="settings" class="sideBtn p-4" style="display: none;">
             <div class="flex">
-               <div class="border" >
+               <div class="border window-bg-color" >
                   <span class="label" style="position: relative; top:-25px">
                   <label class="label-text">Bot settings</label>
                   </span>
@@ -338,7 +338,7 @@
                      <input id="scriptCheck" type="checkbox">
                      <span class="checkmark"></span>
                      </label>
-                     <input id="scriptPath" type="file" accept=".txt" class="input">
+                     <input id="scriptPath" type="file" accept=".txt" class="pl-4">
                   </div>
                   <div class="flex">
                      <label class="container">
@@ -346,11 +346,11 @@
                      <input id="accountFileCheck" type="checkbox">
                      <span class="checkmark"></span>
                      </label>
-                     <input id="accountFilePath" type="file" accept=".txt" class="input">
+                     <input id="accountFilePath" type="file" accept=".txt" class="pl-4">
                   </div>
                </div>
 
-               <div class="border m-4" style="width: 275px;">
+               <div class="border window-bg-color m-4" style="width: 275px;">
                   <span class="label" style="position: relative; top:-25px">
                   <label class="label-text">App settings</label>
                   </span>
@@ -371,11 +371,18 @@
                   <input id="errorSound" type="checkbox">
                   <span class="checkmark"></span>
                   </label>
+                  <div class="p-4">
+                     <label>Theme</label>
+                     <div class="flex">
+                        <button class="button" id="btnSaveTheme">Save</button>
+                        <input id="customCssFile" type="file" accept=".css">
+                     </div>
+                  </div>
                </div>
 
             </div>
 
-            <div class="border mu-4" style="width: 424px;">
+            <div class="border window-bg-color mu-4" style="width: 424px;">
                <span class="label" style="position: relative; top:-25px">
                <label class="label-text">Proxy settings</label>
                </span>
@@ -385,7 +392,7 @@
                   <input id="useProxy" type="checkbox">
                   <span class="checkmark"></span>
                   </label>
-                  <input id="proxyFilePath" type="file" accept=".txt" class="input"> 
+                  <input id="proxyFilePath" type="file" accept=".txt" class="pl-4"> 
                </div>
                <label class="container">
                <label>Random proxy order</label>
@@ -419,7 +426,7 @@
          </div>
          <div id="about" class="sideBtn" style="width: 800px; display:none">
             <div class="m-4">
-               <h1 class="color-white">Info</h1>
+               <h1>Info</h1>
                <label>Author: RattlesHyper</label>
                <div class="flex">
                   <label>Version:</label>
@@ -428,7 +435,7 @@
                <hr class="mu-4">
                <div class="flex center-elements">
                   <img src="./assets/icons/app/icon.png" style="width: 50px;">
-                  <h1 class="color-white">TrafficerMC</h1>
+                  <h1>TrafficerMC</h1>
                </div>
                <div class="flex center-elements">
                   <img class="icon" src="./assets/icons/app/discord.svg" onclick="shell.openExternal('https://discord.gg/m6b8Pw4NR8')">
@@ -441,8 +448,9 @@
       <div class="downbar flex">
          <span class="label"><img src="./assets/icons/app/user.svg" class="icon-sm"><label>Bots:</label><label id="downbarBotCount" class="m-1">0</label></span>
          <span class="label"><img src="./assets/icons/app/clock.svg" class="icon-sm"><label>Uptime:</label><label id="uptime" class="m-1">00:00</label></span>
-         <span id="outdatedVersion" class="label" style="display:none" onClick="shell.openExternal('https://github.com/RattlesHyper/TrafficerMC/releases')"><img src="./assets/icons/app/alert-triangle.svg" class="icon-sm error-icon"><label class="m-1 error-text">Outdated version</label></span>
+         <span id="outdatedVersion" class="label" style="display:none" onClick="shell.openExternal('https://github.com/RattlesHyper/TrafficerMC/releases')"><img src="./assets/icons/app/alert-triangle.svg" class="icon-sm error-icon"><label class="m-1 error-text" style="cursor: pointer">Outdated version</label></span>
       </div>
+      <img class="bgimg" width="100%" >
    </body>
    <script src="./assets/js/botMain.js"></script>
 </html>

@@ -24,9 +24,14 @@ function createWindow() {
     });
     mainWindow.webContents.once('dom-ready', () => {
         mainWindow.webContents.send('restore', store.get('config'))
+        mainWindow.webContents.send('restoreTheme', store.get('theme'))
     });
 }
 
 ipcMain.on('config', (event, config) => {
     store.set('config', config)
+});
+
+ipcMain.on('theme', (event, path) => {
+    store.set('theme', path)
 });

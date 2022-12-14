@@ -1,5 +1,5 @@
 const { ipcRenderer, shell } = require("electron")
-const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer } = require( __dirname + '/assets/js/cf.js')
+const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer, loadTheme } = require( __dirname + '/assets/js/cf.js')
 const antiafk = require( __dirname +  '/assets/plugins/antiafk')
 process.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 let currentTime = Date.now()
@@ -63,6 +63,8 @@ let idAntiAfkLoad = document.getElementById('loadAntiAfk')
 let idStartAfk = document.getElementById('startAfk')
 let idStopAfk = document.getElementById('stopAfk')
 let antiSpamLength = document.getElementById('antiSpamLength')
+let idBtnCustomCss = document.getElementById('btnSaveTheme')
+let idCustomCssFile = document.getElementById('customCssFile')
 
 //button listeners
 
@@ -88,6 +90,13 @@ window.addEventListener('DOMContentLoaded', () => {
     idStopAfk.addEventListener('click', () => {exeAll('afkoff')})
     idBtnC.addEventListener('click', () => {saveData(); window.close()})
     idBtnM.addEventListener('click', () => {ipcRenderer.send('minimize')})
+    idBtnCustomCss.addEventListener('click', () => {
+        const path = idCustomCssFile.files[0].path
+        if(path) {
+            loadTheme(path)
+            ipcRenderer.send('theme', (event, path))
+        }
+    })
 })
 
 function newBot(options) {
@@ -242,6 +251,9 @@ ipcRenderer.on('restore', (event, data) => {
     Object.keys(data).forEach(v => {
         document.getElementById(v).value = data[v]
       });
+})
+ipcRenderer.on('restoreTheme', (event, path) => {
+    loadTheme(path)
 })
 function saveData() {
     ipcRenderer.send('config', (event, {
