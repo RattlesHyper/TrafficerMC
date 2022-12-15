@@ -71,6 +71,7 @@ img {
 }
 
 input[type=file]::file-selector-button {
+    color: rgb(var(--text-color) / var(--text-opacity));
     background-color: rgb(var(--button-color) / var(--button-opacity));
     border-color: rgba(var(--button-border-color) / var(--button-border-opacity));
     padding: 5px 10px;
@@ -146,7 +147,6 @@ input[type=file]::file-selector-button:hover {
 .input {
     color: rgb(var(--text-color) / var(--text-opacity));
     position: relative;
-    top: -2px;
     height: 2rem;
     padding-left: 0.25rem;
     padding-right: 0.25rem;
