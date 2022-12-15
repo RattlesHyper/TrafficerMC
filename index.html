@@ -49,11 +49,11 @@
                   <label class="pl-4">(LEGIT) Generates legit names</label>
             </div>
             <div class="p-4">
-               <label class="label-text">Auth type:</label>
+            <label class="label-text">Auth type:</label>
             </span>
             <select id="botAuthType" class="select">
-               <option value="">Cracked</option>
-               <option value="microsoft">Microsoft</option>
+            <option value="">Cracked</option>
+            <option value="microsoft">Microsoft</option>
             </select>
             </div>
             <div class="flex p-4">
@@ -203,7 +203,7 @@
                         <div class="input-group">
                            <div class="input-group center-elements">
                               <div class="flex">
-                                 <select id="hotbarSlot" class="input-sm">
+                                 <select id="hotbarSlot" class="input">
                                     <option class="button" value="0">Slot 1</option>
                                     <option class="button" value="1">Slot 2</option>
                                     <option class="button" value="2">Slot 3</option>
@@ -221,22 +221,18 @@
                      </div>
                   </div>
                   <div id="clickWindow" class="functsBtn" style="display:none">
+                     <div class="center-elements">
+                        <span class="label">
+                        <label class="label-text">Click window slot</label>
+                        </span>
+                     </div>
                      <div class="input-group flex-colum">
-                        <div class="center-elements">
-                           <span class="label">
-                           <label class="label-text">Click window slot</label>
-                           </span>
-                        </div>
-                        <div class="flex-colum input-group">
-                           <div class="flex">
-                              <input id="windowValue" type="number" class="input-sm" placeholder="Window slot">
-                              <select id="clickWindowLorR" class="select">
-                                 <option value="0" class="button">Left click</option>
-                                 <option value="1" class="button">Right click</option>
-                              </select>
-                           </div>
-                           <button id="btnWindowClick" class="button">Click</button>
-                        </div>
+                        <input id="windowValue" type="number" class="input" placeholder="Window slot">
+                        <select id="clickWindowLorR" class="input">
+                           <option value="0" class="button">Left click</option>
+                           <option value="1" class="button">Right click</option>
+                        </select>
+                        <button id="btnWindowClick" class="button">Click</button>
                      </div>
                   </div>
                   <div id="moveDirection" class="functsBtn" style="display:none">
@@ -247,7 +243,7 @@
                            </span>
                         </div>
                         <div class="input-group flex-colum">
-                           <select id="controlValue" class="input select">
+                           <select id="controlValue" class="select">
                               <option value="forward">Forward</option>
                               <option value="back">Backwards</option>
                               <option value="left">Left</option>
@@ -263,19 +259,17 @@
                      </div>
                   </div>
                   <div id="look" class="functsBtn" style="display:none">
-                     <div class="input-group flex-colum center-elements">
-                        <span class="label">
-                        <label class="label-text">Look at direction</label>
-                        </span>
-                        <div class="flex">
-                           <select id="lookValue" class="input-sm select">
-                              <option value="0">North</option>
-                              <option value="3">South</option>
-                              <option value="-1.5">East</option>
-                              <option value="1.5">West</option>
-                           </select>
-                           <button id="setLook" class="button">Set</button>
-                        </div>
+                     <span class="label">
+                     <label class="label-text">Look at direction</label>
+                     </span>
+                     <div class="input-group">
+                        <select id="lookValue" class="select">
+                           <option value="0">North</option>
+                           <option value="3">South</option>
+                           <option value="-1.5">East</option>
+                           <option value="1.5">West</option>
+                        </select>
+                        <button id="setLook" class="button">Set</button>
                      </div>
                   </div>
                   <div id="drop" class="functsBtn" style="display:none">
@@ -349,7 +343,6 @@
                      <input id="accountFilePath" type="file" accept=".txt" class="pl-4">
                   </div>
                </div>
-
                <div class="border window-bg-color m-4" style="width: 275px;">
                   <span class="label" style="position: relative; top:-25px">
                   <label class="label-text">App settings</label>
@@ -379,9 +372,7 @@
                      </div>
                   </div>
                </div>
-
             </div>
-
             <div class="border window-bg-color mu-4" style="width: 424px;">
                <span class="label" style="position: relative; top:-25px">
                <label class="label-text">Proxy settings</label>

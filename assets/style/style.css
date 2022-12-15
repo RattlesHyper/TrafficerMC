@@ -92,11 +92,12 @@ input[type=file]::file-selector-button:hover {
 }
 
 .button-selected {
-    filter: saturate(200%) brightness(200%);
+    border-color: rgb(var(--selected-item-color) / var(--selected-item-opacity));
+    border-left: 5px solid;
 }
 
 .button:hover {
-    filter: brightness(150%) 
+    filter: brightness(150%)
 }
 
 .input-group {
@@ -380,13 +381,11 @@ ul li {
 
 :root {
     --background-image: url('../icons/app/Background.svg');
-    --text-color: 80 200 145;
+    --text-color: 255 255 255;
     --text-opacity: 1;
-    --button-color: 80 200 200;
+    --button-color: 0 0 0;
     --button-opacity: 0.5;
-    --button-text-color: 255 255 255;
-    --button-text-: 1;
-    --button-border-color: 0 35 255;
+    --button-border-color: 125 125 125;
     --button-border-opacity: 0.2;
     --ul-opacity: 0.7;
     --sidebar-color: 0 0 0;
