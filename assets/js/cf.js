@@ -6,9 +6,11 @@ const botApi = new EventEmitter()
 const fetch = require('node-fetch')
 const fs = require('fs')
 const currentVersion = "1.9.2"
+let stopBot = false
 
 //bot connect method
 function connectBot() {
+    stopBot = false
     if (idAccountFileCheck.checked && idAccountFilePath.value) {
         startAccountFile(idAccountFilePath.files[0].path)
     } else {
@@ -24,6 +26,9 @@ function connectBot() {
     }
 }
 
+//bot stop event listener
+botApi.on('stopBots', () => {stopBot = true})
+
 //connection methods
 async function startAccountFile(accountFile) {
     sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> Account File Loaded. </li>`)
@@ -37,6 +42,7 @@ async function startAccountFile(accountFile) {
 }
 async function startWname() {
     for (var i = 0; i < idBotCount.value; i++) {
+        if (stopBot) break;
         let options = getBotInfo(idBotUsername.value, i)
         if (idBotUsername.value.includes("(SALT)") || idBotUsername.value.includes("(LEGIT)")) {
             newBot(options)
@@ -49,6 +55,7 @@ async function startWname() {
 }
 async function startWnoName() {
     for (var i = 0; i < idBotCount.value; i++) {
+        if (stopBot) break;
         newBot(getBotInfo(idBotUsername.value, i))
         await delay(idJoinDelay.value ? idJoinDelay.value : 1000)
     }
