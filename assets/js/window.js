@@ -3,20 +3,19 @@ const { BrowserWindow } = require('electron')
 class Window extends BrowserWindow {
   constructor ({ file }) {
     super({
-      width: 930,
+      width: 970,
       height: 530,
-      autoHideMenuBar: true,
       show: false,
       resizable: false,
-      devTools: false,
+      autoHideMenuBar: true,
       titleBarStyle: 'hidden',
       webPreferences: {
+        devTools: false,
         nodeIntegration: true,
         contextIsolation: false
       }
     })
     this.loadFile(file)
-    //this.webContents.openDevTools()
     this.once('ready-to-show', () => {
       this.show()
     })

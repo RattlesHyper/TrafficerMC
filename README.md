@@ -9,15 +9,16 @@
 
 # 📦 Features
 - Anti-AFK
-- Inventory/Chest Clicker
+- Inventory Manager
 - Chat
-- Chat Spammer + Anti Spam
+- Chat Spammer
 - Auto Reconnect
+- Killaura
 - [Scripting](#scripting)
 - [Account File](#accountfile)
-- [Proxy Support](#proxy) SOCKS4/SOCKS5
-- [Name Salt](#namesalt)
-- [Linux Support](#linux)
+- [Proxy Support](#proxy)
+- [Name Generator](#namegen)
+- [Custom Theme](#theme)
 - [Manual Build & Run Guide](#build)
 - Minecraft 1.8 - 1.19 Support
 - (And so many more featutrs, I'm too lazy to write them all)
@@ -28,11 +29,11 @@
 
 # 📷 Screenshots
 
-![Screenshot 1](https://cdn.discordapp.com/attachments/937393739490537493/1036899237654446100/unknown.png)
+![Screenshot 1](https://cdn.discordapp.com/attachments/937393739490537493/1070253266237140992/image.png)
 
-![Screenshot 2](https://cdn.discordapp.com/attachments/937393739490537493/1036899922781417502/unknown.png)
+![Screenshot 2](https://cdn.discordapp.com/attachments/937393739490537493/1070254695718862889/image.png)
 
-![Screenshot 3](https://cdn.discordapp.com/attachments/937393739490537493/1036900465478217738/unknown.png)
+![Screenshot 3](https://cdn.discordapp.com/attachments/937393739490537493/1070255636874534953/image.png)
 
 # 🎞️ Video
 
@@ -52,7 +53,7 @@ You need to use ` .txt ` file. Capitalization doesnt matter.
 ```
 chat Hi
 delay 1000
-LlickWindow 10
+winclick 36 0
 delay 5000
 disconnect
 ``` 
@@ -156,9 +157,7 @@ disconnect
     ` Disconnect ` Discommects Bot.
 
     ### Reconnect 
-    ` Reconnect ` Reconnects Bot.
-
-    (Currently not supported in MultiMode)
+    ` Reconnect ` Reconnects Bot. Delay can be set from settings. (Currently not supported in MultiMode)
 
     ### StartScript
     ` startScript ` Script Starts again with script command. works as loop.
@@ -186,39 +185,13 @@ disconnect
     
     ⚠️ And you must set bot count. That many accounts will join.
 
-    You can leave the Username & Password empty while using account file.
-
-    ## Inside account file
-
-    📍 First argument: Username / Email
-
-    📍 Second argument: Password (Leave empty if cracked)
-
-    📍 Third argument: Auth Type [mojang / microsoft]. (Leave empty if mojang)
-
     💡 Example:
 
     ```
-    Username Password microsoft
-    Username Password
-    Email Password microsoft
+    Username
+    Username
     Username
     ```
-
-    # linux
-
-    📍 Download the Linux version.
-
-    📍 Right click on the Appimage file.
-
-    📍 Click Properties.
-
-    📍 Click Permissions
-
-    📍 And enable "Allow ecexuting file as program"
-
-    📍 Then you can run the app by double clicking on it.
-
 
     # proxy
 
@@ -235,12 +208,45 @@ disconnect
     Proxy:Port
     Proxy:Port
     ```
+    # Theme
+    Custom CSS can be loaded from settings
+    
+    file format must be ` .css `
 
-    # namesalt
+    background-image url can be set to any online image link.
 
-    Name Salt Randomizes the name automatically!
+    here is the default theme
 
-    You can put ` (SALT) ` in the name box to get 4 random letters.
+    💡 Example
+
+    ```
+    :root {
+    --background-image: url('../icons/app/Background.svg');
+    --bg-color: #0c0d11;
+    --text-color: #f6f5f5;
+    --button-color: #5b8191;
+    --button-text-color: #f6f5f5;
+    --button-opacity: 1;
+    --button-border-color: #454864;;
+    --ul-bg-color: #171a25;
+    --ul-opacity: 0.7;
+    --downbar-color: #3D75C9;
+    --selected-item-color: #00e1ff88;
+    --selected-item-opacity: 1;
+    --downbar-opacity: 1;
+    --sidebar-color: 0 0 0;
+    --sidebar-opacity: 0.2;
+    --topbar-color: 0 0 0;
+    --topbar-opacity: 0.6;
+    }
+    ```
+    # Namegen
+
+    Name Generator Randomizes the name automatically!
+
+    Name Generator currently has 2 options (SALT) and (LEGIT)
+
+    ` (SALT) ` in the Username input to get 4 random letters.
 
     💡 Example
 
@@ -250,6 +256,8 @@ disconnect
     (SALT)(SALT)(SALT) = UaiOaFHWHbJx
     ```
 
+    ` (LEGIT) ` in the Username input will Generate fairly realistic names.
+
     # Build
 
     This is a guide for those who wanna build or run it with the source code.
@@ -258,18 +266,15 @@ disconnect
 
     Open Powershell or Terminal in a folder
 
-    1 ` git clone https://github.com/RattlesHyper/TrafficerMC ` clones the repo
+    1 ` git clone https://github.com/RattlesHyper/TrafficerMC `
 
-    2 ` npm install ` installs the dependencies
+    2 ` npm install `
 
-    3 ` npm start ` starts the application
+    3 ` npm start `
 
     Build commands.
 
-    ` npm run <OSxArch> ` builds and puts the build in /dist folder
-
-
-    OScArch options.
+    ` npm run <option> ` builds and puts the build in /dist folder
 
     `winx64` for Windows x64
 

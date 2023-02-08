@@ -5,7 +5,7 @@ const ProxyAgent = require('proxy-agent')
 const botApi = new EventEmitter()
 const fetch = require('node-fetch')
 const fs = require('fs')
-const currentVersion = "1.9.2"
+const currentVersion = "2.0"
 let stopBot = false
 
 //bot connect method
@@ -27,7 +27,9 @@ function connectBot() {
 }
 
 //bot stop event listener
-botApi.on('stopBots', () => {stopBot = true})
+botApi.on('stopBots', () => {
+    stopBot = true
+})
 
 //connection methods
 async function startAccountFile(accountFile) {
@@ -63,27 +65,14 @@ async function startWnoName() {
 
 //send bot info
 function getBotInfo(botName, n) {
-    let unm = "";
-    unm = botName.replaceAll("(SALT)", salt(4)).replaceAll("(LEGIT)", genName())
+    var unm = botName.replaceAll("(SALT)", salt(4)).replaceAll("(LEGIT)", genName());
+    var serverHost = idIp.value.split(':')[0] ? idIp.value.split(':')[0] : "localhost";
+    var serverPort = idIp.value.split(':')[1] ? idIp.value.split(':')[1] : 25565;
 
     if (idProxyToggle.checked) {
-        const file = fs.readFileSync(idProxyFilePath.files[0].path)
-        const lines = file.toString().split(/\r?\n/)
-        const rnd = Math.floor(Math.random() * lines.length)
-        let proxyHost = '';
-        let proxyPort = '';
-
-        if (idProxyOrderRnd.checked) {
-            proxyHost = lines[rnd].split(":")[0]
-            proxyPort = lines[rnd].split(":")[1]
-        } else {
-            if (n >= lines.length) {
-                n = rnd
-            }
-            proxyHost = lines[n].split(":")[0]
-            proxyPort = lines[n].split(":")[1]
-        }
-
+        var proxyHost = getProxy(n).split(":")[0];
+        var proxyPort = getProxy(n).split(":")[1];
+        
         options = {
             connect: client => {
                 socks.createConnection({
@@ -94,12 +83,12 @@ function getBotInfo(botName, n) {
                     },
                     command: 'connect',
                     destination: {
-                        host: idIp.value.split(':')[0],
-                        port: parseInt(idIp.value.split(':')[1] ? idIp.value.split(':')[1] : 25565)
+                        host: serverHost,
+                        port: parseInt(serverPort)
                     }
                 }, (err, info) => {
                     if (err) {
-                        sendLog(`[ProxyError]-> [${unm}]-> [proxy:port]-> ${err}`)
+                        sendLog(`[ProxyError] [${unm}] [${proxyHost}:${proxyPort}] ${err}`)
                         return;
                     }
                     client.setSocket(info.socket);
@@ -111,8 +100,8 @@ function getBotInfo(botName, n) {
                 host: proxyHost,
                 port: proxyPort
             }),
-            host: idIp.value.split(':')[0] ? idIp.value.split(':')[0] : "localhost",
-            port: idIp.value.split(':')[1] ? idIp.value.split(':')[1] : 25565,
+            host: serverHost,
+            port: serverPort,
             username: unm ? unm : salt(10),
             version: idBotVersion.value,
             auth: idAuthType.value,
@@ -123,8 +112,8 @@ function getBotInfo(botName, n) {
         return options;
     } else {
         options = {
-            host: idIp.value.split(':')[0] ? idIp.value.split(':')[0] : "localhost",
-            port: idIp.value.split(':')[1] ? idIp.value.split(':')[1] : 25565,
+            host: serverHost,
+            port: serverPort,
             username: unm ? unm : salt(10),
             version: idBotVersion.value,
             auth: idAuthType.value,
@@ -132,8 +121,24 @@ function getBotInfo(botName, n) {
                 sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)">[${botName}] First time signing in. Please authenticate now: To sign in, use a web browser to open the page https://www.microsoft.com/link and enter the code: ${data.user_code} to authenticate. </li>`)
             }
         };
-
         return options;
+    }
+}
+
+//get proxy from file with line number
+function getProxy(n) {
+    const file = fs.readFileSync(idProxyFilePath.files[0].path)
+    const lines = file.toString().split(/\r?\n/)
+    const rnd = Math.floor(Math.random() * lines.length)
+    
+    if (idProxyOrderRnd.checked) {
+        return lines[rnd]
+    } else {
+        if (n >= lines.length) {
+            return lines[rnd]
+        } else {
+            return lines[n]
+        }
     }
 }
 
@@ -156,6 +161,7 @@ function delay(ms) {
 function addPlayer(name) {
     const b = document.createElement("li")
     b.id = "list" + name
+    b.style = "font-weight:bold"
     b.innerHTML = name
     b.addEventListener('click', () => {
         selectBot(event)
@@ -179,6 +185,7 @@ function errBot(name) {
 
 //console logs
 function sendLog(log) {
+    if(!log) return;
     const b = document.createElement("li")
     b.innerHTML = log
     idChatBox.appendChild(b)
@@ -186,28 +193,25 @@ function sendLog(log) {
 }
 
 //execute command all bots
-function exeAll(command, a1, a2) {
-    let e = idBotList.getElementsByTagName("li")
-    if (e.length === 0) return;
-    let l = e.length
+async function exeAll(command, ...args) {
+    var sels = document.getElementsByClassName("botSelected");
+    if (sels.length === 0) return sendLog(`<li> <img src="./assets/icons/app/alert-triangle.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(89%) sepia(82%) saturate(799%) hue-rotate(1deg) brightness(103%) contrast(102%)">No bots selected!</li>`);
     let list = ["BLANK"]
 
-    for (var i = 0; i < l; i++) {
-        if (i + 1 === l) {
-            startcmd(a1, a2)
-        }
-        if (e[i].classList.value.includes("botSelected")) {
-            list.push(e[i].innerHTML + command)
-        }
+    var liElements = Array.from(sels).filter(function(element) {
+        return element.tagName === "LI";
+    });
+
+    liElements.forEach(e => {
+        list.push(e.innerHTML + command)
+    })
+
+    for (var i = 0; i < list.length; i++) {
+        botApi.emit(list[i], ...args)
+        await delay(idLinearValue.value)
     }
 
-    async function startcmd(a1, a2) {
-        for (var i = 0; i < list.length; i++) {
-            botApi.emit(list[i], a1, a2)
-            await delay(idLinearValue.value)
-        }
-    }
-    sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${command}] ${a1? a1: ""} ${a2 ? a2: ""} </li>`)
+    sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${command}] ${args} </li>`)
 }
 
 function updateBotCount() {
@@ -224,11 +228,14 @@ async function startScript(botId, script) {
         const args = lines[i].split(" ")
         const command = args.shift().toLowerCase();
         if (command === "delay") {
+            sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] Delay ${args.shift()}ms </li>`)
             await delay(args.shift())
         } else if (command === "chat") {
             botApi.emit(botId + command, lines[i].slice(5))
+            sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] Chat ${lines[i].slice(5)} </li>`)
         } else {
-            botApi.emit(botId + command, args.shift(), args.shift(1))
+            botApi.emit(botId + command, ...args)
+            sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] ${args} </li>`)
         }
     }
 }
@@ -247,6 +254,7 @@ function checkVer() {
         .then(result => {
             if (result.replaceAll("\n", "").replaceAll(" ", "") !== currentVersion) {
                 outdatedVersionAlert.style.display = outdatedVersionAlert.style.display.replace("none", "")
+                createPopup("New version found, Please update", "red")
             }
         })
 }
@@ -263,12 +271,61 @@ function genName() {
 
 // load theme
 function loadTheme(file) {
-    var link = document.createElement( "link" );
-    link.href = file
-    link.type = "text/css";
-    link.rel = "stylesheet";
-
-document.getElementsByTagName( "head" )[0].appendChild( link );
+    fs.exists(file, (exists) => {
+        if(exists) {
+            var link = document.createElement("link");
+            link.href = file
+            link.type = "text/css";
+            link.rel = "stylesheet";
+        
+            document.getElementsByTagName("head")[0].appendChild(link);
+            createPopup("Loaded custom CSS", "green")
+        }
+    });
 }
 
-module.exports = { getBotInfo, connectBot, salt, delay, addPlayer, rmPlayer, errBot, sendLog, exeAll, startScript, checkVer, genName, loadTheme, mineflayer, botApi }
+// Create the pop-up element
+function createPopup(text, color) {
+    const popup = document.createElement('li');
+    popup.classList.add('popup-content');
+    popup.textContent = text;
+    if(color) popup.style.color = color;
+
+    idPopupUl.appendChild(popup);
+
+    setTimeout(() => {
+        popup.style.right = 0;
+    }, 100);
+    setTimeout(() => {
+        popup.style.opacity = 0;
+        setTimeout(() => {
+            popup.remove()
+        }, 300);
+    }, 3000);
+}
+
+// json to html format
+function formatText(json) {
+    c = json
+    return `<span style='${c.color ? `color: ${c.color};`: ""}${c.bold ? "font-weight:bold;" : ""}${c.italic ? "font-style:italic;" : ""} '>${c.text}</span>`;
+}
+
+module.exports = {
+    getBotInfo,
+    connectBot,
+    salt,
+    delay,
+    addPlayer,
+    rmPlayer,
+    errBot,
+    sendLog,
+    exeAll,
+    startScript,
+    checkVer,
+    genName,
+    loadTheme,
+    createPopup,
+    formatText,
+    mineflayer,
+    botApi
+}

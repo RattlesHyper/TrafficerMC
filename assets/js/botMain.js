@@ -1,5 +1,5 @@
 const { ipcRenderer, shell } = require("electron")
-const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer, loadTheme } = require( __dirname + '/assets/js/cf.js')
+const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer, loadTheme, createPopup, formatText } = require( __dirname + '/assets/js/cf.js')
 const antiafk = require( __dirname +  '/assets/plugins/antiafk')
 process.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 let currentTime = Date.now()
@@ -66,9 +66,20 @@ let idStopAfk = document.getElementById('stopAfk')
 let antiSpamLength = document.getElementById('antiSpamLength')
 let idBtnCustomCss = document.getElementById('btnSaveTheme')
 let idCustomCssFile = document.getElementById('customCssFile')
+let idPopupUl = document.getElementById('listul')
+let idShowChatCheck = document.getElementById('showChatCheck')
+let idWindow = document.getElementById('botOpenWindow')
+let idWindowTitle = document.getElementById('botOpenWindowName')
+let idKarange = document.getElementById('kaRange')
+let idKadelay = document.getElementById('kaDelay')
+let idTplayer = document.getElementById('kaTp')
+let idTvehicle = document.getElementById('kaTv')
+let idTmob = document.getElementById('kaTm')
+let idTanimal = document.getElementById('kaTa')
+let idKaToggle = document.getElementById('toggleka')
+let idKaLook = document.getElementById('toggleKaLook')
 
 //button listeners
-
 window.addEventListener('DOMContentLoaded', () => {
     botApi.setMaxListeners(0)
     checkVer()
@@ -99,9 +110,17 @@ window.addEventListener('DOMContentLoaded', () => {
             ipcRenderer.send('theme', (event, path))
         }
     })
+    idKaToggle.addEventListener('change', ()=> {
+        if(idKaToggle.checked) {
+            botApi.emit("toggleka", idKadelay.value)
+        } else {
+            botApi.emit("stopka")
+        }
+    })
 })
 
-function newBot(options) {
+
+async function newBot(options) {
     const bot = mineflayer.createBot(options)
     let afkLoaded = false
 
@@ -114,7 +133,7 @@ function newBot(options) {
         if(idScriptCheck.checked && idScriptPath.value) { startScript(bot.username, idScriptPath.files[0].path)}
     });
     bot.once('kicked', (reason)=> {
-        botApi.emit("kicked", bot.username, reason)
+        botApi.emit("kicked", options.username, reason)
     });
     bot.once('end', (reason)=> {
         botApi.emit("end", options.username, reason)
@@ -131,16 +150,44 @@ function newBot(options) {
     });
     
     bot.on('messagestr', (message) => {
-        if(idBotList.getElementsByTagName("li").length <= 1) {
-            sendLog(message)
+        if(!message) return;
+        if(idShowChatCheck.checked) {
+            sendLog(`[${options.username}] ${message}`)
         }
     });
+
+    bot.on('windowOpen', (window) => {
+        idWindow.innerHTML = ""
+        idWindowTitle.innerHTML = formatText(JSON.parse(window.title))
+        for (var i = 0; i < window.slots.length; i++) {
+            const item = window.slots[i]
+            let dname = ""
+            if (item) {
+                if (item.nbt.value.display.value.Name.value) {
+                    displayname = JSON.parse(item.nbt.value.display.value.Name.value)
+    
+                    if (displayname.extra) {
+                        var ext = displayname.extra
+                        ext.forEach(e => {
+                            dname += formatText(e)
+                        });
+                    } else {
+                        dname += formatText(displayname)
+                    }
+                }
+                const b = document.createElement("li")
+                b.innerHTML = `<span style="font-weight: bold;">${i}</span> ${dname} <span style="font-weight: bold;">${item.count}x</span>`
+                idWindow.appendChild(b)
+            }
+        }
+        sendLog(`[${bot.username}] Window opened`)
+    })
 
     botApi.once(options.username+'disconnect', () => {bot.quit()})
     botApi.once(options.username+'reconnect', () => {newBot(options)})
     botApi.on(options.username+'useheld', () => {bot.activateItem()})
-    botApi.on(options.username+'closewindow', () => {bot.closeWindow(window)})
-    botApi.on(options.username+'chat', (o) => { if(idCheckAntiSpam.checked) { bot.chat(o.replaceAll("(SALT)", salt(4))+" "+salt(antiSpamLength.value ? antiSpamLength.value : 5)) } else { bot.chat(o.replaceAll("(SALT)", salt(4))) } })
+    botApi.on(options.username+'closewindow', () => {bot.closeWindow(bot.currentWindow)})
+    botApi.on(options.username+'chat', (o) => { if(idCheckAntiSpam.checked) { bot.chat(o.toString().replaceAll("(SALT)", salt(4))+" "+salt(antiSpamLength.value ? antiSpamLength.value : 5)) } else { bot.chat(o.toString().replaceAll("(SALT)", salt(4))) } })
     botApi.on(options.username+'sethotbar', (o) => {bot.setQuickBarSlot(o)})
     botApi.on(options.username+'winclick', (o, i) => {if(i == 0) {bot.clickWindow(o, 0, 0)} else {bot.clickWindow(o, 1, 0)}})
     botApi.on(options.username+'stopcontrol', (o) => {bot.setControlState(o, false)})
@@ -164,8 +211,7 @@ function newBot(options) {
             bot.clickWindow(o, 0, 0)
             bot.clickWindow(-999, 0, 0)
         } else {
-            tossAll()
-            async function tossAll() {
+            (async () => {
                 const itemCount = bot.inventory.items().length
                 for (var i = 0; i < itemCount; i++) {
                     if (bot.inventory.items().length === 0) return
@@ -173,7 +219,7 @@ function newBot(options) {
                     bot.tossStack(item)
                     await delay(10)
                 }
-              }
+              })();
         }
     })
 
@@ -183,13 +229,61 @@ function newBot(options) {
     })
 
     idBtnRc.addEventListener('click', () => {botApi.emit(options.username+'reconnect')})
+
+    botApi.on(options.username + 'hit', () => {
+        const entities = Object.values(bot.entities);
+        entities.forEach((entity) => {
+            const distance = bot.entity.position.distanceTo(entity.position);
+            if (distance <= idKarange.value) {
+                if (entity.kind === "Hostile mobs" && idTmob.checked) {
+                    if (idKaLook.checked) {
+                        bot.lookAt(entity.position, true);
+                        bot.attack(entity);
+                    } else {
+                        bot.attack(entity);
+                    }
+                }
+                if (entity.kind === "Passive mobs" && idTanimal.checked) {
+                    if (idKaLook.checked) {
+                        bot.lookAt(entity.position, true);
+                        bot.attack(entity);
+                    } else {
+                        bot.attack(entity);
+                    }
+                }
+                if (entity.kind === "Vehicles" && idTvehicle.checked) {
+                    if (idKaLook.checked) {
+                        bot.lookAt(entity.position, true);
+                        bot.attack(entity);
+                    } else {
+                        bot.attack(entity);
+                    }
+                }
+                if (entity.type === "player" && entity.username !== bot.username && idTplayer.checked) {
+                    if (idKaLook.checked) {
+                        bot.lookAt(entity.position, true);
+                        bot.attack(entity);
+                    } else {
+                        bot.attack(entity);
+                    }
+                }
+            }
+        });
+    })
 }
 
+botApi.on('toggleka', (dl)=> {
+    botApi.once('stopka', ()=> {clearInterval(katoggle)})
+    var katoggle = setInterval(() => {
+        exeAll('hit')
+    }, dl ? dl: 500);
+})
+
 botApi.on('spam', (msg, dl) => {
-    botApi.on('stopspam', ()=> {clearInterval(chatSpam)})
+    botApi.once('stopspam', ()=> {clearInterval(chatSpam)})
     var chatSpam = setInterval(() => {
         exeAll("chat", msg)
-    }, dl);
+    }, dl ? dl: 1000);
 })
 
 botApi.on("login", (name)=> {
@@ -204,8 +298,9 @@ botApi.on("spawn", (name)=> {
     sendLog(`<li> <img src="./assets/icons/app/arrow-right.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(26%) sepia(94%) saturate(5963%) hue-rotate(74deg) brightness(96%) contrast(101%)"> ${name} Spawned.</li>`)
 })
 botApi.on("kicked", (name, reason)=> {
+    console.log(reason)
     rmPlayer(name)
-    sendLog(`<li> <img src="./assets/icons/app/arrow-left.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(11%) sepia(92%) saturate(6480%) hue-rotate(360deg) brightness(103%) contrast(113%)"> [${name}] : ${reason}</li>`)
+    sendLog(`<li> <img src="./assets/icons/app/arrow-left.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(11%) sepia(92%) saturate(6480%) hue-rotate(360deg) brightness(103%) contrast(113%)"> [${name}] : ${formatText(JSON.parse(reason))}</li>`)
 })
 botApi.on("end", (name, reason)=> {
     rmPlayer(name)
@@ -226,8 +321,8 @@ botApi.on("error", (name, err)=> {
 
 // uptime counter
 idBtnStart.addEventListener('click', () => {
+    currentTime = Date.now()
     idBtnStart.addEventListener('click', () => {
-        currentTime = Date.now()
         clearInterval(botUptime)
         idUptime.innerHTML = getTime(currentTime)
     })

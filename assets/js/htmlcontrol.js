@@ -1,28 +1,39 @@
-function openTab(evt, tabName) {
-    var i, x, tablinks;
-    x = document.getElementsByClassName("sideBtn");
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablink");
-    for (i = 0; i < x.length+1; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" tab-selected", "");
-    }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " tab-selected";
+const buttons = document.querySelectorAll('.selectors button');
+for (const button of buttons) {
+  button.addEventListener('click', showHideDiv);
 }
-function openFuncs(evt, tabName) {
-    var i, x, tablinks;
-    x = document.getElementsByClassName("functsBtn");
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
+
+const tabbuttons = document.querySelectorAll('.tab-selectors button');
+for (const button of tabbuttons) {
+  button.addEventListener('click', tabShowHideDiv);
+}
+
+function showHideDiv(event) {
+    const targetDiv = event.target.dataset.target;
+    const divElements = document.querySelectorAll('.functsBtn');
+    for (const element of divElements) {
+      element.style.display = 'none';
     }
-    tablinks = document.getElementsByClassName("funcBtnLink");
-    for (i = 0; i < x.length+1; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" button-selected", "");
+    document.querySelector(targetDiv).style.display = 'block';
+    const buttonElements = document.querySelectorAll('.selectors button');
+    for (const button of buttonElements) {
+      button.classList.remove('button-selected');
     }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " button-selected";
+    event.target.classList.add('button-selected');
+}
+
+function tabShowHideDiv(event) {
+    const targetDiv = event.target.dataset.target;
+    const divElements = document.querySelectorAll('.tab-functsBtn');
+    for (const element of divElements) {
+      element.style.display = 'none';
+    }
+    document.querySelector(targetDiv).style.display = 'block';
+    const buttonElements = document.querySelectorAll('.tab-selectors button');
+    for (const button of buttonElements) {
+      button.classList.remove('button-selected');
+    }
+    event.target.classList.add('button-selected');
 }
 
 function clearChat() {
@@ -51,3 +62,19 @@ function selectRemove() {
         e.classList.remove("botSelected")
     });
 }
+
+const triggers = document.querySelectorAll('.hpop');
+triggers.forEach(function (trigger) {
+  trigger.addEventListener('mouseenter', function () {
+    const popupId = this.getAttribute('data-popup');
+    const popup = document.getElementById(popupId);
+    const triggerRect = trigger.getBoundingClientRect();
+    popup.style.left = triggerRect.right-100 + 'px';
+    popup.style.display = 'block';
+  });
+  trigger.addEventListener('mouseleave', function () {
+    const popupId = this.getAttribute('data-popup');
+    const popup = document.getElementById(popupId);
+    popup.style.display = 'none';
+  });
+});

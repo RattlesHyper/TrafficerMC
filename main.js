@@ -26,6 +26,7 @@ function createWindow() {
         mainWindow.webContents.send('restore', store.get('config'))
         mainWindow.webContents.send('restoreTheme', store.get('theme'))
     });
+    mainWindow.webContents.setBackgroundThrottling(false)
 }
 
 ipcMain.on('config', (event, config) => {
