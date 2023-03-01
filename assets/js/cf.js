@@ -5,7 +5,7 @@ const ProxyAgent = require('proxy-agent')
 const botApi = new EventEmitter()
 const fetch = require('node-fetch')
 const fs = require('fs')
-const currentVersion = "2.0"
+const currentVersion = "2.1"
 let stopBot = false
 
 //bot connect method
@@ -227,9 +227,14 @@ async function startScript(botId, script) {
     for (var i = 0; i < lines.length; i++) {
         const args = lines[i].split(" ")
         const command = args.shift().toLowerCase();
+        const cmd2 = args.shift(1)
+        if (command === "loop") {
+            startScript(botId, script)
+            sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] Script Loop </li>`)
+        }
         if (command === "delay") {
-            sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] Delay ${args.shift()}ms </li>`)
-            await delay(args.shift())
+            sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] Delay ${cmd2}ms </li>`)
+            await delay(cmd2)
         } else if (command === "chat") {
             botApi.emit(botId + command, lines[i].slice(5))
             sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] Chat ${lines[i].slice(5)} </li>`)

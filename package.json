@@ -2,7 +2,7 @@
   "name": "trafficermc",
   "author": "RattlesHyper",
   "maintainer": "RattlesHyper",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A Minecraft botting tool with Anti-AFK, Chat spammer, Inventory/Chest manager features.",
   "license": "MIT",
   "main": "main.js",
@@ -16,7 +16,7 @@
   "dependencies": {
     "electron-json-storage": "^4.6.0",
     "electron-store": "^8.1.0",
-    "mineflayer": "^4.1.0",
+    "mineflayer": "^4.8.1",
     "node-fetch": "2.6.7",
     "proxy-agent": "^5.0.0",
     "socks": "^2.7.0"
