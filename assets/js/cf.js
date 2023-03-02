@@ -227,20 +227,15 @@ async function startScript(botId, script) {
     for (var i = 0; i < lines.length; i++) {
         const args = lines[i].split(" ")
         const command = args.shift().toLowerCase();
-        const cmd2 = args.shift(1)
-        if (command === "loop") {
-            startScript(botId, script)
-            sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] Script Loop </li>`)
-        }
         if (command === "delay") {
-            sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] Delay ${cmd2}ms </li>`)
-            await delay(cmd2)
-        } else if (command === "chat") {
+            await delay(args[0])
+        }
+        if (command === "chat") {
             botApi.emit(botId + command, lines[i].slice(5))
-            sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] Chat ${lines[i].slice(5)} </li>`)
+            sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] chat ${lines[i].slice(5)} </li>`)
         } else {
             botApi.emit(botId + command, ...args)
-            sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] ${args} </li>`)
+            sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] ${command} ${args} </li>`)
         }
     }
 }
