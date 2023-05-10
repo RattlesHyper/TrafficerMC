@@ -1,226 +1,159 @@
-# TrafficerMC
-## A Minecraft botting tool with Anti-AFK, Chat spammer, Inventory/Chest manager features.
+<p align="center">
+  <img src="https://cdn.discordapp.com/attachments/1101173583956422736/1101178737875234816/fqwefqef.png"/>
+</p>
+<p align="center">The best, free and open source Minecraft botting tool.</p>
+<p align="center">
+  <img src="https://img.shields.io/discord/935341227400904734?color=red&style=for-the-badge"/>
+  <img src="https://img.shields.io/github/v/release/RattlesHyper/Trafficermc?color=red&style=for-the-badge"/>
+  <img src="https://img.shields.io/github/downloads/RattlesHyper/TrafficerMC/total?color=red&style=for-the-badge"/>
+</p>
 
-[![Discord](https://discord.com/api/guilds/935341227400904734/widget.png)](https://discord.gg/m6b8Pw4NR8)
-[![](https://img.shields.io/github/release/RattlesHyper/TrafficerMC.svg)](https://github.com/RattlesHyper/TrafficerMC/releases)
-[![GitHub downloads](https://img.shields.io/github/downloads/RattlesHyper/TrafficerMC/total.svg)](https://github.com/RattlesHyper/TrafficerMC/releases/latest)
+# Features
+TrafficerMC has a variety of features. Some of them are:
+ - Anti-AFK
+ - Killaura
+ - Spam w/ Anti-Spam prevention
+ - FileIO (Scripting, Accounts, Proxies)
+ - Linear Delay
+ - Auto Reconnect
+ - and way more!
 
-### Click here to [Download](https://github.com/RattlesHyper/TrafficerMC/releases)
+# Media
 
-# 📦 Features
-- Anti-AFK
-- Inventory Manager
-- Chat
-- Chat Spammer
-- Auto Reconnect
-- Killaura
-- [Scripting](#scripting)
-- [Account File](#accountfile)
-- [Proxy Support](#proxy)
-- [Name Generator](#namegen)
-- [Custom Theme](#theme)
-- [Manual Build & Run Guide](#build)
-- Minecraft 1.8 - 1.19 Support
-- (And so many more featutrs, I'm too lazy to write them all)
+![](https://media.discordapp.net/attachments/1101173583956422736/1105880170751078400/image.png)
 
-<details open style="font-size: 16px">
-<summary>📷 Screenshots and Video</summary>
-<br>
+![](https://media.discordapp.net/attachments/1101173583956422736/1105881853849772062/TrafficerMC_BCQhRUpAWj.png)
 
-# 📷 Screenshots
+![](https://media.discordapp.net/attachments/1101173583956422736/1105881852948009090/TrafficerMC_Agn7kon7Np.png)
+## Tutorials
+[![](https://img.youtube.com/vi/lD3poymjVAk/maxresdefault.jpg)](https://www.youtube.com/watch?v=lD3poymjVAk)
+TrafficerMC v2.1
 
-![Screenshot 1](https://cdn.discordapp.com/attachments/937393739490537493/1070253266237140992/image.png)
-
-![Screenshot 2](https://cdn.discordapp.com/attachments/937393739490537493/1070254695718862889/image.png)
-
-![Screenshot 3](https://cdn.discordapp.com/attachments/937393739490537493/1070255636874534953/image.png)
-
-# 🎞️ Video
-
-[![](https://cdn.discordapp.com/attachments/962345126536036415/962355332263317554/hqdefault.jpg)](https://www.youtube.com/watch?v=eAe9m-d-el0&t=2s)
-
-</details> <br>
+[![](https://img.youtube.com/vi/eAe9m-d-el0/maxresdefault.jpg)](https://www.youtube.com/watch?v=eAe9m-d-el0)
+TrafficerMC v0.4
 
 # Scripting
+Scripting can allow the bot to do things automatically without any user input. It can also help if you are making multiple bots do the same things. To make a script, you would need to go into a text file editor, and apon finishing the script, you save it as a `.txt` file. You can name it anything. Scripts will run after the bot has spawned in.
 
-## Script format
+## What a script would look like
+```
+chat Hello from TrafficerMC!
+delay 1000
+useheld
+delay 2000
+winclick 36 0
+delay 1000
+disconnect
+```
+## Features
+ - [Chat](#chat)
+ - [Use Held Item](#useheld)
+ - [Set Hotbar Slot](#sethotbar)
+ - [Click Inventory Item](#winclick)
+ - [Close Window](#closewindow)
+ - [Drop](#drop)
+ - [Movement](#movement)
+ - [Anti-AFK](#anti-afk)
+ - [Disconnect](#disconnect)
+ - [Reconnect](#reconnect)
+ - [Loop](#startscript)
+ - [Delay](#delay)
 
-Script will start after bot spawn.
-
-You need to use ` .txt ` file. Capitalization doesnt matter.
-
-### 💡 Example
+### Chat
+Sends a message to the servers chat.
+Usage: `chat <message>`
+Example:
+```
+chat Hello there!
+chat /help
+```
+### useHeld
+Uses the current held item.
+Usage: `useHeld`
+### setHotbar
+Sets hotbar to the selected slot.
+Usage: `setHotbar <number>`
+Example: 
+```
+setHotbar 0
+setHotbar 3
+```
+### winClick 
+Clicks on a window item. To right click, use `0`. Otherwise, to left click, use `1`.
+Usage: `winClick <number> <type>`
+Example:
+```
+winClick 36 0
+winClick 24 1
+```
+**If you are struggling on what slots you should click, here are some images to represent!**
+Chest interface:
+![](https://cdn.discordapp.com/attachments/963491992506073108/967223630436118648/unknown.png) 
+Inventory interface:
+![](https://cdn.discordapp.com/attachments/963491992506073108/967224021823397888/unknown.png)
+### closeWindow
+Closes the current window.
+Usage: `closeWindow` 
+### Drop
+Drops the slot item if none specified drops all.
+Usage: `drop <number>`
+Example:
+```
+drop
+drop 36
+```
+### Movement
+Controls the bot movement.
+Usage: `startControl/stopControl forward/backwards/left/right/jump/sneak/sprint`
+Example:
+```
+startControl forward
+startControl jump
+stopControl forward
+```
+### Anti-AFK
+Enables/Disables Anti-AFK on the bot.
+Usage: `afkOn/afkOff`
+### Disconnect
+Disconnects the Bot.
+Usage: `disconnect` 
+### Reconnect 
+Reconnects the bot.
+Usage: `reconnect`
+### startScript
+Starts the script.
+Usage: `startScript`
+### Delay 
+Delays the next task.
+Usage: `delay <milliseconds - 1000 by default>`
+Example:
 ```
 chat Hi
-delay 1000
-winclick 36 0
-delay 5000
-disconnect
-``` 
-🔎 Script features
-
-- [Features](#scriptfeatures)
-    - [Chat](#chat)
-    - [Use Held Item](#useheld)
-    - [setHotbar](#sethotbar)
-    - [Click Inventory Item](#winclick)
-    - [closeWindow](#closewindow)
-    - [drop](#drop)
-    - [Control Movement](#control)
-    - [Anti-Afk](#anti-afk)
-    - [Disconnect](#disconnect)
-    - [Reconnect](#reconnect)
-    - [Loop](#startscript)
-    - [Anti-Afk](#anti-afk)
-    - [Delay](#delay)
-
-    ### chat
-    ` chat <Message> ` Sends message in chat.
-
-    💡 Example:
-    ```
-    chat Hi
-    chat Hello
-    ```
-
-    ### Useheld
-    ` useheld ` Uses Held item in hand.
-
-    ### setHotbar
-    ` sethotbar <Hotbar Slot Number> ` Sets Hotbar to selected slot.
-
-    Minecraft hotbar starts at 0
-
-    ![Horbar](https://cdn.discordapp.com/attachments/963491992506073108/967220718376996934/hotbar.jpg)
-
-    💡 Example: 
-    ```
-    setHotbar 0
-    sethotbar 3
-    ```
-
-    ### WinClick 
-    ` winclick ` lets you Left and Right click on window item.
-
-    Right click ` <Item Slot> 0`
-
-    Left click ` <Item Slot> 1`
-
-    💡 Example:
-
-    ```
-    winclick 36 0
-    winclick 36 1
-    ```
-
-    Window Slots Example:
-
-    Minecraft Window slots / While window open:
-
-    ![](https://cdn.discordapp.com/attachments/963491992506073108/967223630436118648/unknown.png)
-
-    Minecraft Inventory slots / While window closed:
-
-    ![](https://cdn.discordapp.com/attachments/963491992506073108/967224021823397888/unknown.png)
-
-    ### closeWindow
-    ` closeWindow ` Closes open window.
-
-    ### Drop
-    ` Drop <Invntory Slot>` Drops the slot item if none specified drops all.
-
-    💡 Example:
-    ```
-    Drop
-    Drop 36
-    ```
-    ### Control
-    ` startControl ` and  ` stopControl ` lets you control bots movement.
-    
-    control options: ` forward, backwards, left, right, jump, sneak, sprint `
-
-    💡 Example:
-
-    ```
-    startControl forward
-    startControl jump
-    stopControl forward
-    ```
-
-    ### Anti-AFK
-
-    ` afkOn ` Anti-AFK enabled
-
-    ` afkOff ` Anti-AFK disabled
-
-    ### Disconnect
-    ` Disconnect ` Discommects Bot.
-
-    ### Reconnect 
-    ` Reconnect ` Reconnects Bot. Delay can be set from settings. (Currently not supported in MultiMode)
-
-    ### StartScript
-    ` startScript ` Script Starts again with script command. works as loop.
-
-    ### Delay 
-    ` Delay ` Adds delay to next task.
-
-    Delay is count by ms ` 1 sec = 1000 `
-
-    Default delay 1000
-
-    💡 Example:
-
-    ```
-    chat Hi
-    delay 1200
-    chat Hello
-    ```
-
-    # AccountFile
-
-    ## Account File format
-
-    Account file must be a ` .txt ` file.
-    
-    ⚠️ And you must set bot count. That many accounts will join.
-
-    💡 Example:
-
-    ```
-    Username
-    Username
-    Username
-    ```
-
-    # proxy
-
-    Proxy file must be a ` .txt ` file. And it's used in Random order
-
-    💡 Proxy Supports SOCKS4 & SOCKS5
-
-    ⚠️ You must chose SOCKS protocol from Dashboard
-    
-    💡 Proxy File format Example
-
-    ```
-    Proxy:Port
-    Proxy:Port
-    Proxy:Port
-    ```
-    # Theme
-    Custom CSS can be loaded from settings
-    
-    file format must be ` .css `
-
-    background-image url can be set to any online image link.
-
-    here is the default theme
-
-    💡 Example
-
-    ```
-    :root {
+delay 1200
+chat Hello
+```
+# Account Filing
+Account filing connects the bots with certain names that aren't set in General tab. It can be useful if you want to bot a server with NameMC names, for example. To make a account file, you would need to go into a text file editor, and apon entering all the usernames, you save it as a `.txt` file. You can name it anything. **Please note that you will still need to set the Max Accounts in General Tab for the bots to join!**
+## What an account file would look like
+```
+vampers
+nVoid
+Danilo764
+```
+# Proxies
+Proxy file must be a ` .txt ` file. And it's used in Random order
+Proxies connects the bots with different ip addresses. This can be very useful to bypass the max connections to a server, or bypass the max registerations if it's a cracked server. To make a proxy file, you would need to go into a text file editor, and apon entering all the proxies with ports, you save it as a `.txt` file. You can name it anything. **Please note that you will need to set the SOCKS protocol in Settings Tab for the bots to join!**
+## What a proxy file would look like
+```
+12.34.56.78:9876
+54.3.210.123:45678
+98.7.65.4:32101
+```
+# Theming
+Custom CSS allows you to customize TrafficerMC the way you wanted. To make a custom css file, you would need to go into a text file editor, and apon finishing the css file, you save it as a `.css` file. You can name it anything. After all that, the file must be loaded in Settings tab. 
+## What the css file should look like
+```
+:root {
     --background-image: url('../icons/app/Background.svg');
     --bg-color: #0c0d11;
     --text-color: #f6f5f5;
@@ -238,48 +171,21 @@ disconnect
     --sidebar-opacity: 0.2;
     --topbar-color: 0 0 0;
     --topbar-opacity: 0.6;
-    }
-    ```
-    # Namegen
+}
+```
+# Name generator
+Name generation randomizes the bot's name without any user input. There are 2 current options, which are `(SALT)` and `(LEGIT)`. These must be input in the Username bit in General tab.
+## What name generation would look like
+```
+TrafficerMC_(SALT) = TrafficerMC_hlpC / TrafficerMC_ggKt
+(LEGIT) = JogBeeRibTap / GitFunWitSinWar
+```
+# Building TrafficerMC
+If you want to run TrafficerMC in an IDE environment, you can do so. You would need [node.js](https://nodejs.org/en/download) installed before continuing. After node.js is installed, you need to make a folder to put all TrafficerMC code in, and open up a terminal or powershell in that folder. Once you have a terminal opened and on the folder, you need to execute these 3 commands:
 
-    Name Generator Randomizes the name automatically!
+ 1. `git clone https://github.com/RattlesHyper/TrafficerMC`
+ 2. `npm install`
+ 3. `npm start`
 
-    Name Generator currently has 2 options (SALT) and (LEGIT)
-
-    ` (SALT) ` in the Username input to get 4 random letters.
-
-    💡 Example
-
-    ```
-    (SALT)_NAME = UaiO_NAME
-    (SALT)_NAME_(SALT) = kwaW_NAME_aWad
-    (SALT)(SALT)(SALT) = UaiOaFHWHbJx
-    ```
-
-    ` (LEGIT) ` in the Username input will Generate fairly realistic names.
-
-    # Build
-
-    This is a guide for those who wanna build or run it with the source code.
-
-    You need to download [NodeJs](https://nodejs.org/en/download/) before following the steps.
-
-    Open Powershell or Terminal in a folder
-
-    1 ` git clone https://github.com/RattlesHyper/TrafficerMC `
-
-    2 ` npm install `
-
-    3 ` npm start `
-
-    Build commands.
-
-    ` npm run <option> ` builds and puts the build in /dist folder
-
-    `winx64` for Windows x64
-
-    `winx86` for Windows x86
-
-    `linux64` for linux x64
-
-    `linux86` for linux x86
+If you want to build TrafficerMC, then run `npm run <option>`. The build will be put into /dist folder.
+If you want to run TrafficerMC on different OSes, you can do so by doing `npm start <os>`. The current OSes supported are Windows 64-Bit (`winx64`), Windows 32-Bit (`winx86`), Linux 64-Bit (`linux64`) & Linux 32-Bit (`linux86`)
