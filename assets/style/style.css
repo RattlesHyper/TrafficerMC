@@ -399,3 +399,7 @@ ul li {
     --topbar-color: 0 0 0;
     --topbar-opacity: 0.6;
 }
+
+#logo {
+    color: #FFFFFF;
+}
