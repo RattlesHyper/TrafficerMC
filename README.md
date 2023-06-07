@@ -3,22 +3,33 @@
 </p>
 <p align="center">The best, free and open source Minecraft botting tool.</p>
 <p align="center">
-  <img src="https://img.shields.io/discord/935341227400904734?color=red&style=for-the-badge"/>
+<a href="https://github.com/RattlesHyper/TrafficerMC/releases/latest">
   <img src="https://img.shields.io/github/v/release/RattlesHyper/Trafficermc?color=red&style=for-the-badge"/>
+</a>
+  <a href="https://github.com/RattlesHyper/TrafficerMC/releases">
   <img src="https://img.shields.io/github/downloads/RattlesHyper/TrafficerMC/total?color=red&style=for-the-badge"/>
+  </a>
 </p>
+<div align="center">
+  <a href="https://discord.gg/uFpaAZdVgS"><img src="https://invidget.switchblade.xyz/uFpaAZdVgS"></a>
+</div>
 
-# Features
+<hr />
+
+## Features
 TrafficerMC has a variety of features. Some of them are:
  - Anti-AFK
  - Killaura
  - Spam w/ Anti-Spam prevention
- - FileIO (Scripting, Accounts, Proxies)
+ - [Scripting](#scripting)
+ - [Accounts](#account-file)
+ - [Proxies](#proxies)
+ - [Theme](#theme)
  - Linear Delay
  - Auto Reconnect
  - and way more!
 
-# Media
+## Media
 
 ![](https://media.discordapp.net/attachments/1101173583956422736/1105880170751078400/image.png)
 
@@ -132,7 +143,7 @@ chat Hi
 delay 1200
 chat Hello
 ```
-# Account Filing
+# Account File
 Account filing connects the bots with certain names that aren't set in General tab. It can be useful if you want to bot a server with NameMC names, for example. To make a account file, you would need to go into a text file editor, and apon entering all the usernames, you save it as a `.txt` file. You can name it anything. **Please note that you will still need to set the Max Accounts in General Tab for the bots to join!**
 ## What an account file would look like
 ```
@@ -149,7 +160,7 @@ Proxies connects the bots with different ip addresses. This can be very useful t
 54.3.210.123:45678
 98.7.65.4:32101
 ```
-# Theming
+# Theme
 Custom CSS allows you to customize TrafficerMC the way you wanted. To make a custom css file, you would need to go into a text file editor, and apon finishing the css file, you save it as a `.css` file. You can name it anything. After all that, the file must be loaded in Settings tab. 
 ## What the css file should look like
 ```
