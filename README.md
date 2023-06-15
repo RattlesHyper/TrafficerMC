@@ -8,11 +8,9 @@
 </a>
   <a href="https://github.com/RattlesHyper/TrafficerMC/releases">
   <img src="https://img.shields.io/github/downloads/RattlesHyper/TrafficerMC/total?color=red&style=for-the-badge"/>
+    <a href="https://discord.gg/uFpaAZdVgS"><img src="https://img.shields.io/discord/935341227400904734?label=DISCORD&color=red&style=for-the-badge"></a>
   </a>
 </p>
-<div align="center">
-  <a href="https://discord.gg/uFpaAZdVgS"><img src="https://invidget.switchblade.xyz/uFpaAZdVgS"></a>
-</div>
 
 <hr />
 
