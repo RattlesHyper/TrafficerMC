@@ -5,7 +5,7 @@ const ProxyAgent = require('proxy-agent')
 const botApi = new EventEmitter()
 const fetch = require('node-fetch')
 const fs = require('fs')
-const currentVersion = "2.1"
+const currentVersion = "2.2"
 let stopBot = false
 
 //bot connect method
@@ -106,7 +106,8 @@ function getBotInfo(botName, n) {
             version: idBotVersion.value,
             auth: idAuthType.value,
             onMsaCode: function(data) {
-                sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)">[${botName}] First time signing in. Please authenticate now: To sign in, use a web browser to open the page https://www.microsoft.com/link and enter the code: ${data.user_code} to authenticate. </li>`)
+                const code = data.user_code
+                sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)">[${botName}] First time signing in. Please authenticate now: To sign in, use a web browser to open the page <b style="cursor: pointer; color: blue;" onClick="shell.openExternal('https://www.microsoft.com/link')">https://www.microsoft.com/link</b> and enter the code: ${code} <img src="./assets/icons/app/clipboard.svg" onclick="navigator.clipboard.writeText('${code}')" style="cursor: pointer; filter: brightness(0) invert(1);" height="16px;"> to authenticate. </li>`)
             }
         };
         return options;
@@ -118,7 +119,8 @@ function getBotInfo(botName, n) {
             version: idBotVersion.value,
             auth: idAuthType.value,
             onMsaCode: function(data) {
-                sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)">[${botName}] First time signing in. Please authenticate now: To sign in, use a web browser to open the page https://www.microsoft.com/link and enter the code: ${data.user_code} to authenticate. </li>`)
+                const code = data.user_code
+                sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)">[${botName}] First time signing in. Please authenticate now: To sign in, use a web browser to open the page <b style="cursor: pointer; color: blue;" onClick="shell.openExternal('https://www.microsoft.com/link')">https://www.microsoft.com/link</b> and enter the code: ${code} <img src="./assets/icons/app/clipboard.svg" onclick="navigator.clipboard.writeText('${code}')" style="cursor: pointer; filter: brightness(0) invert(1);" height="16px;"> to authenticate. </li>`)
             }
         };
         return options;
@@ -169,12 +171,14 @@ function addPlayer(name) {
     idBotList.appendChild(b)
     idBotList.scrollTop = idBotList.scrollHeight
     updateBotCount()
+    if(idAutoSelect.checked) {selectAll()}
 }
 
 //remove player from list
 function rmPlayer(name) {
     if (document.getElementById("list" + name)) document.getElementById("list" + name).remove()
     updateBotCount()
+    if(idAutoSelect.checked) {selectAll()}
 }
 
 //log error
@@ -194,23 +198,15 @@ function sendLog(log) {
 
 //execute command all bots
 async function exeAll(command, ...args) {
-    var sels = document.getElementsByClassName("botSelected");
-    if (sels.length === 0) return sendLog(`<li> <img src="./assets/icons/app/alert-triangle.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(89%) sepia(82%) saturate(799%) hue-rotate(1deg) brightness(103%) contrast(102%)">No bots selected!</li>`);
-    let list = ["BLANK"]
-
-    var liElements = Array.from(sels).filter(function(element) {
-        return element.tagName === "LI";
-    });
-
-    liElements.forEach(e => {
-        list.push(e.innerHTML + command)
-    })
-
+    
+    const list = selectedList()
+    if(list.length === 0) return sendLog(`<li> <img src="./assets/icons/app/alert-triangle.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(89%) sepia(82%) saturate(799%) hue-rotate(1deg) brightness(103%) contrast(102%)">No bots selected!</li>`);
+    
     for (var i = 0; i < list.length; i++) {
-        botApi.emit(list[i], ...args)
+        botApi.emit(list[i] + command, ...args)
         await delay(idLinearValue.value)
     }
-
+    if(command === "hit") return;
     sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${command}] ${args} </li>`)
 }
 
@@ -221,12 +217,13 @@ function updateBotCount() {
 //script controler
 async function startScript(botId, script) {
     sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [${botId}] Script started. </li>`)
-    const file = fs.readFileSync(script)
-    const lines = file.toString().split(/\r?\n/)
+
+    const lines = script.toString().split(/\r?\n/)
 
     for (var i = 0; i < lines.length; i++) {
         const args = lines[i].split(" ")
         const command = args.shift().toLowerCase();
+        
         if (command === "delay") {
             await delay(args[0])
         }
@@ -302,12 +299,29 @@ function createPopup(text, color) {
             popup.remove()
         }, 300);
     }, 3000);
+    playAudio("error.wav")   
 }
 
 // json to html format
 function formatText(json) {
     c = json
     return `<span style='${c.color ? `color: ${c.color};`: ""}${c.bold ? "font-weight:bold;" : ""}${c.italic ? "font-style:italic;" : ""} '>${c.text}</span>`;
+}
+
+// Gets list of selected bots
+function selectedList() {
+    var sels = document.getElementsByClassName("botSelected");
+    let list = new Array;
+
+    var liElements = Array.from(sels).filter(function(element) {
+        return element.tagName === "LI";
+    });
+
+    liElements.forEach(e => {
+        list.push(e.innerHTML)
+    })
+
+    return list;
 }
 
 module.exports = {
@@ -326,6 +340,7 @@ module.exports = {
     loadTheme,
     createPopup,
     formatText,
+    selectedList,
     mineflayer,
     botApi
 }

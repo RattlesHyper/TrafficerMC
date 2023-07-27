@@ -1,5 +1,5 @@
 const { ipcRenderer, shell } = require("electron")
-const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer, loadTheme, createPopup, formatText } = require( __dirname + '/assets/js/cf.js')
+const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer, loadTheme, createPopup, formatText, selectedList } = require( __dirname + '/assets/js/cf.js')
 const antiafk = require( __dirname +  '/assets/plugins/antiafk')
 process.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 let currentTime = Date.now()
@@ -78,6 +78,10 @@ let idTmob = document.getElementById('kaTm')
 let idTanimal = document.getElementById('kaTa')
 let idKaToggle = document.getElementById('toggleka')
 let idKaLook = document.getElementById('toggleKaLook')
+let idAutoSelect = document.getElementById('toggleAutoSelect')
+let idCheckOnRespawn = document.getElementById('scriptCheckOnRespawn')
+let idCheckOnDeath = document.getElementById('scriptCheckOnDeath')
+let idCheckIgnoreFriends = document.getElementById('checkKaIgnoreSelected')
 
 //button listeners
 window.addEventListener('DOMContentLoaded', () => {
@@ -98,7 +102,13 @@ window.addEventListener('DOMContentLoaded', () => {
     idBtnLookAt.addEventListener('click', () => {exeAll("look", idLookValue.value)})
     idCheckSprint.addEventListener('click', () => {exeAll("sprintcheck", idCheckSprint.checked)})
     idBtnDrop.addEventListener('click', () => {exeAll("drop", idDropValue.value)})
-    idBtnStartScript.addEventListener('click', () => {exeAll('startscript')})
+    idBtnStartScript.addEventListener('click', () => {
+        const list = selectedList()
+        if(list.length === 0) return createPopup("No bot selected")
+        list.forEach(name => {
+            startScript(name, idScriptPath.value)
+        });
+    })
     idStartAfk.addEventListener('click', () => {exeAll('afkon')})
     idStopAfk.addEventListener('click', () => {exeAll('afkoff')})
     idBtnC.addEventListener('click', () => {saveData(); window.close()})
@@ -120,7 +130,7 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 
-async function newBot(options) {
+function newBot(options) {
     const bot = mineflayer.createBot(options)
     let afkLoaded = false
 
@@ -130,7 +140,7 @@ async function newBot(options) {
     bot.once('spawn', ()=> {
         botApi.emit("spawn", bot.username)
         if(idJoinMessage) {bot.chat(idJoinMessage.value)}
-        if(idScriptCheck.checked && idScriptPath.value) { startScript(bot.username, idScriptPath.files[0].path)}
+        if(idScriptCheck.checked && idScriptPath.value) { startScript(bot.username, idScriptPath.value)}
     });
     bot.once('kicked', (reason)=> {
         botApi.emit("kicked", options.username, reason)
@@ -157,30 +167,17 @@ async function newBot(options) {
     });
 
     bot.on('windowOpen', (window) => {
-        idWindow.innerHTML = ""
-        idWindowTitle.innerHTML = formatText(JSON.parse(window.title))
-        for (var i = 0; i < window.slots.length; i++) {
-            const item = window.slots[i]
-            let dname = ""
-            if (item) {
-                if (item.nbt.value.display.value.Name.value) {
-                    displayname = JSON.parse(item.nbt.value.display.value.Name.value)
-    
-                    if (displayname.extra) {
-                        var ext = displayname.extra
-                        ext.forEach(e => {
-                            dname += formatText(e)
-                        });
-                    } else {
-                        dname += formatText(displayname)
-                    }
-                }
-                const b = document.createElement("li")
-                b.innerHTML = `<span style="font-weight: bold;">${i}</span> ${dname} <span style="font-weight: bold;">${item.count}x</span>`
-                idWindow.appendChild(b)
-            }
-        }
         sendLog(`[${bot.username}] Window opened`)
+    })
+    bot.on('death', function() {
+        botApi.emit('death', options.username)
+        bot.once('respawn', function() {
+            if(idCheckOnDeath.checked && idScriptPath.value) { startScript(bot.username, idScriptPath.value)}
+        })
+    })
+    bot.on('respawn', function() {
+        botApi.emit('respawn', options.username)
+        if(idCheckOnRespawn.checked && idScriptPath.value) { startScript(bot.username, idScriptPath.value)}
     })
 
     botApi.once(options.username+'disconnect', () => {bot.quit()})
@@ -193,7 +190,7 @@ async function newBot(options) {
     botApi.on(options.username+'stopcontrol', (o) => {bot.setControlState(o, false)})
     botApi.on(options.username+'look', (o) => {bot.look(o, 0)})
     botApi.on(options.username+'sprintcheck', (o) => {bot.setControlState('sprint', o)})
-    botApi.on(options.username+'startscript', () => {startScript(bot.username, idScriptPath.files[0].path)})
+    botApi.on(options.username+'startscript', () => {startScript(bot.username, idScriptPath.value)})
     
     botApi.on(options.username+'afkon', () => {
         if(!afkLoaded) {
@@ -242,6 +239,7 @@ async function newBot(options) {
                     } else {
                         bot.attack(entity);
                     }
+                    sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [hit] ${entity.displayName ? entity.displayName : "Unknown Entity"} </li>`)
                 }
                 if (entity.kind === "Passive mobs" && idTanimal.checked) {
                     if (idKaLook.checked) {
@@ -250,6 +248,7 @@ async function newBot(options) {
                     } else {
                         bot.attack(entity);
                     }
+                    sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [hit] ${entity.displayName ? entity.displayName : "Unknown Entity"} </li>`)
                 }
                 if (entity.kind === "Vehicles" && idTvehicle.checked) {
                     if (idKaLook.checked) {
@@ -258,14 +257,18 @@ async function newBot(options) {
                     } else {
                         bot.attack(entity);
                     }
+                    sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [hit] ${entity.displayName ? entity.displayName : "Unknown Entity"} </li>`)
                 }
                 if (entity.type === "player" && entity.username !== bot.username && idTplayer.checked) {
+                    const list = selectedList()
+                    if(list.includes(entity.username) && idCheckIgnoreFriends.checked) return;
                     if (idKaLook.checked) {
                         bot.lookAt(entity.position, true);
                         bot.attack(entity);
                     } else {
                         bot.attack(entity);
                     }
+                    sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [hit] ${entity.username} </li>`)
                 }
             }
         });
@@ -290,32 +293,35 @@ botApi.on("login", (name)=> {
     addPlayer(name)
     sendLog(`<li> <img src="./assets/icons/app/arrow-right.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(68%) sepia(74%) saturate(5439%) hue-rotate(86deg) brightness(128%) contrast(114%)"> ${name} Logged in.</li>`)
     if(idConnectSound.checked === true) {
-        var audio = new Audio( __dirname + '/assets/audios/connected.mp3');
-        audio.play();
+        playAudio("connected.mp3")
     }
-})
-botApi.on("spawn", (name)=> {
-    sendLog(`<li> <img src="./assets/icons/app/arrow-right.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(26%) sepia(94%) saturate(5963%) hue-rotate(74deg) brightness(96%) contrast(101%)"> ${name} Spawned.</li>`)
-})
-botApi.on("kicked", (name, reason)=> {
-    rmPlayer(name)
-    sendLog(`<li> <img src="./assets/icons/app/arrow-left.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(11%) sepia(92%) saturate(6480%) hue-rotate(360deg) brightness(103%) contrast(113%)"> [${name}] : ${formatText(JSON.parse(reason))}</li>`)
 })
 botApi.on("end", (name, reason)=> {
     rmPlayer(name)
     sendLog(`<li> <img src="./assets/icons/app/alert-triangle.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(100%) sepia(61%) saturate(4355%) hue-rotate(357deg) brightness(104%) contrast(104%)"> [${name}] ${reason}</li>`)
     if(idDiconnectSound.checked === true) {
-        var audio = new Audio( __dirname + '/assets/audios/disconnected.wav');
-        audio.play();
+        playAudio("")
     }
 })
 botApi.on("error", (name, err)=> {
     errBot(name)
     sendLog(`<li> <img src="./assets/icons/app/alert-triangle.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(89%) sepia(82%) saturate(799%) hue-rotate(1deg) brightness(103%) contrast(102%)"> [${name}] ${err}</li>`)
     if(idErrorSound.checked === true) {
-        var audio = new Audio( __dirname + '/assets/audios/error.wav');
-        audio.play();
+        playAudio("error.wav")
     }
+})
+botApi.on("spawn", (name)=> {
+    sendLog(`<li> <img src="./assets/icons/app/arrow-right.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(26%) sepia(94%) saturate(5963%) hue-rotate(74deg) brightness(96%) contrast(101%)"> ${name} Spawned.</li>`)
+})
+botApi.on("death", (name)=> {
+    sendLog(`<li> <img src="./assets/icons/app/arrow-right.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(26%) sepia(94%) saturate(5963%) hue-rotate(74deg) brightness(96%) contrast(101%)"> ${name} Died.</li>`)
+})
+botApi.on("respawn", (name)=> {
+    sendLog(`<li> <img src="./assets/icons/app/arrow-right.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(26%) sepia(94%) saturate(5963%) hue-rotate(74deg) brightness(96%) contrast(101%)"> ${name} Respawned.</li>`)
+})
+botApi.on("kicked", (name, reason)=> {
+    rmPlayer(name)
+    sendLog(`<li> <img src="./assets/icons/app/arrow-left.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(11%) sepia(92%) saturate(6480%) hue-rotate(360deg) brightness(103%) contrast(113%)"> [${name}] : ${formatText(JSON.parse(reason))}</li>`)
 })
 
 // uptime counter
@@ -341,7 +347,9 @@ function formatTime(time) {
     if (10 > time) return "0" + time;
     return time;
 }
-
+function playAudio(filename) {
+    new Audio( __dirname + `./assets/audios/${filename}`).play();
+}
 // save and restore config
 ipcRenderer.on('restore', (event, data) => {
     Object.keys(data).forEach(v => {
@@ -359,7 +367,8 @@ function saveData() {
         "botversion": document.getElementById('botversion').value,
         "botCount": document.getElementById('botCount').value,
         "joinDelay": document.getElementById('joinDelay').value,
-        "joinMessage": document.getElementById('joinMessage').value
+        "joinMessage": document.getElementById('joinMessage').value,
+        'scriptPath': document.getElementById('scriptPath').value
     }))
 }
 

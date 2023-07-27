@@ -27,6 +27,8 @@ TrafficerMC has a variety of features. Some of them are:
  - Auto Reconnect
  - and way more!
 
+#### Minecraft Version 1.8.x - 1.20
+
 ## Media
 
 ![](https://media.discordapp.net/attachments/1101173583956422736/1105880170751078400/image.png)
@@ -42,7 +44,7 @@ TrafficerMC v2.1
 TrafficerMC v0.4
 
 # Scripting
-Scripting can allow the bot to do things automatically without any user input. It can also help if you are making multiple bots do the same things. To make a script, you would need to go into a text file editor, and apon finishing the script, you save it as a `.txt` file. You can name it anything. Scripts will run after the bot has spawned in.
+Scripting can allow the bot to do things automatically without any user input. It can also help if you are making multiple bots do the same things.
 
 ## What a script would look like
 ```
@@ -142,7 +144,7 @@ delay 1200
 chat Hello
 ```
 # Account File
-Account filing connects the bots with certain names that aren't set in General tab. It can be useful if you want to bot a server with NameMC names, for example. To make a account file, you would need to go into a text file editor, and apon entering all the usernames, you save it as a `.txt` file. You can name it anything. **Please note that you will still need to set the Max Accounts in General Tab for the bots to join!**
+Account filing connects the bots with certain names that aren't set in General tab. It can be useful if you want to bot a server with NameMC names, for example. To make a account file, you would need to go into a text file editor, and apon entering all the usernames, you save it as a `.txt` file. You can name it anything. **Please note that you can set Max Accounts in General Tab or it will use all the names**
 ## What an account file would look like
 ```
 vampers

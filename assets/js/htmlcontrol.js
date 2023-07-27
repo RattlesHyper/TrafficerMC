@@ -3,11 +3,6 @@ for (const button of buttons) {
   button.addEventListener('click', showHideDiv);
 }
 
-const tabbuttons = document.querySelectorAll('.tab-selectors button');
-for (const button of tabbuttons) {
-  button.addEventListener('click', tabShowHideDiv);
-}
-
 function showHideDiv(event) {
     const targetDiv = event.target.dataset.target;
     const divElements = document.querySelectorAll('.functsBtn');
@@ -56,6 +51,7 @@ function selectAll() {
         e.classList.add("botSelected")
     });
 }
+
 function selectRemove() {
     const list = document.getElementById("botList").querySelectorAll('li')
     list.forEach(e => {
@@ -78,3 +74,16 @@ triggers.forEach(function (trigger) {
     popup.style.display = 'none';
   });
 });
+
+function openTab(tabName) {
+  var tabContent = document.getElementsByClassName("tab-pane");
+  for (var i = 0; i < tabContent.length; i++) {
+    tabContent[i].style.display = "none";
+  }
+  var tabs = document.getElementsByClassName("tab");
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove("active");
+  }
+  document.getElementById(tabName).style.display = "block";
+  event.currentTarget.classList.add("active");
+}
