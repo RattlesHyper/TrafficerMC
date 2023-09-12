@@ -5,7 +5,7 @@ const ProxyAgent = require('proxy-agent')
 const botApi = new EventEmitter()
 const fetch = require('node-fetch')
 const fs = require('fs')
-const currentVersion = "2.2"
+const currentVersion = "2.3"
 let stopBot = false
 
 //bot connect method
@@ -105,6 +105,7 @@ function getBotInfo(botName, n) {
             username: unm ? unm : salt(10),
             version: idBotVersion.value,
             auth: idAuthType.value,
+            easyMcToken: idAltToken.value,
             onMsaCode: function(data) {
                 const code = data.user_code
                 sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)">[${botName}] First time signing in. Please authenticate now: To sign in, use a web browser to open the page <b style="cursor: pointer; color: blue;" onClick="shell.openExternal('https://www.microsoft.com/link')">https://www.microsoft.com/link</b> and enter the code: ${code} <img src="./assets/icons/app/clipboard.svg" onclick="navigator.clipboard.writeText('${code}')" style="cursor: pointer; filter: brightness(0) invert(1);" height="16px;"> to authenticate. </li>`)
@@ -118,6 +119,7 @@ function getBotInfo(botName, n) {
             username: unm ? unm : salt(10),
             version: idBotVersion.value,
             auth: idAuthType.value,
+            easyMcToken: idAltToken.value,
             onMsaCode: function(data) {
                 const code = data.user_code
                 sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)">[${botName}] First time signing in. Please authenticate now: To sign in, use a web browser to open the page <b style="cursor: pointer; color: blue;" onClick="shell.openExternal('https://www.microsoft.com/link')">https://www.microsoft.com/link</b> and enter the code: ${code} <img src="./assets/icons/app/clipboard.svg" onclick="navigator.clipboard.writeText('${code}')" style="cursor: pointer; filter: brightness(0) invert(1);" height="16px;"> to authenticate. </li>`)
@@ -129,7 +131,7 @@ function getBotInfo(botName, n) {
 
 //get proxy from file with line number
 function getProxy(n) {
-    const file = fs.readFileSync(idProxyFilePath.files[0].path)
+    const file = idProxylist.value
     const lines = file.toString().split(/\r?\n/)
     const rnd = Math.floor(Math.random() * lines.length)
     
@@ -187,13 +189,21 @@ function errBot(name) {
     updateBotCount()
 }
 
-//console logs
+// logs info to chat
 function sendLog(log) {
     if(!log) return;
     const b = document.createElement("li")
     b.innerHTML = log
     idChatBox.appendChild(b)
     idChatBox.scrollTop = idChatBox.scrollHeight
+}
+// logs info to proxy logs
+function proxyLog(log) {
+    if(!log) return;
+    const b = document.createElement("li")
+    b.innerHTML = log
+    idProxyLogs.appendChild(b)
+    idProxyLogs.scrollTop = idProxyLogs.scrollHeight
 }
 
 //execute command all bots
@@ -324,6 +334,115 @@ function selectedList() {
     return list;
 }
 
+function checkAuth() {
+    const selectElement = document.getElementById('botAuthType');
+    const selectedValue = selectElement.value;
+    const easymcDiv = document.getElementById('easymcDiv');
+    const usernameDiv = document.getElementById('usernameDiv');
+  
+    if (selectedValue === "easymc") {
+      easymcDiv.style.display = 'block';
+      usernameDiv.style.display = 'none';
+      document.getElementById('botUsename').value = '';
+    } else {
+      easymcDiv.style.display = 'none';
+      usernameDiv.style.display = 'block';
+    }
+}
+async function easyMcAuth (client, options) {
+    const fetchOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: `{"token":"${options.easyMcToken}"}`
+    }
+    try {
+        const res = await fetch('https://api.easymc.io/v1/token/redeem', fetchOptions)
+        const resJson = await res.json()
+        if (resJson.error) throw new Error(`EasyMC: ${resJson.error}`)
+        if (!resJson) throw new Error('Empty response from EasyMC.')
+        if (resJson.session?.length !== 43 || resJson.mcName?.length < 3 || resJson.uuid?.length !== 36) throw new Error('Invalid response from EasyMC.')
+        const session = {
+            accessToken: resJson.session,
+            selectedProfile: {
+                name: resJson.mcName,
+                id: resJson.uuid
+            }
+        }
+        options.haveCredentials = true
+        client.session = session
+        options.username = client.username = session.selectedProfile.name
+        options.accessToken = session.accessToken
+        client.emit('session', session)
+    } catch (error) {
+        client.emit('error', error)
+        return
+    }
+    options.connect(client)
+}
+
+function createBot(options) {
+    if (options.auth === 'easymc') {
+        if (options.easyMcToken?.length !== 20) {
+            throw new Error('EasyMC authentication requires an alt token. See https://easymc.io/get .')
+        }
+        options.auth = easyMcAuth
+        options.sessionServer ||= 'https://sessionserver.easymc.io'
+        options.username = Buffer.alloc(0)
+    }
+
+    return mineflayer.createBot(options)
+}
+
+async function scrapeProxy() {
+    try {
+        const items = await fetchList(`https://raw.githubusercontent.com/RattlesHyper/proxy/main/socks${idScrapeProtocol.value}`);
+        for (var i = 0; i < items.length; i++) {
+            let link = items[i]
+            proxyLog("Requesting proxy from " + link)
+            fetchList(link)
+            .then(items => {
+                let proxies = "";
+                proxyLog("Proxy fetched " + items.length)
+                items.forEach(proxy => {
+                    proxies += proxy+"\n"
+                });
+                idProxylist.value += proxies
+            })
+            .catch(error => {
+                proxyLog(error);
+            });
+        }
+    } catch (error) {
+        proxyLog(error);
+    }
+}
+
+async function fetchList(link) {
+    const fetchOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        body: null
+    };
+
+    try {
+        const res = await fetch(link, fetchOptions);
+        const text = await res.text();
+        const lines = text.toString().split(/\r?\n/);
+        let items = new Array;
+
+        for (var i = 0; i < lines.length; i++) {
+            let line = lines[i]
+            if (line === "") continue;
+            items.push(line);
+        }
+        return items
+
+    } catch (error) {
+        proxyLog(error);
+        return;
+    }
+}
+
 module.exports = {
     getBotInfo,
     connectBot,
@@ -333,6 +452,7 @@ module.exports = {
     rmPlayer,
     errBot,
     sendLog,
+    proxyLog,
     exeAll,
     startScript,
     checkVer,
@@ -341,6 +461,9 @@ module.exports = {
     createPopup,
     formatText,
     selectedList,
+    checkAuth,
+    createBot,
+    scrapeProxy,
     mineflayer,
     botApi
 }

@@ -87,3 +87,14 @@ function openTab(tabName) {
   document.getElementById(tabName).style.display = "block";
   event.currentTarget.classList.add("active");
 }
+
+function removeDuplicateLines() {
+  const text = idProxylist.value
+  const lines = text.split('\n');
+  const uniqueLines = new Set();
+  for (const line of lines) {
+    uniqueLines.add(line);
+  }
+  const result = Array.from(uniqueLines).join('\n');
+  idProxylist.value = result;
+}

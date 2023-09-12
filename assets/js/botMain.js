@@ -1,5 +1,7 @@
 const { ipcRenderer, shell } = require("electron")
-const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer, loadTheme, createPopup, formatText, selectedList } = require( __dirname + '/assets/js/cf.js')
+const fs = require('fs')
+const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, mineflayer, loadTheme, createPopup, formatText, selectedList, checkAuth, createBot, scrapeProxy } = require( __dirname + '/assets/js/cf.js')
+const { checkProxy } = require( __dirname + '/assets/plugins/proxychecker.js')
 const antiafk = require( __dirname +  '/assets/plugins/antiafk')
 process.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 let currentTime = Date.now()
@@ -82,6 +84,19 @@ let idAutoSelect = document.getElementById('toggleAutoSelect')
 let idCheckOnRespawn = document.getElementById('scriptCheckOnRespawn')
 let idCheckOnDeath = document.getElementById('scriptCheckOnDeath')
 let idCheckIgnoreFriends = document.getElementById('checkKaIgnoreSelected')
+let idAltToken = document.getElementById('easymcAuthToken')
+let idStartScrape = document.getElementById('proxyScrapeStart')
+let idProxyLogs = document.getElementById('proxyLogs')
+let idScrapeProtocol = document.getElementById('proxyScrapeProtocol')
+let idProxylist = document.getElementById('proxyTextBox')
+let idStartProxyCheck = document.getElementById('buttonStartCheckBoxList')
+let idProxyCheckProtocol = document.getElementById('proxyCheckProtocol')
+let idProxyTimeout = document.getElementById('proxyTimeout')
+let idproxyCheckDelay = document.getElementById('proxyCheckDelay')
+let idStopCheck = document.getElementById('buttonStopCheck')
+let idProxyDownbar = document.getElementById('proxyInfoDownbar')
+let idCheckCount = document.getElementById('proxyInfoDownbarCount')
+let idBtnCheckFile = document.getElementById('checkProxyfile')
 
 //button listeners
 window.addEventListener('DOMContentLoaded', () => {
@@ -102,6 +117,13 @@ window.addEventListener('DOMContentLoaded', () => {
     idBtnLookAt.addEventListener('click', () => {exeAll("look", idLookValue.value)})
     idCheckSprint.addEventListener('click', () => {exeAll("sprintcheck", idCheckSprint.checked)})
     idBtnDrop.addEventListener('click', () => {exeAll("drop", idDropValue.value)})
+    idStartScrape.addEventListener('click', () => {scrapeProxy()})
+    idStartProxyCheck.addEventListener('click', () => {checkProxy(idProxylist.value)})
+    idBtnCheckFile.addEventListener('click', () => {
+        const list = fs.readFileSync(idProxyFilePath.files[0].path).toString()
+        checkProxy(list)
+    })
+    
     idBtnStartScript.addEventListener('click', () => {
         const list = selectedList()
         if(list.length === 0) return createPopup("No bot selected")
@@ -127,26 +149,119 @@ window.addEventListener('DOMContentLoaded', () => {
             botApi.emit("stopka")
         }
     })
+    idAuthType.addEventListener('change', () => {checkAuth()});
 })
 
 
-function newBot(options) {
-    const bot = mineflayer.createBot(options)
+async function newBot(options) {
+    const bot = createBot(options)
     let afkLoaded = false
-
-    bot.once('login', ()=> {
+    await bot.once('login', ()=> {
         botApi.emit("login", bot.username)
+        botApi.once(bot.username+'disconnect', () => {bot.quit()})
+        botApi.once(bot.username+'reconnect', () => {newBot(options)})
+        botApi.on(bot.username+'useheld', () => {bot.activateItem()})
+        botApi.on(bot.username+'closewindow', () => {bot.closeWindow(bot.currentWindow)})
+        botApi.on(bot.username+'chat', (o) => { if(idCheckAntiSpam.checked) { bot.chat(o.toString().replaceAll("(SALT)", salt(4))+" "+salt(antiSpamLength.value ? antiSpamLength.value : 5)) } else { bot.chat(o.toString().replaceAll("(SALT)", salt(4))) } })
+        botApi.on(bot.username+'sethotbar', (o) => {bot.setQuickBarSlot(o)})
+        botApi.on(bot.username+'winclick', (o, i) => {if(i == 0) {bot.clickWindow(o, 0, 0)} else {bot.clickWindow(o, 1, 0)}})
+        botApi.on(bot.username+'stopcontrol', (o) => {bot.setControlState(o, false)})
+        botApi.on(bot.username+'look', (o) => {bot.look(o, 0)})
+        botApi.on(bot.username+'sprintcheck', (o) => {bot.setControlState('sprint', o)})
+        botApi.on(bot.username+'startscript', () => {startScript(bot.username, idScriptPath.value)})
+        if(idScriptCheck.checked) { startScript(bot.username, idScriptPath.value)}
+        
+        botApi.on(bot.username+'afkon', () => {
+            if(!afkLoaded) {
+                afkLoaded = true
+                bot.loadPlugin(antiafk)
+                bot.afk.start()
+            } else {
+                bot.afk.start()
+            }
+        })
+        botApi.on(bot.username+'afkoff', () => {bot.afk.stop()})
+    
+        botApi.on(bot.username+'drop', (o) => {
+            if(o) {
+                bot.clickWindow(o, 0, 0)
+                bot.clickWindow(-999, 0, 0)
+            } else {
+                (async () => {
+                    const itemCount = bot.inventory.items().length
+                    for (var i = 0; i < itemCount; i++) {
+                        if (bot.inventory.items().length === 0) return
+                        const item = bot.inventory.items()[0]
+                        bot.tossStack(item)
+                        await delay(10)
+                    }
+                  })();
+            }
+        })
+    
+        botApi.on(bot.username+'startcontrol', (o) => {
+            bot.setControlState(o, true)
+            if(idCheckSprint.checked === true) {bot.setControlState('sprint', true)} else {bot.setControlState('sprint', false)}
+        })
+    
+        idBtnRc.addEventListener('click', () => {botApi.emit(bot.username+'reconnect')})
+    
+        botApi.on(bot.username + 'hit', () => {
+            const entities = Object.values(bot.entities);
+            entities.forEach((entity) => {
+                const distance = bot.entity.position.distanceTo(entity.position);
+                if (distance <= idKarange.value) {
+                    if (entity.kind === "Hostile mobs" && idTmob.checked) {
+                        if (idKaLook.checked) {
+                            bot.lookAt(entity.position, true);
+                            bot.attack(entity);
+                        } else {
+                            bot.attack(entity);
+                        }
+                        sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [hit] ${entity.displayName ? entity.displayName : "Unknown Entity"} </li>`)
+                    }
+                    if (entity.kind === "Passive mobs" && idTanimal.checked) {
+                        if (idKaLook.checked) {
+                            bot.lookAt(entity.position, true);
+                            bot.attack(entity);
+                        } else {
+                            bot.attack(entity);
+                        }
+                        sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [hit] ${entity.displayName ? entity.displayName : "Unknown Entity"} </li>`)
+                    }
+                    if (entity.kind === "Vehicles" && idTvehicle.checked) {
+                        if (idKaLook.checked) {
+                            bot.lookAt(entity.position, true);
+                            bot.attack(entity);
+                        } else {
+                            bot.attack(entity);
+                        }
+                        sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [hit] ${entity.displayName ? entity.displayName : "Unknown Entity"} </li>`)
+                    }
+                    if (entity.type === "player" && entity.username !== bot.username && idTplayer.checked) {
+                        const list = selectedList()
+                        if(list.includes(entity.username) && idCheckIgnoreFriends.checked) return;
+                        if (idKaLook.checked) {
+                            bot.lookAt(entity.position, true);
+                            bot.attack(entity);
+                        } else {
+                            bot.attack(entity);
+                        }
+                        sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [hit] ${entity.username} </li>`)
+                    }
+                }
+            });
+        })
     });
     bot.once('spawn', ()=> {
         botApi.emit("spawn", bot.username)
         if(idJoinMessage) {bot.chat(idJoinMessage.value)}
-        if(idScriptCheck.checked && idScriptPath.value) { startScript(bot.username, idScriptPath.value)}
     });
     bot.once('kicked', (reason)=> {
-        botApi.emit("kicked", options.username, reason)
+        botApi.emit("kicked", bot.username, reason)
     });
     bot.once('end', (reason)=> {
-        botApi.emit("end", options.username, reason)
+        botApi.emit("end", bot.username, reason)
         if(idCheckAutoRc.checked === true) {
             recon()
             async function recon() {
@@ -156,13 +271,13 @@ function newBot(options) {
         }
     });
     bot.once('error', (err)=> {
-        botApi.emit("error", options.username, err)
+        botApi.emit("error", bot.username, err)
     });
     
     bot.on('messagestr', (message) => {
         if(!message) return;
         if(idShowChatCheck.checked) {
-            sendLog(`[${options.username}] ${message}`)
+            sendLog(`[${bot.username}] ${message}`)
         }
     });
 
@@ -170,108 +285,14 @@ function newBot(options) {
         sendLog(`[${bot.username}] Window opened`)
     })
     bot.on('death', function() {
-        botApi.emit('death', options.username)
+        botApi.emit('death', bot.username)
         bot.once('respawn', function() {
             if(idCheckOnDeath.checked && idScriptPath.value) { startScript(bot.username, idScriptPath.value)}
         })
     })
     bot.on('respawn', function() {
-        botApi.emit('respawn', options.username)
+        botApi.emit('respawn', bot.username)
         if(idCheckOnRespawn.checked && idScriptPath.value) { startScript(bot.username, idScriptPath.value)}
-    })
-
-    botApi.once(options.username+'disconnect', () => {bot.quit()})
-    botApi.once(options.username+'reconnect', () => {newBot(options)})
-    botApi.on(options.username+'useheld', () => {bot.activateItem()})
-    botApi.on(options.username+'closewindow', () => {bot.closeWindow(bot.currentWindow)})
-    botApi.on(options.username+'chat', (o) => { if(idCheckAntiSpam.checked) { bot.chat(o.toString().replaceAll("(SALT)", salt(4))+" "+salt(antiSpamLength.value ? antiSpamLength.value : 5)) } else { bot.chat(o.toString().replaceAll("(SALT)", salt(4))) } })
-    botApi.on(options.username+'sethotbar', (o) => {bot.setQuickBarSlot(o)})
-    botApi.on(options.username+'winclick', (o, i) => {if(i == 0) {bot.clickWindow(o, 0, 0)} else {bot.clickWindow(o, 1, 0)}})
-    botApi.on(options.username+'stopcontrol', (o) => {bot.setControlState(o, false)})
-    botApi.on(options.username+'look', (o) => {bot.look(o, 0)})
-    botApi.on(options.username+'sprintcheck', (o) => {bot.setControlState('sprint', o)})
-    botApi.on(options.username+'startscript', () => {startScript(bot.username, idScriptPath.value)})
-    
-    botApi.on(options.username+'afkon', () => {
-        if(!afkLoaded) {
-            afkLoaded = true
-            bot.loadPlugin(antiafk)
-            bot.afk.start()
-        } else {
-            bot.afk.start()
-        }
-    })
-    botApi.on(options.username+'afkoff', () => {bot.afk.stop()})
-
-    botApi.on(options.username+'drop', (o) => {
-        if(o) {
-            bot.clickWindow(o, 0, 0)
-            bot.clickWindow(-999, 0, 0)
-        } else {
-            (async () => {
-                const itemCount = bot.inventory.items().length
-                for (var i = 0; i < itemCount; i++) {
-                    if (bot.inventory.items().length === 0) return
-                    const item = bot.inventory.items()[0]
-                    bot.tossStack(item)
-                    await delay(10)
-                }
-              })();
-        }
-    })
-
-    botApi.on(options.username+'startcontrol', (o) => {
-        bot.setControlState(o, true)
-        if(idCheckSprint.checked === true) {bot.setControlState('sprint', true)} else {bot.setControlState('sprint', false)}
-    })
-
-    idBtnRc.addEventListener('click', () => {botApi.emit(options.username+'reconnect')})
-
-    botApi.on(options.username + 'hit', () => {
-        const entities = Object.values(bot.entities);
-        entities.forEach((entity) => {
-            const distance = bot.entity.position.distanceTo(entity.position);
-            if (distance <= idKarange.value) {
-                if (entity.kind === "Hostile mobs" && idTmob.checked) {
-                    if (idKaLook.checked) {
-                        bot.lookAt(entity.position, true);
-                        bot.attack(entity);
-                    } else {
-                        bot.attack(entity);
-                    }
-                    sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [hit] ${entity.displayName ? entity.displayName : "Unknown Entity"} </li>`)
-                }
-                if (entity.kind === "Passive mobs" && idTanimal.checked) {
-                    if (idKaLook.checked) {
-                        bot.lookAt(entity.position, true);
-                        bot.attack(entity);
-                    } else {
-                        bot.attack(entity);
-                    }
-                    sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [hit] ${entity.displayName ? entity.displayName : "Unknown Entity"} </li>`)
-                }
-                if (entity.kind === "Vehicles" && idTvehicle.checked) {
-                    if (idKaLook.checked) {
-                        bot.lookAt(entity.position, true);
-                        bot.attack(entity);
-                    } else {
-                        bot.attack(entity);
-                    }
-                    sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [hit] ${entity.displayName ? entity.displayName : "Unknown Entity"} </li>`)
-                }
-                if (entity.type === "player" && entity.username !== bot.username && idTplayer.checked) {
-                    const list = selectedList()
-                    if(list.includes(entity.username) && idCheckIgnoreFriends.checked) return;
-                    if (idKaLook.checked) {
-                        bot.lookAt(entity.position, true);
-                        bot.attack(entity);
-                    } else {
-                        bot.attack(entity);
-                    }
-                    sendLog(`<li> <img src="./assets/icons/app/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> [hit] ${entity.username} </li>`)
-                }
-            }
-        });
     })
 }
 
@@ -355,6 +376,7 @@ ipcRenderer.on('restore', (event, data) => {
     Object.keys(data).forEach(v => {
         document.getElementById(v).value = data[v]
       });
+      checkAuth()
 })
 ipcRenderer.on('restoreTheme', (event, path) => {
     loadTheme(path)

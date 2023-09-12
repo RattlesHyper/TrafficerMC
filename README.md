@@ -25,6 +25,7 @@ TrafficerMC has a variety of features. Some of them are:
  - [Theme](#theme)
  - Linear Delay
  - Auto Reconnect
+ - EasyMC Support
  - and way more!
 
 #### Minecraft Version 1.8.x - 1.20

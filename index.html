@@ -20,22 +20,31 @@
         <button class="button tab active" onclick="openTab('general')">General</button>
         <button id="btnBotting" class="button tab" onclick="openTab('botting')">Botting</button>
         <button class="button tab" onclick="openTab('scripting')">Scripting</button>
+        <button class="button tab" onclick="openTab('proxyTab')">Proxy</button>
         <button class="button tab" onclick="openTab('settings')">Settings</button>
         <button class="button tab" onclick="openTab('about')">About</button>
       </ul>
     </div>
     <div class="contentArea">
-      <div id="general" class="tab-pane m-4 mu-4"  style="display: block;">
+      <div id="general" class="tab-pane m-4 mu-4" style="display: block;">
         <div class="flex">
-          <div>
+          <div id="usernameDiv" >
+
             <span class="label-text"> Username:</span>
             <input type="text" id="botUsename" class="text-input" placeholder="Name Default random">
           </div>
+
+          <div id="easymcDiv" hidden>
+            <span class="label-text"> Alt Token:</span>
+            <input type="text" id="easymcAuthToken" class="text-input" placeholder="EasyMC alt token">
+          </div>
+
           <div class="m-4">
             <span class="label-text"> Auth Type:</span>
             <select id="botAuthType" class="select-input">
               <option value="">Cracked</option>
               <option value="microsoft">Microsoft</option>
+              <option value="easymc">EasyMC</option>
             </select>
           </div>
         </div>
@@ -45,6 +54,7 @@
           <span class="label-text"> Version:</span>
           <select id="botversion" class="select-input">
             <option value="">Version Auto</option>
+            <option value="1.20.1">1.20.1</option>
             <option value="1.20">1.20</option>
             <option value="1.19.4">1.19.4</option>
             <option value="1.19.3">1.19.3</option>
@@ -90,7 +100,7 @@
         </div>
         <div class="mu-4">
           <span class="label-text"> Join delay:</span>
-          <input type="text" id="joinDelay" class="text-input" placeholder="1000 (ms)">
+          <input type="number" id="joinDelay" class="text-input" placeholder="1000 (ms)">
         </div>
         <div class="mu-4">
           <span class="label-text"> Join message:</span>
@@ -381,6 +391,85 @@
           </div>
         </div>
       </div>
+
+      <div id="proxyTab" class="tab-pane">
+        <div class="flex">
+
+          <div class="m-4">
+            <div>
+              <textarea id="proxyTextBox" class="textbox" placeholder="Proxy list"></textarea>
+            </div>
+            <div class="flex">
+              <button id="buttonStartCheckBoxList" class="button">Check list</button>
+              <button id="buttonStopCheck" class="button">Stop</button>
+              <button class="button" onclick="removeDuplicateLines()">UnDupe</button>
+            </div>
+          </div>
+          <div class="m-4">
+
+            <div class="border">
+
+              <div>
+                <label class="label-text">Proxy file</label>
+                <input id="proxyFilePath" type="file" accept=".txt" class="pl-4">
+              </div>
+
+              <div class="mu-2">
+                <span class="label-text"> Delay:</span>
+                <input type="number" min="1" id="proxyCheckDelay" class="text-input input-sm" placeholder="100(ms)">
+              </div>
+              
+              <div class="mu-2">
+                <span class="label-text"> Proxy timeout:</span>
+                <input type="number" min="1" id="proxyTimeout" class="text-input input-sm" placeholder="1000(ms)">
+              </div>
+
+              <div class="flex mu-2">
+                <div class="flex">
+                  <select id="proxyCheckProtocol" class="select-input">
+                    <option value="4">SOCKS4</option>
+                    <option value="5">SOCKS5</option>
+                  </select>
+                </div>
+                <button class="button m-1" id="checkProxyfile">Check file</button>
+              </div>
+            </div>
+            
+            <div class="border mu-2">
+              <div class="flex">
+                <div class="flex">
+                  <select id="proxyScrapeProtocol" class="select-input">
+                    <option value="4">SOCKS4</option>
+                    <option value="5">SOCKS5</option>
+                  </select>
+                </div>
+                <button id="proxyScrapeStart" class="button m-1">Scrape proxy</button>
+              </div>
+
+            </div>
+
+            <div class="border mu-2">
+              <div class="flex">
+
+                <label class="container">
+                  <label>Use proxy</label>
+                  <input id="useProxy" type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+  
+                <select id="proxyType" class="select-input m-1">
+                  <option value="4">SOCKS4</option>
+                  <option value="5">SOCKS5</option>
+                </select>
+              </div>
+            </div>
+
+            <ul id="proxyLogs" style="height: 137px; width: 490px; user-select: text;"></ul>
+
+          </div>
+        </div>
+      </div>
+
       <div id="settings" class="tab-pane m-4">
         <div class="flex">
           <div class="border">
@@ -458,25 +547,10 @@
           <span class="label" style="position: relative; top:-25px">
             <label class="label-text">Proxy settings</label>
           </span>
-          <div class="flex">
-            <label class="container">
-              <label>Proxy file</label>
-              <input id="useProxy" type="checkbox">
-              <span class="checkmark"></span>
-            </label>
-            <input id="proxyFilePath" type="file" accept=".txt" class="pl-4">
-          </div>
           <label class="container">
             <label>Random proxy order</label>
             <input id="proxyOrderRnd" type="checkbox">
             <span class="checkmark"></span>
-          </label>
-          <label class="container">
-            <label>Proxy type</label>
-            <select id="proxyType" class="select button">
-              <option value="4">SOCKS 4</option>
-              <option value="5">SOCKS 5</option>
-            </select>
           </label>
         </div>
       </div>
@@ -516,6 +590,13 @@
         <img src="./assets/icons/app/alert-triangle.svg" class="icon-sm error-icon">
         <label class="m-1 error-text" style="cursor: pointer">Outdated version</label>
       </span>
+
+      <span id="proxyInfoDownbar" style="display: none" class="label">
+        <img src="./assets/icons/app/code.svg" class="icon-sm">
+        <label>Checking:</label>
+        <label id="proxyInfoDownbarCount" class="m-1">0/0</label>
+      </span>
+
     </div>
     <img class="bgimg" width="100%">
     <ul id="listul" style="pointer-events: none; position: fixed; bottom: 10px; right: 10px; border: none; opacity: 1; background: transparent; " dir="rtl"></ul>
