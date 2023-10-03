@@ -2,8 +2,7 @@ const mc = require('minecraft-protocol')
 const socks = require('socks').SocksClient
 const ProxyAgent = require('proxy-agent')
 const path = require('path')
-const { createPopup } = require('../js/cf')
-const { salt, delay , proxyLog } = require(path.join(__dirname, ".." , "js", "cf.js"))
+const { salt, delay , proxyLog, createPopup } = require(path.join(__dirname, "..", "utils.js"))
 process.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 
 let proxyList = "";

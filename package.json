@@ -5,25 +5,25 @@
   "version": "2.3.0",
   "description": "A Minecraft botting tool with Anti-AFK, Chat spammer, Inventory/Chest manager features.",
   "license": "MIT",
-  "main": "main.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron-forge start",
     "winx64": "electron-builder build --win --x64",
     "winx86": "electron-builder build --win --ia32",
     "linux64": "electron-builder build --linux --x64",
     "linux86": "electron-builder build --linux --ia32"
   },
   "dependencies": {
-    "electron-json-storage": "^4.6.0",
     "electron-store": "^8.1.0",
     "minecraft-protocol": "^1.44.0",
-    "mineflayer": "^4.10.1",
+    "mineflayer": "^4.14.0",
     "node-fetch": "2.6.7",
     "proxy-agent": "^5.0.0",
     "socks": "^2.7.0"
   },
   "devDependencies": {
-    "electron": "^21.3.0",
+    "@electron-forge/cli": "^6.0.0-beta.61",
+    "electron": "^26.2.4",
     "electron-builder": "^23.6.0"
   },
   "build": {
@@ -33,13 +33,13 @@
     "win": {
       "target": "portable",
       "publisherName": "RattlesHyper",
-      "icon": "assets/icons/app/icon.png"
+      "icon": "assets/icons/icon.png"
     },
     "linux": {
       "target": [
         "AppImage"
       ],
-      "icon": "assets/icons/app/icon.png",
+      "icon": "assets/icons/icon.png",
       "category": "Utility"
     }
   }

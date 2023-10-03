@@ -362,7 +362,7 @@ ul li {
     display: block;
 }
 :root {
-    --background-image: url('../icons/app/Background.svg');
+    --background-image: url('../assets/images/Background.svg');
     --bg-color: #0c0d11;
     --text-color: #f6f5f5;
     --button-color: #5b8191;

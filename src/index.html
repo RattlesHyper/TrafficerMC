@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="./assets/style/style.css">
+    <link rel="stylesheet" href="./style/main.css">
   </head>
   <body>
     <div class="titlebar draggable">
       <div class=" center-elements">
-        <img class="icon-sm" src="./assets/icons/app/icon.png">
+        <img class="icon-sm" src="./assets/icons/icon.png">
         <label>TrafficerMC</label>
         <label id="topBarVersion" class="p-1"></label>
       </div>
       <div class="nodrag center-elements">
-        <img id="btnMinimize" class="btn minimize" src="./assets/icons/app/minus.svg">
-        <img id="btnClose" class="btn close" src="./assets/icons/app/x.svg">
+        <img id="btnMinimize" class="btn minimize" src="./assets/icons/minus.svg">
+        <img id="btnClose" class="btn close" src="./assets/icons/x.svg">
       </div>
     </div>
     <div class="sidebar">
-      <ul class="flex-colum flex tab-selectors" style="border: none; opacity: 1;">
+        <ul class="flex-colum flex tab-selectors" style="border: none; opacity: 1;">
         <button class="button tab active" onclick="openTab('general')">General</button>
         <button id="btnBotting" class="button tab" onclick="openTab('botting')">Botting</button>
         <button class="button tab" onclick="openTab('scripting')">Scripting</button>
@@ -107,7 +107,7 @@
           <input type="text" id="joinMessage" class="text-input" placeholder="/register">
         </div>
         <div class="mu-4">
-          <button id="btnStart" class="button" onclick="document.getElementById('btnBotting').click()">Start</button>
+          <button id="btnStart" class="button">Start</button>
           <button id="btnStop" class="button">Stop</button>
         </div>
       </div>
@@ -481,7 +481,7 @@
                 <label>Linear</label>
               </label>
               <input id="linearValue" type="number" min="0" class="input-sm m-1" placeholder="delay (0ms)">
-              <img src="./assets/icons/app/info.svg" class="icon-sm hpop" data-popup="popupLinear">
+              <img src="./assets/icons/info.svg" class="icon-sm hpop" data-popup="popupLinear">
               <div class="popup" id="popupLinear">
                 <span>Delay between each bots</span>
               </div>
@@ -517,24 +517,7 @@
             <span class="label" style="position: relative; top:-25px">
               <label class="label-text">App settings</label>
             </span>
-            <div class="flex">
-              <label class="container">
-                <label>Connect sound</label>
-                <input id="connectSound" type="checkbox">
-                <span class="checkmark"></span>
-              </label>
-            </div>
-            <label class="container">
-              <label>Disconnect sound</label>
-              <input id="disconnectSound" type="checkbox">
-              <span class="checkmark"></span>
-            </label>
-            <label class="container">
-              <label>Error sound</label>
-              <input id="errorSound" type="checkbox">
-              <span class="checkmark"></span>
-            </label>
-            <div class="p-4">
+            <div>
               <label>Theme</label>
               <div class="flex">
                 <button class="button" id="btnSaveTheme">Save</button>
@@ -564,35 +547,35 @@
           </div>
           <hr class="mu-4">
           <div class="flex center-elements">
-            <img src="./assets/icons/app/icon.png" style="width: 50px;">
+            <img src="./assets/icons/icon.png" style="width: 50px;">
             <h1>TrafficerMC</h1>
           </div>
           <div class="flex center-elements">
-            <img class="icon" src="./assets/icons/app/discord.svg" onclick="shell.openExternal('https://discord.gg/m6b8Pw4NR8')">
-            <img class="icon" src="./assets/icons/app//youtube.svg" onclick="shell.openExternal('https://youtube.com/rattleshyper')">
-            <img class="icon" src="./assets/icons/app/github.svg" style="width: 40px;" onclick="shell.openExternal('https://github.com/RattlesHyper/TrafficerMC')">
+            <img class="icon" src="./assets/icons/discord.svg" onclick="shell.openExternal('https://discord.gg/m6b8Pw4NR8')">
+            <img class="icon" src="./assets/icons/youtube.svg" onclick="shell.openExternal('https://youtube.com/rattleshyper')">
+            <img class="icon" src="./assets/icons/github.svg" style="width: 40px;" onclick="shell.openExternal('https://github.com/RattlesHyper/TrafficerMC')">
           </div>
         </div>
       </div>
     </div>
     <div class="downbar flex">
       <span class="label">
-        <img src="./assets/icons/app/user.svg" class="icon-sm">
+        <img src="./assets/icons/user.svg" class="icon-sm">
         <label>Bots:</label>
         <label id="downbarBotCount" class="m-1">0</label>
       </span>
       <span class="label">
-        <img src="./assets/icons/app/clock.svg" class="icon-sm">
+        <img src="./assets/icons/clock.svg" class="icon-sm">
         <label>Uptime:</label>
         <label id="uptime" class="m-1">00:00</label>
       </span>
       <span id="outdatedVersion" class="label" style="display:none" onClick="shell.openExternal('https://github.com/RattlesHyper/TrafficerMC/releases')">
-        <img src="./assets/icons/app/alert-triangle.svg" class="icon-sm error-icon">
+        <img src="./assets/icons/alert-triangle.svg" class="icon-sm error-icon">
         <label class="m-1 error-text" style="cursor: pointer">Outdated version</label>
       </span>
 
       <span id="proxyInfoDownbar" style="display: none" class="label">
-        <img src="./assets/icons/app/code.svg" class="icon-sm">
+        <img src="./assets/icons/code.svg" class="icon-sm">
         <label>Checking:</label>
         <label id="proxyInfoDownbarCount" class="m-1">0/0</label>
       </span>
@@ -601,6 +584,6 @@
     <img class="bgimg" width="100%">
     <ul id="listul" style="pointer-events: none; position: fixed; bottom: 10px; right: 10px; border: none; opacity: 1; background: transparent; " dir="rtl"></ul>
   </body>
-  <script src="./assets/js/botMain.js"></script>
-  <script src="./assets/js/htmlcontrol.js"></script>
+  <script defer src="./js/bot.js"></script>
+  <script defer src="./js/htmlControl.js"></script>
 </html>
