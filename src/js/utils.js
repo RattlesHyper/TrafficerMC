@@ -8,70 +8,71 @@ const fs = require('fs')
 const currentVersion = "2.3"
 let stopBot = false
 
-//bot connect method
-function connectBot() {
-    stopBot = false
-    if (idAccountFileCheck.checked && idAccountFilePath.value) {
-        startAccountFile(idAccountFilePath.files[0].path)
-    } else {
-        if (idBotCount.value <= 1) {
-            newBot(getBotInfo(idBotUsername.value, "0"))
-        } else {
-            if (idBotUsername.value) {
-                startWname()
-            } else {
-                startWnoName()
-            }
-        }
-    }
-}
-
-// //bot stop event listener
+// bot stop event listener
 botApi.on('stopBots', () => {
     stopBot = true
 })
 
-// //connection methods
+// bot connect method
+async function connectBot() {
+    stopBot = false;
+    let stopLoop = false;
+    const count = idBotCount.value ? idBotCount.value : 1
+
+    for (let i = 0; i < count; i++) {
+        if (stopBot || stopLoop) break;
+    
+        let botInfo;
+    
+        switch (idNameMethod.value) {
+            case "random":
+                botInfo = getBotInfo(salt(10), i);
+                break;
+            case "legit":
+                botInfo = getBotInfo(genName(), i);
+                break;
+            case "file":
+                startAccountFile(idAccountFilePath.files[0].path);
+                stopLoop = true;
+                break;
+            default:
+                const username = count != 1
+                    ? idBotUsername.value + "_" + i
+                    : idBotUsername.value;
+    
+                botInfo = getBotInfo(username, i);
+        }
+    
+        if (!stopLoop) {
+            newBot(botInfo);
+            await delay(idJoinDelay.value ? idJoinDelay.value : 1000);
+        }
+    }
+    
+}
+
+// connection methods
 async function startAccountFile(accountFile) {
     sendLog(`<li> <img src="./assets/icons/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)"> Account File Loaded. </li>`)
     const file = fs.readFileSync(accountFile)
     const lines = file.toString().split(/\r?\n/)
     const count = idBotCount.value ? idBotCount.value : lines.length
     for (var i = 0; i < count; i++) {
+        if (stopBot) break;
         newBot(getBotInfo(lines[i], i))
         await delay(idJoinDelay.value ? idJoinDelay.value : 1000)
     }
 }
-async function startWname() {
-    for (var i = 0; i < idBotCount.value; i++) {
-        if (stopBot) break;
-        let options = getBotInfo(idBotUsername.value, i)
-        if (idBotUsername.value.includes("(SALT)") || idBotUsername.value.includes("(LEGIT)")) {
-            newBot(options)
-        } else {
-            options.username = options.username + "_" + i
-            newBot(options)
-        }
-        await delay(idJoinDelay.value ? idJoinDelay.value : 1000)
-    }
-}
-async function startWnoName() {
-    for (var i = 0; i < idBotCount.value; i++) {
-        if (stopBot) break;
-        newBot(getBotInfo(idBotUsername.value, i))
-        await delay(idJoinDelay.value ? idJoinDelay.value : 1000)
-    }
-}
 
-//send bot info
-function getBotInfo(botName, n) {
-    var unm = botName.replaceAll("(SALT)", salt(4)).replaceAll("(LEGIT)", genName());
-    var serverHost = idIp.value.split(':')[0] ? idIp.value.split(':')[0] : "localhost";
-    var serverPort = idIp.value.split(':')[1] ? idIp.value.split(':')[1] : 25565;
+// send bot info
+function getBotInfo(botName, num) {
+    const serverHost = idIp.value.split(':')[0] ? idIp.value.split(':')[0] : "localhost";
+    const serverPort = idIp.value.split(':')[1] ? idIp.value.split(':')[1] : 25565;
 
     if (idProxyToggle.checked) {
-        var proxyHost = getProxy(n).split(":")[0];
-        var proxyPort = getProxy(n).split(":")[1];
+        const proxy = getProxy(num);
+        const proxyHost = proxy.split(":")[0];
+        const proxyPort = proxy.split(":")[1];
         
         options = {
             connect: client => {
@@ -88,7 +89,7 @@ function getBotInfo(botName, n) {
                     }
                 }, (err, info) => {
                     if (err) {
-                        sendLog(`[ProxyError] [${unm}] [${proxyHost}:${proxyPort}] ${err}`)
+                        sendLog(`[ProxyError] [${botName}] [${proxyHost}:${proxyPort}] ${err}`)
                         return;
                     }
                     client.setSocket(info.socket);
@@ -102,9 +103,10 @@ function getBotInfo(botName, n) {
             }),
             host: serverHost,
             port: serverPort,
-            username: unm ? unm : salt(10),
+            username: botName,
             version: idBotVersion.value,
             auth: idAuthType.value,
+            hideErrors: true,
             easyMcToken: idAltToken.value,
             onMsaCode: function(data) {
                 const code = data.user_code
@@ -116,9 +118,10 @@ function getBotInfo(botName, n) {
         options = {
             host: serverHost,
             port: serverPort,
-            username: unm ? unm : salt(10),
+            username: botName,
             version: idBotVersion.value,
             auth: idAuthType.value,
+            hideErrors: true,
             easyMcToken: idAltToken.value,
             onMsaCode: function(data) {
                 const code = data.user_code
@@ -134,15 +137,11 @@ function getProxy(n) {
     const file = idProxylist.value
     const lines = file.toString().split(/\r?\n/)
     const rnd = Math.floor(Math.random() * lines.length)
-    
-    if (idProxyOrderRnd.checked) {
+
+    if (n >= lines.length || idProxyOrderRnd.checked) {
         return lines[rnd]
     } else {
-        if (n >= lines.length) {
-            return lines[rnd]
-        } else {
-            return lines[n]
-        }
+        return lines[n]
     }
 }
 
@@ -310,7 +309,6 @@ function createPopup(text, color) {
             popup.remove()
         }, 300);
     }, 3000);
-    playAudio("error.wav")   
 }
 
 // json to html format
@@ -336,19 +334,20 @@ function selectedList() {
 }
 
 function checkAuth() {
-    const selectElement = document.getElementById('botAuthType');
-    const selectedValue = selectElement.value;
+    const mode = document.getElementById('botAuthType').value;
     const easymcDiv = document.getElementById('easymcDiv');
     const usernameDiv = document.getElementById('usernameDiv');
-  
-    if (selectedValue === "easymc") {
-      easymcDiv.style.display = 'block';
-      usernameDiv.style.display = 'none';
-      document.getElementById('botUsename').value = '';
-    } else {
-      easymcDiv.style.display = 'none';
-      usernameDiv.style.display = 'block';
-    }
+
+    switch (mode) {
+        case "easymc":
+            easymcDiv.style.display = 'block';
+            usernameDiv.style.display = 'none';
+            document.getElementById('botUsename').value = '';
+          break;
+        default:
+            easymcDiv.style.display = 'none';
+            usernameDiv.style.display = 'block';
+      }
 }
 async function easyMcAuth (client, options) {
     const fetchOptions = {
@@ -359,8 +358,8 @@ async function easyMcAuth (client, options) {
     try {
         const res = await fetch('https://api.easymc.io/v1/token/redeem', fetchOptions)
         const resJson = await res.json()
-        if (resJson.error) throw new Error(`EasyMC: ${resJson.error}`)
-        if (!resJson) throw new Error('Empty response from EasyMC.')
+        if (resJson.error) throw sendLog(`[EasyMC] ${resJson.error}`)
+        if (!resJson) throw sendLog('[EasyMC] Empty response from EasyMC.')
         if (resJson.session?.length !== 43 || resJson.mcName?.length < 3 || resJson.uuid?.length !== 36) throw new Error('Invalid response from EasyMC.')
         const session = {
             accessToken: resJson.session,
@@ -384,7 +383,7 @@ async function easyMcAuth (client, options) {
 function createBot(options) {
     if (options.auth === 'easymc') {
         if (options.easyMcToken?.length !== 20) {
-            throw new Error('EasyMC authentication requires an alt token. See https://easymc.io/get .')
+            throw sendLog('EasyMC authentication requires an alt token. See https://easymc.io/get .')
         }
         options.auth = easyMcAuth
         options.sessionServer ||= 'https://sessionserver.easymc.io'

@@ -98,3 +98,29 @@ function removeDuplicateLines() {
   const result = Array.from(uniqueLines).join('\n');
   idProxylist.value = result;
 }
+
+document.getElementById('usernameMethod').addEventListener('change', () => {
+  const mode = document.getElementById('usernameMethod').value;
+  const fileButton = document.getElementById('usernameFileSelector');
+  const usernameInput = document.getElementById('botUsename');
+  switch (mode) {
+    case "file":
+      fileButton.removeAttribute("hidden");
+      usernameInput.setAttribute("hidden", true);
+      break;
+    case "random":
+      usernameInput.setAttribute("disabled", true);
+      usernameInput.removeAttribute("hidden");
+      fileButton.setAttribute("hidden", true);
+      break
+    case "legit":
+      usernameInput.setAttribute("disabled", true);
+      usernameInput.removeAttribute("hidden");
+      fileButton.setAttribute("hidden", true);
+      break
+    default:
+      usernameInput.removeAttribute("hidden");
+      usernameInput.removeAttribute("disabled");
+      fileButton.setAttribute("hidden", true);
+  }
+})

@@ -33,13 +33,13 @@
     "win": {
       "target": "portable",
       "publisherName": "RattlesHyper",
-      "icon": "assets/icons/icon.png"
+      "icon": "src/assets/icons/icon.ico"
     },
     "linux": {
       "target": [
         "AppImage"
       ],
-      "icon": "assets/icons/icon.png",
+      "icon": "src/assets/icons/icon.png",
       "category": "Utility"
     }
   }

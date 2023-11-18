@@ -56,17 +56,19 @@ img {
 .nodrag {
     -webkit-app-region: no-drag;
 }
-input[type=file]::file-selector-button {
-    color: var(--text-color);
-    background-color: var(--button-color);
-    border-color: var(--button-border-color);
-    padding: 5px 10px;
-    border-width: 1px;
+
+.select-file::-webkit-file-upload-button {
+    display: none;
+}
+.select-file::before {
+    content: 'Select files';
+    display: inline-block;
+    border: 1px solid #999;
+    border-radius: 3px;
+    padding: 2px 5px;
     cursor: pointer;
 }
-input[type=file]::file-selector-button:hover {
-    filter: brightness(150%) 
-}
+
 .button {
     color: var(--button-text-color);
     background-color: var(--button-color);
@@ -172,7 +174,8 @@ input::placeholder, textarea::placeholder {
     height: 33px;
 }
 .bgimg {
-    content: var(--background-image) 
+    content: var(--background-image);
+    width: 100%;
 }
 .select-input {
     color: var(--text-color);
@@ -362,7 +365,7 @@ ul li {
     display: block;
 }
 :root {
-    --background-image: url('../assets/images/Background.svg');
+    --background-image: url('../assets/images/background.svg');
     --bg-color: #0c0d11;
     --text-color: #f6f5f5;
     --button-color: #5b8191;

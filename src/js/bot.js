@@ -2,7 +2,7 @@ const { ipcRenderer, shell } = require("electron");
 const fs = require('fs');
 const path = require('path');
 const { connectBot, delay, salt, addPlayer, rmPlayer, errBot, botApi, sendLog, exeAll, checkVer, startScript, loadTheme, createPopup, formatText, selectedList, checkAuth, createBot, scrapeProxy } = require(path.join(__dirname, "js", "utils.js"));
-const checkProxy = require(path.join(__dirname, "js", "plugins", "proxy.js"))
+const { checkProxy } = require(path.join(__dirname, "js", "plugins", "proxy.js"))
 const antiafk = require(path.join(__dirname, "js", "plugins", "afk.js"))
 
 let currentTime
@@ -32,9 +32,6 @@ const idDownbarBotCount = document.getElementById('downbarBotCount')
 const idChatBox = document.getElementById('chatBox')
 const idCheckAutoRc = document.getElementById('checkboxAutoRc')
 const idReconDelay = document.getElementById('reconDelay')
-const idConnectSound = document.getElementById('connectSound')
-const idDiconnectSound = document.getElementById('disconnectSound')
-const idErrorSound = document.getElementById('errorSound')
 const idBtnSpam = document.getElementById('startSpam')
 const idBtnSpamStop = document.getElementById('stopSpam')
 const idUptime = document.getElementById('uptime')
@@ -98,6 +95,7 @@ const idProxyDownbar = document.getElementById('proxyInfoDownbar')
 const idCheckCount = document.getElementById('proxyInfoDownbarCount')
 const idBtnCheckFile = document.getElementById('checkProxyfile')
 const idTabBot = document.getElementById('btnBotting')
+const idNameMethod = document.getElementById('usernameMethod')
 
 // button listeners
 
@@ -106,7 +104,15 @@ window.onload = () => {
     checkVer()
 }
 
-idBtnStart.onclick = () => {connectBot(); saveData(); idTabBot.click()}
+idBtnStart.onclick = () => {
+    if(idNameMethod.value == "default" && !idBotUsername.value) {
+        createPopup("Invalid Username!", "red")
+        return;
+    }
+    connectBot();
+    saveData();
+    idTabBot.click()
+}
 idBtnStop.onclick = () => {botApi.emit('stopBots')}
 idBtnDc.onclick = () => {exeAll("disconnect")}
 idBtnUse.onclick = () => {exeAll("useheld")}
@@ -124,7 +130,9 @@ idBtnDrop.onclick = () => {exeAll("drop", idDropValue.value)}
 idStartScrape.onclick = () => {scrapeProxy()}
 idStartProxyCheck.onclick = () => {checkProxy(idProxylist.value)}
 idBtnCheckFile.onclick = () => {
-    const list = fs.readFileSync(idProxyFilePath.files[0].path).toString()
+    const path = fs.readFileSync(idProxyFilePath.files[0].path)
+    if (!path) return createPopup("No file selected.")
+    const list = path.toString()
     checkProxy(list)
 }
 
@@ -316,23 +324,14 @@ botApi.on('spam', (msg, dl) => {
 botApi.on("login", (name)=> {
     addPlayer(name)
     sendLog(`<li> <img src="./assets/icons/arrow-right.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(68%) sepia(74%) saturate(5439%) hue-rotate(86deg) brightness(128%) contrast(114%)"> ${name} Logged in.</li>`)
-    if(idConnectSound.checked === true) {
-        playAudio("connected.mp3")
-    }
 })
 botApi.on("end", (name, reason)=> {
     rmPlayer(name)
     sendLog(`<li> <img src="./assets/icons/alert-triangle.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(100%) sepia(61%) saturate(4355%) hue-rotate(357deg) brightness(104%) contrast(104%)"> [${name}] ${reason}</li>`)
-    if(idDiconnectSound.checked === true) {
-        playAudio("")
-    }
 })
 botApi.on("error", (name, err)=> {
     errBot(name)
     sendLog(`<li> <img src="./assets/icons/alert-triangle.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(89%) sepia(82%) saturate(799%) hue-rotate(1deg) brightness(103%) contrast(102%)"> [${name}] ${err}</li>`)
-    if(idErrorSound.checked === true) {
-        playAudio("error.wav")
-    }
 })
 botApi.on("spawn", (name)=> {
     sendLog(`<li> <img src="./assets/icons/arrow-right.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(26%) sepia(94%) saturate(5963%) hue-rotate(74deg) brightness(96%) contrast(101%)"> ${name} Spawned.</li>`)

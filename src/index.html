@@ -31,7 +31,19 @@
           <div id="usernameDiv" >
 
             <span class="label-text"> Username:</span>
-            <input type="text" id="botUsename" class="text-input" placeholder="Name Default random">
+
+            <input id="accountFilePath" type="file" accept=".txt" class="" hidden>
+            <label id="usernameFileSelector" class="select-file" for="accountFilePath" hidden></label>
+
+            <input type="text" id="botUsename" class="text-input" placeholder="username">
+
+            <select id="usernameMethod" class="select-input">
+              <option value="default">Default</option>
+              <option value="random">Random</option>
+              <option value="legit">Legit</option>
+              <option value="file">File</option>
+            </select>
+          
           </div>
 
           <div id="easymcDiv" hidden>
@@ -410,8 +422,8 @@
             <div class="border">
 
               <div>
-                <label class="label-text">Proxy file</label>
-                <input id="proxyFilePath" type="file" accept=".txt" class="pl-4">
+                <label class="label-text">Proxy file:</label>
+                <input id="proxyFilePath" type="file" accept=".txt" class="select-file">
               </div>
 
               <div class="mu-2">
@@ -504,25 +516,14 @@
               <input id="checkKaIgnoreSelected" type="checkbox">
               <span class="checkmark"></span>
             </label>
-            <div class="flex">
-              <label class="container">
-                <label>Account file</label>
-                <input id="accountFileCheck" type="checkbox">
-                <span class="checkmark"></span>
-              </label>
-              <input id="accountFilePath" type="file" accept=".txt" class="pl-4">
-            </div>
           </div>
           <div class="border m-4" style="width: 275px;">
             <span class="label" style="position: relative; top:-25px">
-              <label class="label-text">App settings</label>
+              <label class="label-text">Theme</label>
             </span>
             <div>
-              <label>Theme</label>
-              <div class="flex">
-                <button class="button" id="btnSaveTheme">Save</button>
-                <input id="customCssFile" type="file" accept=".css">
-              </div>
+              <input id="customCssFile" type="file" accept=".css" class="select-file">
+              <button class="button" id="btnSaveTheme">Save</button>
             </div>
           </div>
         </div>
@@ -538,14 +539,6 @@
         </div>
       </div>
       <div id="about" class="tab-pane" style="width: 800px;">
-        <div class="m-4">
-          <h1>Info</h1>
-          <label>Author: RattlesHyper</label>
-          <div class="flex">
-            <label>Version:</label>
-            <label id="aboutPageVersion" class="m-1"></label>
-          </div>
-          <hr class="mu-4">
           <div class="flex center-elements">
             <img src="./assets/icons/icon.png" style="width: 50px;">
             <h1>TrafficerMC</h1>
@@ -581,7 +574,7 @@
       </span>
 
     </div>
-    <img class="bgimg" width="100%">
+    <img class="bgimg">
     <ul id="listul" style="pointer-events: none; position: fixed; bottom: 10px; right: 10px; border: none; opacity: 1; background: transparent; " dir="rtl"></ul>
   </body>
   <script defer src="./js/bot.js"></script>
