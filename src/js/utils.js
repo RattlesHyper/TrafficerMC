@@ -3,6 +3,8 @@ const { EventEmitter } = require('events')
 const socks = require('socks').SocksClient
 const ProxyAgent = require('proxy-agent')
 const botApi = new EventEmitter()
+const { HttpsProxyAgent } = require('https-proxy-agent');
+const Http = require('http')
 const fetch = require('node-fetch')
 const fs = require('fs')
 const currentVersion = "2.3"
@@ -70,60 +72,119 @@ function getBotInfo(botName, num) {
     const serverPort = idIp.value.split(':')[1] ? idIp.value.split(':')[1] : 25565;
 
     if (idProxyToggle.checked) {
-        const proxy = getProxy(num);
-        const proxyHost = proxy.split(":")[0];
-        const proxyPort = proxy.split(":")[1];
-        
-        options = {
-            connect: client => {
-                socks.createConnection({
-                    proxy: {
-                        host: proxyHost,
-                        port: parseInt(proxyPort),
-                        type: parseInt(idProxyType.value)
-                    },
-                    command: 'connect',
-                    destination: {
-                        host: serverHost,
-                        port: parseInt(serverPort)
-                    }
-                }, (err, info) => {
-                    if (err) {
-                        sendLog(`[ProxyError] [${botName}] [${proxyHost}:${proxyPort}] ${err}`)
-                        return;
-                    }
-                    client.setSocket(info.socket);
-                    client.emit('connect')
-                })
-            },
-            agent: new ProxyAgent({
-                protocol: `socks${idProxyType.value}`,
-                host: proxyHost,
-                port: proxyPort
-            }),
-            host: serverHost,
-            port: serverPort,
-            username: botName,
-            version: idBotVersion.value,
-            auth: idAuthType.value,
-            hideErrors: true,
-            easyMcToken: idAltToken.value,
-            onMsaCode: function(data) {
-                const code = data.user_code
-                sendLog(`<li> <img src="./assets/icons/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)">[${botName}] First time signing in. Please authenticate now: To sign in, use a web browser to open the page <b style="cursor: pointer; color: blue;" onClick="shell.openExternal('https://www.microsoft.com/link')">https://www.microsoft.com/link</b> and enter the code: ${code} <img src="./assets/icons/clipboard.svg" onclick="navigator.clipboard.writeText('${code}')" style="cursor: pointer; filter: brightness(0) invert(1);" height="16px;"> to authenticate. </li>`)
+        if (idProxyType.value != 1) {
+            var proxy = getProxy(num);
+            var proxyHost = proxy.split(":")[0];
+            var proxyPort = proxy.split(":")[1];
+
+            options = {
+                connect: client => {
+                    socks.createConnection({
+                        proxy: {
+                            host: proxyHost,
+                            port: parseInt(proxyPort),
+                            type: parseInt(idProxyType.value)
+                        },
+                        command: 'connect',
+                        destination: {
+                            host: serverHost,
+                            port: parseInt(serverPort)
+                        }
+                    }, (err, info) => {
+                        if (err) {
+                            sendLog(`[ProxyError] [${botName}] [${proxyHost}:${proxyPort}] ${err}`)
+                            return;
+                        }
+                        client.setSocket(info.socket);
+                        client.emit('connect')
+                    })
+                },
+                agent: new ProxyAgent({
+                    protocol: `socks${idProxyType.value}`,
+                    host: proxyHost,
+                    port: proxyPort
+                }),
+                checkTimeoutInterval: 60 * 10000,
+                host: serverHost,
+                port: serverPort,
+                username: unm ? unm : salt(10),
+                version: idBotVersion.value,
+                auth: idAuthType.value,
+                easyMcToken: idAltToken.value,
+                onMsaCode: function (data) {
+                    const code = data.user_code
+                    sendLog(`<li> <img src="./assets/icons/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)">[${botName}] First time signing in. Please authenticate now: To sign in, use a web browser to open the page <b style="cursor: pointer; color: blue;" onClick="shell.openExternal('https://www.microsoft.com/link')">https://www.microsoft.com/link</b> and enter the code: ${code} <img src="./assets/icons/clipboard.svg" onclick="navigator.clipboard.writeText('${code}')" style="cursor: pointer; filter: brightness(0) invert(1);" height="16px;"> to authenticate. </li>`)
+                }
+            };
+            return options;
+        } else {
+            let proxyAuth
+            let proxyHost
+            let proxyPort
+            let authed
+            if (getProxy(num).split("@").length > 1) {
+                proxyAuth = btoa(getProxy(num).split("@")[0]);
+                proxyHost = getProxy(num).split("@")[1].split(":")[0];
+                proxyPort = parseInt(getProxy(num).split("@")[1].split(":")[1]);
+                authed = true
+            } else {
+                proxyHost = getProxy(num).split(":")[0];
+                proxyPort = parseInt(getProxy(num).split(":")[1]);
+                authed = false
             }
-        };
-        return options;
+            var options = {
+                connect: client => {
+                    let req = Http.request({
+                        host: proxyHost,
+                        port: proxyPort,
+                        method: 'CONNECT',
+                        path: serverHost + ':' + serverPort
+                    })
+                    if (authed) {
+                        req = Http.request({
+                            host: proxyHost,
+                            port: proxyPort,
+                            method: 'CONNECT',
+                            headers: {
+                                "host": `${serverHost}:${serverPort}`,
+                                "proxy-authorization": "Basic " + proxyAuth
+                            },
+                            path: serverHost + ':' + serverPort
+                        })
+                    }
+                    req.end()
+
+                    req.on('connect', (res, stream) => {
+                        client.setSocket(stream)
+                        client.emit('connect')
+                    })
+                },
+                agent: new ProxyAgent({ protocol: 'http', host: proxyHost, port: proxyPort }),
+                checkTimeoutInterval: 60 * 10000,
+                host: serverHost,
+                port: serverPort,
+                username: botName,
+                hideErrors: true,
+                version: idBotVersion.value,
+                auth: idAuthType.value,
+                easyMcToken: idAltToken.value,
+                onMsaCode: function (data) {
+                    const code = data.user_code
+                    sendLog(`<li> <img src="./assets/icons/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)">[${botName}] First time signing in. Please authenticate now: To sign in, use a web browser to open the page <b style="cursor: pointer; color: blue;" onClick="shell.openExternal('https://www.microsoft.com/link')">https://www.microsoft.com/link</b> and enter the code: ${code} <img src="./assets/icons/clipboard.svg" onclick="navigator.clipboard.writeText('${code}')" style="cursor: pointer; filter: brightness(0) invert(1);" height="16px;"> to authenticate. </li>`)
+                }
+            };
+            return options;
+        }
     } else {
         options = {
+            checkTimeoutInterval: 60 * 10000,
             host: serverHost,
             port: serverPort,
             username: botName,
             version: idBotVersion.value,
             auth: idAuthType.value,
-            hideErrors: true,
             easyMcToken: idAltToken.value,
-            onMsaCode: function(data) {
+            onMsaCode: function (data) {
                 const code = data.user_code
                 sendLog(`<li> <img src="./assets/icons/code.svg" class="icon-sm" style="filter: brightness(0) saturate(100%) invert(28%) sepia(100%) saturate(359%) hue-rotate(172deg) brightness(93%) contrast(89%)">[${botName}] First time signing in. Please authenticate now: To sign in, use a web browser to open the page <b style="cursor: pointer; color: blue;" onClick="shell.openExternal('https://www.microsoft.com/link')">https://www.microsoft.com/link</b> and enter the code: ${code} <img src="./assets/icons/clipboard.svg" onclick="navigator.clipboard.writeText('${code}')" style="cursor: pointer; filter: brightness(0) invert(1);" height="16px;"> to authenticate. </li>`)
             }
