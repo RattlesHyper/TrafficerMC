@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link href="./assets/css/main.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <div class="content">
+    <div class="topbar drag" style="width: 1000px;">
+      <div class="flex">
+        <img src="./assets/icons/icon.png" class="icon-sm">
+        <p class="gradient">TrafficerMC</p>
+        <p id="versionString" class="tip" style="margin-left: 5px;"></p>
+      </div>
+      <div>
+        <img src="./assets/icons/min.svg" class="icon-sm button" id="minimize">
+        <img src="./assets/icons/x.svg" class="icon-sm button" id="close">
+      </div>
+    </div>
+    <div class="area" style="width: 1000px; height: 440px;">
+      <ul class="sidebar">
+        <li class="tab tab-pane selected">General</li>
+        <li id="bottingTab" class="tab tab-pane">Botting</li>
+        <li class="tab tab-pane">Scripting</li>
+        <li class="tab tab-pane">Proxy</li>
+        <li class="tab tab-pane">About</li>
+      </ul>
+
+      <div class="controlArea">
+
+        <div class="tab-pane" id="general" style="display: block;">
+
+          <div class="m-4 space-h">
+
+            <div>
+
+              <div class="flex">
+
+                <div id="usernameDiv">
+
+                  <div class="flex">
+
+                    <div id="usernameSubDiv" class="flex">
+                      <div class="flex">
+                        <p class="text-sm pr-4">Username:</p>
+                        <input id="username" type="text" class="" placeholder="username">
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div id="easymcDiv" class="flex" style="display: none;">
+                  <div class="flex">
+                    <p class="text-sm pr-4">EasyMC Token:</p>
+                    <input id="easyMcToken" type="text" class="" placeholder="Token">
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="flex mu-2">
+                <p class="text-sm pr-4">Server:</p>
+                <input id="server" type="text" class="" placeholder="localhost:25565">
+
+              </div>
+
+              <div class="flex mu-2">
+                <p class="text-sm pr-4">Max accounts:</p>
+                <input id="botMax" type="number" min="1" class="" placeholder="1">
+              </div>
+
+              <div class="flex mu-2">
+                <p class="text-sm pr-4">Join delay:</p>
+                <input id="joinDelay" type="number" min="0" class="" placeholder="1000">
+              </div>
+
+              <div class="flex mu-2">
+                <p class="text-sm pr-4">Join message:</p>
+                <input id="joinMessage" type="text" class="" placeholder="/register">
+              </div>
+
+              <div class="mu-4">
+                <button id="btnStart" class="button">Start</button>
+                <button id="btnStop" class="button">Stop</button>
+              </div>
+
+            </div>
+
+            <div class="pr-4" style="width: 300px;">
+              <p class="text-sm">Options</p>
+
+              <div class="flex mu-1">
+                <p class="text-sm">Name:</p>
+
+                <select id="nameType" class="mu-1">
+                  <option value="default">Default</option>
+                  <option value="random">Random</option>
+                  <option value="legit">Legit</option>
+                  <option value="file">File</option>
+                </select>
+              </div>
+
+              <div id="nameFileDiv" class="mu-2" style="display: none;">
+                <div class="flex">
+                  <p class="text-sm pr-4">File:</p>
+                  <label id="nameFileLabel" class="text-sm input-file button">Choose a file</label>
+                </div>
+              </div>
+
+              <div class="flex mu-2">
+                <p class="text-sm">Auth:</p>
+                <select id="authType" class="mu">
+                  <option value="offline">Cracked</option>
+                  <option value="microsoft">Microsoft</option>
+                  <option value="easymc">EasyMC</option>
+                </select>
+              </div>
+
+              <div class="flex mu-2">
+                <p class="text-sm">Version:</p>
+                <select id="version" class="mu-1">
+                  <option value="">Auto</option>
+                  <option value="1.20.1">1.20.1</option>
+                  <option value="1.20">1.20</option>
+                  <option value="1.19.4">1.19.4</option>
+                  <option value="1.19.3">1.19.3</option>
+                  <option value="1.19.2">1.19.2</option>
+                  <option value="1.19.1">1.19.1</option>
+                  <option value="1.19">1.19</option>
+                  <option value="1.18.2">1.18.2</option>
+                  <option value="1.18.1">1.18.1</option>
+                  <option value="1.18">1.18</option>
+                  <option value="1.17.1">1.17.1</option>
+                  <option value="1.17">1.17</option>
+                  <option value="1.16.5">1.16.5</option>
+                  <option value="1.16.4">1.16.4</option>
+                  <option value="1.16.3">1.16.3</option>
+                  <option value="1.16.2">1.16.2</option>
+                  <option value="1.16.1">1.16.1</option>
+                  <option value="1.16">1.16</option>
+                  <option value="1.15.2">1.15.2</option>
+                  <option value="1.15.1">1.15.1</option>
+                  <option value="1.15">1.15</option>
+                  <option value="1.14.4">1.14.4</option>
+                  <option value="1.14.3">1.14.3</option>
+                  <option value="1.14.1">1.14.1</option>
+                  <option value="1.14">1.14</option>
+                  <option value="1.13.2">1.13.2</option>
+                  <option value="1.13.1">1.13.1</option>
+                  <option value="1.13">1.13</option>
+                  <option value="1.12.2">1.12.2</option>
+                  <option value="1.12.1">1.12.1</option>
+                  <option value="1.12">1.12</option>
+                  <option value="1.11.2">1.11.2</option>
+                  <option value="1.11">1.11</option>
+                  <option value="1.10.2">1.10.2</option>
+                  <option value="1.10.1">1.10.1</option>
+                  <option value="1.10">1.10</option>
+                  <option value="1.9">1.9</option>
+                  <option value="1.8">1.8.x</option>
+                </select>
+              </div>
+
+              <div class="flex mu-2">
+                <p class="text-sm">Mode:</p>
+                <select id="botMode" class="mu-1">
+                  <option value="normal">Normal</option>
+                  <option value="minimal">Minimal</option>
+                </select>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="tab-pane" id="botting" style="display: none;">
+          <div class="space-h" style="width: 890px; height: 440px;">
+            <div class="m-4">
+
+              <ul class="border" id="botList" style="height: 150px;"></ul>
+
+              <div class="space-h mu-2">
+                <label class="containerCheckbox">
+                  Auto
+                  <input id="autoSelect" type="checkbox" checked>
+                  <span class="checkmark"></span>
+                </label>
+
+                <button id="selectAll">Select</button>
+              </div>
+
+              <ul id="controlList" class="border mu-2 flex-c">
+                <li class="tab-2 control-tab selected">Controls</li>
+                <li class="tab-2 control-tab">Chat</li>
+                <li class="tab-2 control-tab">Hotbar</li>
+                <li class="tab-2 control-tab">Inventory</li>
+                <li class="tab-2 control-tab">Move</li>
+                <li class="tab-2 control-tab">Look</li>
+                <li class="tab-2 control-tab">AntiAFK</li>
+                <li class="tab-2 control-tab disabled">Interact</li>
+                <li class="tab-2 control-tab">KillAura</li>
+                <li class="tab-2 control-tab disabled">Nuker</li>
+              </ul>
+
+            </div>
+
+            <div class="m-4">
+
+              <div id="controls" class="control-tab" style="display: block;">
+                <p class="text">Controls</p>
+                <div class="mu-2 input-group">
+                  <button id="btnDisconnect">Disconnect</button>
+                </div>
+              </div>
+
+              <div id="chat" class="control-tab" style="display: none;">
+                <p class="text">Chat</p>
+
+                <div class="space-h-f">
+                  <p class="text-sm mu-2">Chat</p>
+                </div>
+
+                <div class="space-h-f">
+                  <input id="chatMsg" type="text" placeholder="Message">
+                </div>
+
+                <div class="space-h-f mu-2">
+                  <button id="btnChat">Send</button>
+                </div>
+
+                <div class="space-h-f">
+                  <p class="text-sm mu-2">Spam</p>
+                </div>
+
+                <div class="flex">
+                  <p class="text-sm-2 pr-4">Delay</p>
+                  <input id="spamDelay" type="number" placeholder="1000 (ms)">
+                </div>
+
+                <div class="mu-2 space-h">
+
+                  <label class="containerCheckbox">
+                    Spam
+                    <input id="checkSpam" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+
+                  <label class="containerCheckbox">
+                    Bypass
+                    <input id="bypassChat" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+                </div>
+
+              </div>
+
+              <div id="hotbar" class="control-tab" style="display: none;">
+                <p class="text">Hotbar</p>
+                <div class="mu-2 space-h">
+                  <select id="hotbarSlot">
+                    <option value="0">Slot 1</option>
+                    <option value="1">Slot 2</option>
+                    <option value="2">Slot 3</option>
+                    <option value="3">Slot 4</option>
+                    <option value="4">Slot 5</option>
+                    <option value="5">Slot 6</option>
+                    <option value="6">Slot 7</option>
+                    <option value="7">Slot 8</option>
+                    <option value="8">Slot 9</option>
+                  </select>
+                </div>
+
+                <div class="mu-2 space-h-f">
+                  <button id="btnSetHotbar">Set</button>
+                  <button  id="btnUseheld">Use</button>
+                </div>
+
+              </div>
+
+              <div id="inventory" class="control-tab" style="display: none;">
+                <p class="text">Inventory</p>
+
+                <div class="flex">
+                  <p class="text-sm pr-4">Slot</p>
+                  <input id="invSlot" type="number" placeholder="number">
+                </div>
+
+                <div class="mu-2 space-h">
+                  <p class="text-sm">Click</p>
+                </div>
+
+                <div class="space-h-f">
+                  <button id="btnWinClickLeft">Left</button>
+                  <button id="btnWinClickRight">Right</button>
+                </div>
+
+                <div class="mu-2 space-h">
+                  <p class="text-sm">Drop</p>
+                </div>
+
+                <div class="space-h-f">
+                  <button id="btnDropSlot">Slot</button>
+                  <button id="btnDropAll">All</button>
+                </div>
+
+                <div class="mu-2 space-h">
+                  <p class="text-sm">Close window</p>
+                </div>
+
+                <div class="space-h-f">
+                  <button id="btnCloseWindow">Close</button>
+                </div>
+
+              </div>
+
+              <div id="move" class="control-tab" style="display: none;">
+                <p class="text">Move</p>
+
+                <div class="flex mu-2">
+                  <select id="moveType">
+                    <option value="forward">Forward</option>
+                    <option value="back">Backwards</option>
+                    <option value="left">Left</option>
+                    <option value="right">Right</option>
+                    <option value="jump">Jump</option>
+                    <option value="sprint">Sprint</option>
+                    <option value="sneak">Sneak</option>
+                  </select>
+
+                  <button id="btnResetMove">Reset</button>
+                </div>
+
+                <div class="mu-2">
+                  <button id="btnStartMove">Start</button>
+                  <button id="btnStopMove">Stop</button>
+                </div>
+
+              </div>
+
+              <div id="look" class="control-tab" style="display: none;">
+                <p class="text">Look</p>
+
+                <div class="flex mu-2">
+                  <select id="lookDirection">
+                    <option value="0">North</option>
+                    <option value="3">South</option>
+                    <option value="-1.5">East</option>
+                    <option value="1.5">West</option>
+                  </select>
+                  <button id="btnLook">Look</button>
+                </div>
+
+              </div>
+
+              <div id="antiafk" class="control-tab" style="display: none;">
+                <p class="text">Anti AFK</p>
+
+                <div class="mu-2">
+                  <button id="btnAfkOn">Start</button>
+                  <button id="btnAfkOff">Stop</button>
+                </div>
+
+              </div>
+              <div id="interact" class="control-tab" style="display: none;">
+                <p class="text">Interact [Premium]</p>
+
+                <div class="flex mu-2">
+                  <p class="text-sm pr-4">Coords</p>
+                  <input id="interactCoords" type="text" placeholder="eg: 0 1 0" disabled>
+                </div>
+                <div class="space-h-f mu-2">
+                  <p class="text-sm">Mouse button</p>
+                </div>
+
+                <div class="space-h-f">
+                  <button id="btnInteractLeft">Left</button>
+                  <button id="btnInteractRight">Right</button>
+                </div>
+
+              </div>
+
+              <div id="killaura" class="control-tab" style="display: none;">
+                <p class="text">KillAura</p>
+
+
+                <div class="mu-2">
+                  <div class="space-h-f">
+                    <p class="text-sm">Targets</p>
+                  </div>
+
+                  <label class="containerCheckbox mu-2">
+                    Player
+                    <input id="targetPlayer" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+
+                  <label class="containerCheckbox">
+                    Vehicle
+                    <input id="targetVehicle" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+
+                  <label class="containerCheckbox">
+                    Mob
+                    <input id="targetMob" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+
+                  <label class="containerCheckbox">
+                    Animal
+                    <input id="targetAnimal" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+
+                </div>
+
+                <div class="mu-2">
+                  <div class="space-h-f">
+                    <p class="text-sm">Settings</p>
+                  </div>
+
+                  <div class="flex">
+                    <p class="text-sm-2 pr-4">Delay</p>
+                    <input id="killauraDelay" type="number" placeholder="10 (ticks)">
+                  </div>
+
+                  <div class="slidecontainer space-h mu-2">
+                    <p class="text-sm-2">Range</p>
+                    <div class="flex">
+                      <p class="text-sm-2 pl-2">1</p>
+                      <input id="killauraRange" type="range" min="1" max="6" value="1" class="slider">
+                      <p class="text-sm-2 pl-2">6</p>
+                    </div>
+                  </div>
+
+
+                  <label class="containerCheckbox mu-2">
+                    Rotate
+                    <input id="killauraRotate" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+
+                  <label class="containerCheckbox mu-2">
+                    Toggle
+                    <input id="killauraToggle" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+
+                </div>
+
+              </div>
+
+              <div id="nuker" class="control-tab" style="display: none;">
+                <p class="text">Nuker [Premium]</p>
+                <div class="mu-2">
+
+                  <div class="space-h-f">
+                    <p class="text-sm">Range</p>
+                  </div>
+
+                  <div class="slidecontainer space-h">
+                    <p class="text-sm-2">Up</p>
+                    <div class="flex">
+                      <p class="text-sm-2 pl-2">0</p>
+                      <input id="nukerRangeUp" type="range" min="0" max="6" value="0" class="slider">
+                      <p class="text-sm-2 pl-2">6</p>
+                    </div>
+                  </div>
+
+                  <div class="slidecontainer space-h mu-2">
+                    <p class="text-sm-2">Down</p>
+                    <div class="flex">
+                      <p class="text-sm-2 pl-2">0</p>
+                      <input id="nukerRangeDown" type="range" min="0" max="6" value="0" class="slider">
+                      <p class="text-sm-2 pl-2">6</p>
+                    </div>
+                  </div>
+
+                  <div class="slidecontainer space-h mu-2">
+                    <p class="text-sm-2">Left</p>
+                    <div class="flex">
+                      <p class="text-sm-2 pl-2">0</p>
+                      <input id="nukerRangeLeft" type="range" min="0" max="6" value="0" class="slider">
+                      <p class="text-sm-2 pl-2">6</p>
+                    </div>
+                  </div>
+
+                  <div class="slidecontainer space-h mu-2">
+                    <p class="text-sm-2">Right</p>
+                    <div class="flex">
+                      <p class="text-sm-2 pl-2">0</p>
+                      <input id="nukerRangeRight" type="range" min="0" max="6" value="0" class="slider">
+                      <p class="text-sm-2 pl-2">6</p>
+                    </div>
+                  </div>
+
+                  <div class="slidecontainer space-h mu-2">
+                    <p class="text-sm-2">Forward</p>
+                    <div class="flex">
+                      <p class="text-sm-2 pl-2">0</p>
+                      <input id="nukerRangeForward" type="range" min="0" max="6" value="0" class="slider">
+                      <p class="text-sm-2 pl-2">6</p>
+                    </div>
+                  </div>
+
+                  <div class="slidecontainer space-h mu-2">
+                    <p class="text-sm-2">Back</p>
+                    <div class="flex">
+                      <p class="text-sm-2 pl-2">0</p>
+                      <input id="nukerRangeBack" type="range" min="0" max="6" value="0" class="slider">
+                      <p class="text-sm-2 pl-2">6</p>
+                    </div>
+                  </div>
+
+                  <div class="mu-2 space-h-f">
+                    <p class="text-sm">Settings</p>
+                  </div>
+
+                  <div class="flex mu-2">
+                    <p class="text-sm-2">Target mode</p>
+                    <select id="nukerTargetMode">
+                      <option value="blacklist">Blacklist</option>
+                      <option value="whitelist">Whitelist</option>
+                    </select>
+                  </div>
+
+                  <div class="flex mu-2">
+                    <p class="text-sm-2 pr-4">Blocks</p>
+                    <input id="nukerBlocks" type="text" placeholder="dirt,glass,stone">
+                  </div>
+
+                  <div class="flex mu-2">
+                    <p class="text-sm-2 pr-4">Blcks/tick</p>
+                    <input id="nukerBlocksPerTick" type="number" placeholder="1 (ticks)">
+                  </div>
+
+                  <label class="containerCheckbox mu-2">
+                    Rotate
+                    <input id="nukerRotate" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+
+                  <label class="containerCheckbox mu-2">
+                    Toggle
+                    <input id="nukerToggle" type="checkbox">
+                    <span class="checkmark"></span>
+                  </label>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="m-4 pr-4">
+              <ul id="chatBox" class="border"></ul>
+
+              <div class="space-h mu-2">
+
+                <label class="containerCheckbox">
+                  Show chat
+                  <input id="enableChat" type="checkbox" checked>
+                  <span class="checkmark"></span>
+                </label>
+
+                <label class="containerCheckbox">
+                  Auto scroll
+                  <input id="autoScrollChat" type="checkbox" checked>
+                  <span class="checkmark"></span>
+                </label>
+
+                <button id="clearChat">Clear</button>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="scripting" style="display: none;">
+
+          <div class="space-h">
+            <div class="m-4 flex-c">
+              <p class="text-sm">Script</p>
+              <textarea id="scriptText" class="textbox" style="width: 300px; height: 350px;" spellcheck="false" placeholder="Chat Hello!"></textarea>
+              <div class="space-h mu-2">
+                <div>
+                  <button id="runScript">Start</button>
+                  <button id="stopScript">Stop</button>
+                </div>
+                <button id="clearScript">Clear</button>
+              </div>
+            </div>
+
+            <div class="m-4 pr-4" style="width: 300px;">
+              <p class="text-sm">Options</p>
+
+              <label class="containerCheckbox mu-2">
+                Run on connect
+                <input id="runOnConnect" type="checkbox">
+                <span class="checkmark"></span>
+              </label>
+
+              <label class="containerCheckbox mu-1">
+                Run on spawn
+                <input id="runOnSpawn" type="checkbox">
+                <span class="checkmark"></span>
+              </label>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane" id="proxy" style="display: none;">
+
+          <div class="space-h">
+            <div class="m-4 flex-c">
+
+              <div class="space-h">
+                <p class="text-sm">Proxy</p>
+                <div class="flex">
+                  <p class="text-sm">Type:</p>
+                  <select id="proxyType">
+                    <option value="none">None</option>
+                    <option value="socks4">SOCKS4</option>
+                    <option value="socks5">SOCKS5</option>
+                    <option value="http" disabled >HTTP [P]</option>
+                  </select>
+                </div>
+              </div>
+
+              <textarea id="proxyList" class="textbox" style="width: 300px; height: 350px;" placeholder="Proxy:Port:Username:Password"></textarea>
+              <div class="space-h mu-2">
+                <div>
+                  <button id="proxyTestStart">Test</button>
+                  <button id="proxyTestStop">Stop</button>
+                </div>
+                <button id="proxyListClear">Clear</button>
+              </div>
+            </div>
+
+            <div class="m-4 pr-4" style="width: 300px;">
+              <p class="text-sm">Options</p>
+
+              <div class="slidecontainer space-h mu-1">
+                <p class="text-sm-2">Proxy per bot</p>
+                <div class="flex" style="position: relative; right: 15px;">
+                  <p class="text-sm-2 pl-2">1</p>
+                  <input id="proxyPerBot" type="range" min="1" max="10" value="1" class="slider">
+                  <p class="text-sm-2 pl-2">10</p>
+                </div>
+              </div>
+
+              <label class="containerCheckbox mu-1">
+                Randomize order
+                <input id="randomizeOrder" type="checkbox">
+                <span class="checkmark"></span>
+              </label>
+
+              <button id="proxyScrape" class="mu-1">Scrape</button>
+              <button id="proxyClearDupe">Clear Dupe</button>
+
+              <p class="text-sm mu-4">Proxy test</p>
+
+              <div class="flex mu-2">
+                <p class="text-sm-2 pr-4">Delay</p>
+                <input id="proxyCheckDelay" type="number" placeholder="100 (ms)">
+              </div>
+
+              <div class="flex mu-2">
+                <p class="text-sm-2 pr-4">Timeout</p>
+                <input id="proxyCheckTimeout" type="number" placeholder="5000 (ms)">
+              </div>
+
+              <p class="text-sm mu-4">Logs</p>
+
+              <ul id="proxyLogbox" class="border mu-2"></ul>
+
+              <div class="space-h mu-2">
+                <label class="containerCheckbox">
+                  Auto scroll
+                  <input id="autoScrollProxy" type="checkbox" checked>
+                  <span class="checkmark"></span>
+                </label>
+                <button id="proxyLogClear">Clear</button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="tab-pane" id="about" style="display: none;">
+          <div class="m-4">
+
+            <div class="flex" style="justify-content: center;">
+              <div class="flex-c">
+
+                <div class="flex">
+                  <img src="./assets/icons/icon.png" style="width: 80px;">
+                  <p class="gradient" style="font-size: 50px;">TrafficerMC</p>
+                </div>
+
+                <div class="m-4 pl-2 space-h">
+                  <a href="https://discord.com/invite/uFpaAZdVgS" target="_blank" rel="noreferrer" class="tip">Discord</a>
+                  <a href="https://youtube.com/rattleshyper" target="_blank" rel="noreferrer" class="tip">YouTube</a>
+                  <a href="https://github.com/RattlesHyper/TrafficerMC" target="_blank" rel="noreferrer" class="tip">GitHub</a>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <ul id="notifications" class="notification"></ul>
+
+    <div id="settings" class="settings-tab" style="display: none;">
+      <div class="settings-tab-content">
+
+        <img id="closeSettings" src="./assets/icons/x.svg" class="icon-sm"
+          style="float: right; position: relative; top: -5px;">
+
+        <p class="text-sm">Bot settings</p>
+
+        <div class="flex">
+          <label class="containerCheckbox mu-1">
+            Linear delay
+            <input id="isLinear" type="checkbox">
+            <span class="checkmark"></span>
+          </label>
+          <input id="linearDelay" type="number" placeholder="100 (ms)">
+        </div>
+
+        <div class="flex">
+          <label class="containerCheckbox mu-1">
+            Auto Reconnect
+            <input id="autoReconnect" type="checkbox">
+            <span class="checkmark"></span>
+          </label>
+          <input id="reconnectDelay" type="number" placeholder="Delay 100 (ms)">
+        </div>
+
+        <label class="containerCheckbox mu-2">
+          Physics [Premium]
+          <input id="togglePhysics" type="checkbox" checked disabled>
+          <span class="checkmark"></span>
+        </label>
+
+        <label class="containerCheckbox mu-2">
+          Map notifications [Premium]
+          <input id="mapNotifications" type="checkbox" disabled>
+          <span class="checkmark"></span>
+        </label>
+
+        <label class="containerCheckbox mu-2">
+          Accept resource packs [Premium]
+          <input id="acceptResourcePacks" type="checkbox" disabled>
+          <span class="checkmark"></span>
+        </label>
+
+        <p class="text-sm mu-2">Logs</p>
+
+        <label class="containerCheckbox mu-1">
+          Show proxy error
+          <input id="proxyLogChat" type="checkbox">
+          <span class="checkmark"></span>
+        </label>
+
+        <p class="text-sm">Config</p>
+
+        <button id="resetConfig" class="mu-1">Reset</button>
+
+      </div>
+    </div>
+
+    <div class="topbar downbar" style="width: 1000px;">
+      <div class="flex">
+        <div class="flex">
+          <img src="./assets/icons/user.svg" class="icon-sm">
+          <p id="botCount" class="tip">0</p>
+        </div>
+        <div class="flex" style="margin-left: 5px;">
+          <img src="./assets/icons/clock.svg" class="icon-sm">
+          <p id="idUptime" class="tip">00:00</p>
+        </div>
+        <div id="proxyCheckStatus" class="flex" style="margin-left: 5px; display: none;">
+          <div class="flex">
+            <img src="./assets/icons/spinner.svg" class="icon-sm">
+            <p id="proxyCheckStatusCount" class="tip">/</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <img id="openSettings" src="./assets/icons/settings.svg" class="icon-sm">
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="./src/index.js"></script>
+  <script>
+    document.getElementById('openSettings').addEventListener('click', () => {
+      document.getElementById('settings').style.display = 'block'
+    })
+    document.getElementById('closeSettings').addEventListener('click', () => {
+      document.getElementById('settings').style.display = 'none'
+    })
+    document.getElementById('clearChat').addEventListener('click', () => {
+      document.getElementById('chatBox').innerHTML = ''
+    })
+    let spamInterval;
+
+    document.getElementById('checkSpam').addEventListener('change', () => {
+      const checkbox = document.getElementById('checkSpam');
+      const spamDelayInput = document.getElementById('spamDelay');
+
+      if (checkbox.checked) {
+        const delay = parseInt(spamDelayInput.value, 10) || 1000;
+        document.getElementById('btnChat').click();
+        spamInterval = setInterval(() => {
+          document.getElementById('btnChat').click();
+        }, delay);
+      } else {
+        clearInterval(spamInterval);
+        spamInterval = null;
+      }
+    });
+
+    // Uptime
+    let botStartTime;
+    let botUptime;
+
+    window.addEventListener('DOMContentLoaded', () => {
+      botStartTime = Date.now();
+      updateUptime();
+    })
+
+    function updateUptime() {
+      clearInterval(botUptime);
+      botUptime = setInterval(() => {
+        document.getElementById('idUptime').innerHTML = calculateUptime(botStartTime);
+      }, 1000);
+    }
+
+    function calculateUptime(startTime) {
+      const currentTime = Date.now();
+      const uptimeInSeconds = Math.floor((currentTime - startTime) / 1000);
+      const minutes = Math.floor(uptimeInSeconds / 60);
+      const seconds = uptimeInSeconds % 60;
+      return `${formatTime(minutes)}:${formatTime(seconds)}`;
+    }
+    function formatTime(time) {
+      return time < 10 ? "0" + time : time;
+    }
+    document.getElementById('clearScript').addEventListener('click', () => {
+      document.getElementById('scriptText').value = ''
+    })
+    document.getElementById('proxyListClear').addEventListener('click', () => {
+      document.getElementById('proxyList').value = ''
+    })
+    document.getElementById('proxyLogClear').addEventListener('click', () => {
+      document.getElementById('proxyLogbox').innerHTML = ''
+    })
+  </script>
+</body>
+
+</html>

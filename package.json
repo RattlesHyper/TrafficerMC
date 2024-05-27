@@ -1,46 +1,36 @@
 {
   "name": "trafficermc",
-  "author": "RattlesHyper",
-  "maintainer": "RattlesHyper",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "description": "A Minecraft botting tool with Anti-AFK, Chat spammer, Inventory/Chest manager features.",
-  "license": "MIT",
-  "main": "src/index.js",
+  "main": "./out/main/index.js",
+  "author": "RattlesHyper",
   "scripts": {
-    "start": "electron-forge start",
-    "winx64": "electron-builder build --win --x64",
-    "winx86": "electron-builder build --win --ia32",
-    "linux64": "electron-builder build --linux --x64",
-    "linux86": "electron-builder build --linux --ia32"
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "start": "electron-vite preview",
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "postinstall": "electron-builder install-app-deps",
+    "build:unpack": "npm run build && electron-builder --dir",
+    "build:win": "npm run build && electron-builder --win",
+    "build:mac": "npm run build && electron-builder --mac",
+    "build:linux": "npm run build && electron-builder --linux"
   },
   "dependencies": {
-    "electron-store": "^8.1.0",
-    "minecraft-protocol": "^1.44.0",
-    "mineflayer": "^4.14.0",
-    "node-fetch": "2.6.7",
-    "proxy-agent": "^5.0.0",
-    "socks": "^2.7.0"
+    "@electron-toolkit/preload": "^3.0.0",
+    "@electron-toolkit/utils": "^3.0.0",
+    "electron-store": "^8.2.0",
+    "mineflayer": "^4.20.0",
+    "socks": "^2.8.3"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.61",
-    "electron": "^26.2.4",
-    "electron-builder": "^23.6.0"
-  },
-  "build": {
-    "appId": "com.rattleshyper.trafficermc",
-    "productName": "TrafficerMC",
-    "copyright": "Copyright © 2022 RattlesHyper",
-    "win": {
-      "target": "portable",
-      "publisherName": "RattlesHyper",
-      "icon": "src/assets/icons/icon.ico"
-    },
-    "linux": {
-      "target": [
-        "AppImage"
-      ],
-      "icon": "src/assets/icons/icon.png",
-      "category": "Utility"
-    }
+    "@electron-toolkit/eslint-config": "^1.0.2",
+    "@electron-toolkit/eslint-config-prettier": "^2.0.0",
+    "electron": "^28.2.0",
+    "electron-builder": "^24.9.1",
+    "electron-vite": "^2.0.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.4",
+    "vite": "^5.0.12"
   }
 }

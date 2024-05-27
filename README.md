@@ -1,7 +1,7 @@
 <p align="center">
-  <img src="https://cdn.discordapp.com/attachments/1101173583956422736/1101178737875234816/fqwefqef.png"/>
+  <img src="https://github.com/RattlesHyper/TrafficerMC/assets/83329088/28ffc234-65f7-4847-a0ad-1df8a52a368d"/>
 </p>
-<p align="center">The best, free and open source Minecraft botting tool.</p>
+<p align="center"><b style="font-size: 20px">The best, free and open source Minecraft botting tool.</b></p>
 <p align="center">
 <a href="https://github.com/RattlesHyper/TrafficerMC/releases/latest">
   <img src="https://img.shields.io/github/v/release/RattlesHyper/Trafficermc?color=red&style=for-the-badge"/>
@@ -12,40 +12,51 @@
   </a>
 </p>
 
-<hr />
 
 ## Features
 TrafficerMC has a variety of features. Some of them are:
- - Anti-AFK
- - Killaura
- - Spam w/ Anti-Spam prevention
- - [Scripting](#scripting)
- - [Accounts](#account-file)
- - [Proxies](#proxies)
- - [Theme](#theme)
- - Linear Delay
- - Auto Reconnect
+ - Anti AFK
+ - Spam with Bypass
+ - Name Generator
+ - Full Inventory Control
+ - Movement Control
  - EasyMC Support
+ - Auto Reconnect
+ - Killaura
+ - [Scripting](#scripting)
+ - [Proxies](#proxies)
  - and way more!
 
 #### Minecraft Version 1.8.x - 1.20
 
+##### Check out [Build Guide](#build-guide) to build TrafficerMC for your machine.
+
 ## Media
 
-![](https://media.discordapp.net/attachments/1101173583956422736/1105880170751078400/image.png)
+![TrafficerMC v3.0](https://github.com/RattlesHyper/TrafficerMC/assets/83329088/f0d90bb4-ca3b-4a7c-acdc-b851e386d632)
+**TrafficerMC v3.0**
 
-![](https://media.discordapp.net/attachments/1101173583956422736/1105881853849772062/TrafficerMC_BCQhRUpAWj.png)
+![Settings](https://github.com/RattlesHyper/TrafficerMC/assets/83329088/b1b103f1-1720-46fc-91ae-22e4ac186227)
+**Settings**
 
-![](https://media.discordapp.net/attachments/1101173583956422736/1105881852948009090/TrafficerMC_Agn7kon7Np.png)
+![Botting](https://github.com/RattlesHyper/TrafficerMC/assets/83329088/b1951a59-7c90-40a9-b273-1b0feab52d92)
+**Botting**
+
+![Scripting](https://github.com/RattlesHyper/TrafficerMC/assets/83329088/2a25acd9-0c63-4042-8f11-68179aec0baa)
+**Scripting**
+
+![Proxy](https://github.com/RattlesHyper/TrafficerMC/assets/83329088/36f7cf6d-80e3-4d63-bb4f-ed23e8df8df1)
+**Proxy**
+
 ## Tutorials
 [![](https://img.youtube.com/vi/lD3poymjVAk/maxresdefault.jpg)](https://www.youtube.com/watch?v=lD3poymjVAk)
-TrafficerMC v2.1
+TrafficerMC v2.1 Tutorial Video
 
 [![](https://img.youtube.com/vi/eAe9m-d-el0/maxresdefault.jpg)](https://www.youtube.com/watch?v=eAe9m-d-el0)
-TrafficerMC v0.4
+TrafficerMC v0.4 Preview Video (Outdated)
 
 # Scripting
-Scripting can allow the bot to do things automatically without any user input. It can also help if you are making multiple bots do the same things.
+Scripting can allow the bot to do things automatically without any user input. It can also help if you are making multiple bots do the same things. All script executions will be shown on manual inputs, it can be used in scripting.
 
 ## What a script would look like
 ```
@@ -74,9 +85,12 @@ disconnect
 ### Chat
 Sends a message to the servers chat.
 Usage: `chat <message>`
+
+Variables: Player Name: `{player}`, Random String: `{random}`
+
 Example:
 ```
-chat Hello there!
+chat Hello there! {player}
 chat /help
 ```
 ### useHeld
@@ -85,30 +99,40 @@ Usage: `useHeld`
 ### setHotbar
 Sets hotbar to the selected slot.
 Usage: `setHotbar <number>`
-Example: 
+
+Example:
 ```
 setHotbar 0
 setHotbar 3
 ```
-### winClick 
-Clicks on a window item. To right click, use `0`. Otherwise, to left click, use `1`.
+### winClick
+Clicks on a window item. To left click, use `0`. Otherwise, to right click, use `1`.
 Usage: `winClick <number> <type>`
+
 Example:
 ```
 winClick 36 0
 winClick 24 1
 ```
 **If you are struggling on what slots you should click, here are some images to represent!**
-Chest interface:
-![](https://cdn.discordapp.com/attachments/963491992506073108/967223630436118648/unknown.png) 
-Inventory interface:
-![](https://cdn.discordapp.com/attachments/963491992506073108/967224021823397888/unknown.png)
+
+**Every chest starts from `0`**
+
+#### Chest interface:
+
+![Chest](https://github.com/RattlesHyper/TrafficerMC/assets/83329088/058fd1d2-69c2-41f6-bfd3-3b9665c037e5)
+
+#### Inventory interface:
+
+![Inventory](https://github.com/RattlesHyper/TrafficerMC/assets/83329088/83f952e2-18f1-4c79-8a6d-e7a6880a6879)
+
 ### closeWindow
 Closes the current window.
-Usage: `closeWindow` 
+Usage: `closeWindow`
 ### Drop
 Drops the slot item if none specified drops all.
 Usage: `drop <number>`
+
 Example:
 ```
 drop
@@ -116,7 +140,10 @@ drop 36
 ```
 ### Movement
 Controls the bot movement.
-Usage: `startControl/stopControl forward/backwards/left/right/jump/sneak/sprint`
+Usage: `startMove/stopMove <forward/backwards/left/right/jump/sneak/sprint>`
+
+Reset controls: `resetMove`
+
 Example:
 ```
 startControl forward
@@ -128,16 +155,17 @@ Enables/Disables Anti-AFK on the bot.
 Usage: `afkOn/afkOff`
 ### Disconnect
 Disconnects the Bot.
-Usage: `disconnect` 
-### Reconnect 
+Usage: `disconnect`
+### Reconnect
 Reconnects the bot.
 Usage: `reconnect`
 ### startScript
 Starts the script.
 Usage: `startScript`
-### Delay 
+### Delay
 Delays the next task.
-Usage: `delay <milliseconds - 1000 by default>`
+Usage: `delay <milliseconds>` default 1000
+
 Example:
 ```
 chat Hi
@@ -145,7 +173,9 @@ delay 1200
 chat Hello
 ```
 # Account File
-Account filing connects the bots with certain names that aren't set in General tab. It can be useful if you want to bot a server with NameMC names, for example. To make a account file, you would need to go into a text file editor, and apon entering all the usernames, you save it as a `.txt` file. You can name it anything. **Please note that you can set Max Accounts in General Tab or it will use all the names**
+Account file must be a `.txt` file. Put the usernames of the accounts you want to use line by line. Microsoft accounts can be used the same way.
+
+**Please note that you can set Max Accounts in General Tab or it will use all the names**
 ## What an account file would look like
 ```
 vampers
@@ -153,51 +183,25 @@ nVoid
 Danilo764
 ```
 # Proxies
-Proxy file must be a ` .txt ` file. And it's used in Random order
-Proxies connects the bots with different ip addresses. This can be very useful to bypass the max connections to a server, or bypass the max registerations if it's a cracked server. To make a proxy file, you would need to go into a text file editor, and apon entering all the proxies with ports, you save it as a `.txt` file. You can name it anything. **Please note that you will need to set the SOCKS protocol in Settings Tab for the bots to join!**
+TrafficerMC currently support all protocols and Auth proxies, HTTP is premium only.
 ## What a proxy file would look like
 ```
-12.34.56.78:9876
-54.3.210.123:45678
+ProxyIP:ProxyPORT:Username:Password
 98.7.65.4:32101
 ```
-# Theme
-Custom CSS allows you to customize TrafficerMC the way you wanted. To make a custom css file, you would need to go into a text file editor, and apon finishing the css file, you save it as a `.css` file. You can name it anything. After all that, the file must be loaded in Settings tab. 
-## What the css file should look like
-```
-:root {
-    --background-image: url('../icons/app/Background.svg');
-    --bg-color: #0c0d11;
-    --text-color: #f6f5f5;
-    --button-color: #5b8191;
-    --button-text-color: #f6f5f5;
-    --button-opacity: 1;
-    --button-border-color: #454864;;
-    --ul-bg-color: #171a25;
-    --ul-opacity: 0.7;
-    --downbar-color: #3D75C9;
-    --selected-item-color: #00e1ff88;
-    --selected-item-opacity: 1;
-    --downbar-opacity: 1;
-    --sidebar-color: 0 0 0;
-    --sidebar-opacity: 0.2;
-    --topbar-color: 0 0 0;
-    --topbar-opacity: 0.6;
-}
-```
-# Name generator
-Name generation randomizes the bot's name without any user input. There are 2 current options, which are `(SALT)` and `(LEGIT)`. These must be input in the Username bit in General tab.
-## What name generation would look like
-```
-TrafficerMC_(SALT) = TrafficerMC_hlpC / TrafficerMC_ggKt
-(LEGIT) = JogBeeRibTap / GitFunWitSinWar
-```
-# Building TrafficerMC
-If you want to run TrafficerMC in an IDE environment, you can do so. You would need [node.js](https://nodejs.org/en/download) installed before continuing. After node.js is installed, you need to make a folder to put all TrafficerMC code in, and open up a terminal or powershell in that folder. Once you have a terminal opened and on the folder, you need to execute these 3 commands:
 
- 1. `git clone https://github.com/RattlesHyper/TrafficerMC`
- 2. `npm install`
- 3. `npm start`
+# Build Guide
 
-If you want to build TrafficerMC, then run `npm run <option>`. The build will be put into /dist folder.
-If you want to run TrafficerMC on different OSes, you can do so by doing `npm start <os>`. The current OSes supported are Windows 64-Bit (`winx64`), Windows 32-Bit (`winx86`), Linux 64-Bit (`linux64`) & Linux 32-Bit (`linux86`)
+**Requirements:** [NodeJS](https://nodejs.org/en/download)
+
+Clone TrafficerMC repo with Git Clone: `git clone https://github.com/RattlesHyper/TrafficerMC` or Download the Source Code, then navigate to the folder. and open Terminal/Command Prompt/PowerShell
+
+**Build Commands:**
+
+**Windows:** `build:win`
+
+**Mac:** `build:mac`
+
+**Linux:** `build:linux`
+
+If you want to run from source code use `npm run dev`

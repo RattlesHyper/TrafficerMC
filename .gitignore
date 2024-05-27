@@ -1,4 +1,7 @@
 node_modules
-release-builds
 dist
+out
 package-lock.json
+.DS_Store
+*.log*
+.vscode
