@@ -1,5 +1,5 @@
 import { SocksClient } from 'socks'
-import net from 'node:net'
+import { Socket } from 'net'
 
 export function connection(
   proxyType,
@@ -35,8 +35,7 @@ export function connection(
         }
       )
     } else {
-      const socket = new net.Socket()
-      socket.connect({
+      const socket = new Socket().connect({
         host: dHost,
         port: parseInt(dPort)
       })

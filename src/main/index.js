@@ -499,6 +499,20 @@ function newBot(options) {
   bot.on('messagestr', (msg) => {
     sendEvent(bot._client.username, 'chat', msg)
   })
+  bot.on('windowOpen', (window) => {
+    sendEvent(
+      bot._client.username,
+      'chat',
+      `Window Opened ' ${window.title ? ':' + window.title : ''}`
+    )
+  })
+  bot.on('windowClose', (window) => {
+    sendEvent(
+      bot._client.username,
+      'chat',
+      `Window Closed ' ${window.title ? ':' + window.title : ''}`
+    )
+  })
   bot.once('kicked', (reason) => {
     if (typeof reason === 'string' && reason.trim().startsWith('{')) {
       try {
