@@ -26,6 +26,7 @@
         <li id="bottingTab" class="tab tab-pane">Botting</li>
         <li class="tab tab-pane">Scripting</li>
         <li class="tab tab-pane">Proxy</li>
+        <li class="tab tab-pane disabled">Webhook</li>
         <li class="tab tab-pane">About</li>
       </ul>
 
@@ -46,17 +47,10 @@
                     <div id="usernameSubDiv" class="flex">
                       <div class="flex">
                         <p class="text-sm pr-4">Username:</p>
-                        <input id="username" type="text" class="" placeholder="username">
+                        <input id="username" type="text" class="" placeholder="username / token">
                       </div>
                     </div>
 
-                  </div>
-                </div>
-
-                <div id="easymcDiv" class="flex" style="display: none;">
-                  <div class="flex">
-                    <p class="text-sm pr-4">EasyMC Token:</p>
-                    <input id="easyMcToken" type="text" class="" placeholder="Token">
                   </div>
                 </div>
 
@@ -117,6 +111,7 @@
                   <option value="offline">Cracked</option>
                   <option value="microsoft">Microsoft</option>
                   <option value="easymc">EasyMC</option>
+                  <option value="altening" disabled>TheAltening</option>
                 </select>
               </div>
 
@@ -124,6 +119,9 @@
                 <p class="text-sm">Version:</p>
                 <select id="version" class="mu-1">
                   <option value="">Auto</option>
+                  <option value="1.20.4">1.20.4</option>
+                  <option value="1.20.3">1.20.3</option>
+                  <option value="1.20.2">1.20.2</option>
                   <option value="1.20.1">1.20.1</option>
                   <option value="1.20">1.20</option>
                   <option value="1.19.4">1.19.4</option>
@@ -203,9 +201,10 @@
                 <li class="tab-2 control-tab">Move</li>
                 <li class="tab-2 control-tab">Look</li>
                 <li class="tab-2 control-tab">AntiAFK</li>
-                <li class="tab-2 control-tab disabled">Interact</li>
                 <li class="tab-2 control-tab">KillAura</li>
+                <li class="tab-2 control-tab disabled">Interact</li>
                 <li class="tab-2 control-tab disabled">Nuker</li>
+                <li class="tab-2 control-tab disabled">Pathfinder</li>
               </ul>
 
             </div>
@@ -555,6 +554,29 @@
                 </div>
               </div>
 
+              <div id="pathfinder" class="control-tab" style="display: none;">
+                <p class="text">Pathfinder</p>
+                <div class="mu-2">
+
+                  <div class="border">
+                    <div class="flex">
+                      <p class="tip pr-4 pl-2 border">#</p>
+                      <input id="pathFinderCommand" class="pl-2" type="text" placeholder="command"
+                        style="border: none;">
+                    </div>
+                  </div>
+
+                  <div class="mu-1">
+                    <p class="text-sm mu-4">Commands</p>
+                    <p class="text-sm-2 mu-2"><code>follow (player)</code>Follows a player</p>
+                    <p class="text-sm-2"><code>followLine (player)</code>Forms a line</p>
+                    <p class="text-sm-2"><code>goto X Y Z / X Z</code>Walks to a location</p>
+                    <p class="text-sm-2"><code>stop</code>Stops pathfinder</p>
+                  </div>
+
+                </div>
+              </div>
+
             </div>
 
             <div class="m-4 pr-4">
@@ -696,6 +718,77 @@
 
         </div>
 
+        <div class="tab-pane" id="webhook" style="display: none;">
+          <div class="space-h">
+            <div class="m-4 flex-c">
+
+              <div class="space-h">
+
+                <label class="containerCheckbox">
+                  Webhook:
+                  <input id="enableWebhook" type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+
+                <div class="flex pr-4">
+                  <input id="webhookLink" type="text" class="" placeholder="https://...">
+                </div>
+
+                <button id="webhookTest">Test</button>
+
+              </div>
+
+              <div class="mu-4">
+
+                <p class="text-sm">Logs</p>
+
+                <label class="containerCheckbox mu-1">
+                  Actions
+                  <input id="actionLogWebhook" type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+
+                <label class="containerCheckbox mu-1">
+                  Proxy error
+                  <input id="proxyLogWebhook" type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+
+                <label class="containerCheckbox mu-1">
+                  Chat
+                  <input id="chatLogWebhook" type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+
+                <label class="containerCheckbox mu-1">
+                  Feedback
+                  <input id="feedbackLogWebhook" type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+
+                <label class="containerCheckbox mu-1">
+                  Joins
+                  <input id="joinLogWebhook" type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+
+                <label class="containerCheckbox mu-1">
+                  Kicks
+                  <input id="kickLogWebhook" type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+
+                <label class="containerCheckbox mu-1">
+                  Auth message
+                  <input id="authLogWebhook" type="checkbox">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
         <div class="tab-pane" id="about" style="display: none;">
           <div class="m-4">
 
@@ -724,11 +817,11 @@
 
     <ul id="notifications" class="notification"></ul>
 
-    <div id="settings" class="settings-tab" style="display: none;">
+    <ul id="settings" class="settings-tab" style="display: none;">
       <div class="settings-tab-content">
 
         <img id="closeSettings" src="./assets/icons/x.svg" class="icon-sm"
-          style="float: right; position: relative; top: -5px;">
+          style="position: fixed; top: 90px; right: 110px;">
 
         <p class="text-sm">Bot settings</p>
 
@@ -771,8 +864,44 @@
         <p class="text-sm mu-2">Logs</p>
 
         <label class="containerCheckbox mu-1">
-          Show proxy error
+          Actions
+          <input id="actionLogChat" type="checkbox" checked>
+          <span class="checkmark"></span>
+        </label>
+
+        <label class="containerCheckbox mu-1">
+          Proxy error
           <input id="proxyLogChat" type="checkbox">
+          <span class="checkmark"></span>
+        </label>
+
+        <label class="containerCheckbox mu-1">
+          Chat [Premium]
+          <input id="chatLogChat" type="checkbox" checked disabled>
+          <span class="checkmark"></span>
+        </label>
+
+        <label class="containerCheckbox mu-1">
+          Feedback [Premium]
+          <input id="feedbackLogChat" type="checkbox" checked disabled>
+          <span class="checkmark"></span>
+        </label>
+
+        <label class="containerCheckbox mu-1">
+          Join [Premium]
+          <input id="joinLogChat" type="checkbox" checked disabled>
+          <span class="checkmark"></span>
+        </label>
+
+        <label class="containerCheckbox mu-1">
+          Kicks [Premium]
+          <input id="kickLogChat" type="checkbox" checked disabled>
+          <span class="checkmark"></span>
+        </label>
+
+        <label class="containerCheckbox mu-1">
+          Auth message [Premium]
+          <input id="authLogChat" type="checkbox" checked disabled>
           <span class="checkmark"></span>
         </label>
 
@@ -781,7 +910,7 @@
         <button id="resetConfig" class="mu-1">Reset</button>
 
       </div>
-    </div>
+    </ul>
 
     <div class="topbar downbar" style="width: 1000px;">
       <div class="flex">

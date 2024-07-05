@@ -198,6 +198,8 @@ Clone TrafficerMC repo with Git Clone: `git clone https://github.com/RattlesHype
 
 **Build Commands:**
 
+**Install Dependencies** `npm install`
+
 **Windows:** `build:win`
 
 **Mac:** `build:mac`

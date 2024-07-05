@@ -12,11 +12,12 @@ import {
   delay,
   genName,
   botMode,
-  easyMcAuth,
   sendEvent,
   proxyEvent,
-  notify
+  notify,
+  cleanText
 } from './js/misc/utils'
+import { easyMcAuth } from './js/misc/customAuth'
 import EventEmitter from 'node:events'
 const Store = require('electron-store')
 const mineflayer = require('mineflayer')
@@ -37,7 +38,7 @@ function storeinfo() {
   return store.get('config')
 }
 
-let clientVersion = 3.0
+let clientVersion = 3.1
 
 let playerList = []
 
@@ -48,10 +49,10 @@ function createMainWindow() {
     show: false,
     autoHideMenuBar: true,
     frame: false,
-    resizable: false,
-    maximizable: false,
+    resizable: is.dev,
+    maximizable: is.dev,
     webPreferences: {
-      devTools: false,
+      devTools: is.dev,
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
     }
@@ -308,7 +309,6 @@ async function startFile() {
 }
 
 async function connectBot() {
-  if (storeinfo().value.authType === 'easymc') return easyMcConnect()
   stopBot = false
   currentProxy = 0
   proxyUsed = 0
@@ -352,12 +352,6 @@ async function connectBot() {
   }
 }
 
-function easyMcConnect() {
-  newBot(getBotInfo(salt(10)))
-  BrowserWindow.getAllWindows()[0].webContents.send('showBottab')
-  console.log('EasyMC connected')
-}
-
 function getBotInfo(botName) {
   const server = storeinfo().value.server || 'localhost:25565'
   const [serverHost, serverPort] = server.split(':')
@@ -370,10 +364,14 @@ function getBotInfo(botName) {
     version: storeinfo().value.version,
     auth: storeinfo().value.authType,
     hideErrors: true,
-    easyMcToken: storeinfo().value.easyMcToken,
     joinMessage: storeinfo().value.joinMessage,
     ...botMode(storeinfo().value.botMode),
     ...getProxy(storeinfo().value.proxyType)
+  }
+
+  if (options.auth === 'easymc') {
+    options.auth = easyMcAuth
+    options.sessionServer = 'https://sessionserver.easymc.io'
   }
 
   return options
@@ -409,6 +407,8 @@ function getProxy(proxyType) {
 }
 
 function newBot(options) {
+  let bot
+
   if (options.auth === 'easymc') {
     if (options.easyMcToken?.length !== 20) {
       return sendEvent(options.username, 'easymcAuth')
@@ -417,7 +417,36 @@ function newBot(options) {
     options.sessionServer ||= 'https://sessionserver.easymc.io'
   }
 
-  const bot = mineflayer.createBot({
+  const connectProxy = async (client) => {
+    try {
+      const socket = await connection(
+        storeinfo().value.proxyType,
+        options.proxyHost,
+        options.proxyPort,
+        options.proxyUsername,
+        options.proxyPassword,
+        options.host,
+        options.port
+      )
+      client.setSocket(socket)
+      client.emit('connect')
+    } catch (error) {
+      if (storeinfo().boolean.proxyLogChat) {
+        sendEvent(
+          client.username,
+          'chat',
+          options.proxyHost + ':' + options.proxyPort + ' ' + error
+        )
+      }
+      return
+    }
+  }
+
+  if (storeinfo().value.proxyType !== 'none') {
+    options.connect = connectProxy
+  }
+
+  bot = mineflayer.createBot({
     ...options,
     plugins: {
       anvil: false,
@@ -449,34 +478,11 @@ function newBot(options) {
       title: false,
       villager: false
     },
-    connect: async (client) => {
-      try {
-        const socket = await connection(
-          storeinfo().value.proxyType,
-          options.proxyHost,
-          options.proxyPort,
-          options.proxyUsername,
-          options.proxyPassword,
-          options.host,
-          options.port
-        )
-        client.setSocket(socket)
-        client.emit('connect')
-      } catch (error) {
-        if (storeinfo().boolean.proxyLogChat) {
-          sendEvent(
-            client.username,
-            'chat',
-            options.proxyHost + ':' + options.proxyPort + ' ' + error
-          )
-        }
-        return
-      }
-    },
     onMsaCode: (data) => {
       sendEvent(options.username, 'authmsg', data.user_code)
     }
   })
+
   let hitTimer = 0
 
   bot.once('login', () => {
@@ -514,14 +520,8 @@ function newBot(options) {
     )
   })
   bot.once('kicked', (reason) => {
-    if (typeof reason === 'string' && reason.trim().startsWith('{')) {
-      try {
-        const parsed = JSON.parse(reason)
-        sendEvent(bot._client.username, 'kicked', parsed.text)
-      } catch (e) {
-        return
-      }
-    }
+    const parsed = JSON.parse(reason)
+    sendEvent(bot._client.username, 'kicked', cleanText(parsed))
   })
   bot.once('end', (reason) => {
     sendEvent(bot._client.username, 'end', reason)

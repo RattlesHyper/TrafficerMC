@@ -136,9 +136,6 @@ function valueChange(event) {
   window.electron?.ipcRenderer.send('setConfig', 'value', selectId, selectedValue)
 
   switch (selectId) {
-    case 'authType':
-      checkAuth()
-      break
     case 'nameType':
       checkUsername()
       break
@@ -204,15 +201,6 @@ function navClick(event) {
   event.currentTarget.classList.add('selected')
 }
 
-function checkAuth() {
-  const mode = document.getElementById('authType').value
-  const easymcDiv = document.getElementById('easymcDiv')
-  const usernameDiv = document.getElementById('usernameDiv')
-
-  const isEasyMc = mode === 'easymc'
-  easymcDiv.style.display = isEasyMc ? 'block' : 'none'
-  usernameDiv.style.display = isEasyMc ? 'none' : 'block'
-}
 function checkUsername() {
   const nameType = document.getElementById('nameType')
   const fileDiv = document.getElementById('nameFileDiv')
@@ -236,7 +224,6 @@ function setConfigValues(obj) {
     }
   }
   checkUsername()
-  checkAuth()
 }
 
 function notify(title, body, type, img, keep) {

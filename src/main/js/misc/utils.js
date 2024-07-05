@@ -237,38 +237,6 @@ export function genName() {
   return name
 }
 
-export async function easyMcAuth(client, options) {
-  const fetchOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: `{"token":"${options.easyMcToken}"}`
-  }
-  try {
-    const res = await fetch('https://api.easymc.io/v1/token/redeem', fetchOptions)
-    const resJson = await res.json()
-    if (resJson.error) return sendEvent('EasyMC', 'chat', `${resJson.error}`)
-    if (!resJson) return sendEvent('EasyMC', 'chat', 'Empty response from EasyMC.')
-    if (resJson.session?.length !== 43 || resJson.mcName?.length < 3 || resJson.uuid?.length !== 36)
-      return sendEvent('EasyMC', 'chat', 'Invalid response from EasyMC.')
-    const session = {
-      accessToken: resJson.session,
-      selectedProfile: {
-        name: resJson.mcName,
-        id: resJson.uuid
-      }
-    }
-    options.haveCredentials = true
-    client.session = session
-    options.username = client.username = session.selectedProfile.name
-    options.accessToken = session.accessToken
-    client.emit('session', session)
-  } catch (error) {
-    client.emit('error', error)
-    return
-  }
-  options.connect(client)
-}
-
 export function sendEvent(username, event, message) {
   const info = {
     id: username,
@@ -290,4 +258,22 @@ export function proxyEvent(proxy, event, message, count) {
 
 export function notify(title, body, type, img, keep) {
   BrowserWindow.getAllWindows()[0].webContents.send('notify', title, body, type, img, keep)
+}
+
+export function cleanText(string) {
+  let texts = []
+
+  function recurse(obj) {
+    if (obj.text) {
+      texts.push(obj.text.replace(/\n/g, ' '))
+    }
+    if (obj.extra) {
+      for (let item of obj.extra) {
+        recurse(item)
+      }
+    }
+  }
+
+  recurse(string)
+  return texts.join('').replaceAll('  ', ' ')
 }
