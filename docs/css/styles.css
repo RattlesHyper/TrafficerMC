@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body {
+  font-weight: 600;
+  color: var(--text-primary);
+  background: radial-gradient(circle, rgb(26, 9, 65) 0%, rgb(28, 8, 44) 100%);
+}
+
+.space-h {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex {
+  display: flex;
+}
+
+.center {
+  align-items: center;
+}
+
+.center-items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.pl-1 {
+  padding-left: 10px;
+}
+
+.space {
+  margin-left: 5px;
+}
+
+.mu-8 {
+  margin-top: 4rem;
+}
+
+.mu-4 {
+  margin-top: 1rem;
+}
+
+.icon {
+  height: 25px;
+  width: 25px;
+}
+
+.icon-big {
+  height: 35px;
+  width: 35px;
+}
+
+.tip-sm {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.background {
+  width: 100%;
+  top: 0px;
+  left: 0px;
+}
+
+.main-container {
+  overflow: hidden;
+  min-height: 20rem;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+}
+
+.bg {
+  background: url(../files/background.svg);
+}
+
+.container {
+  padding: 0 4rem;
+  width: 100%;
+}
+
+.options {
+  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 495px);
+}
+
+.title {
+  display: flex;
+  justify-content: center
+}
+
+.title-text {
+  font-size: 2rem;
+}
+
+.section-2 {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  padding: 0px 15px;
+  justify-content: space-between;
+  box-sizing: border-box;
+  border-top: solid 2px var(--accent);
+  background-color: var(--accent-secondary);
+}
+
+.row-first {
+  width: 200px;
+}
+
+.row-second {
+  width: 100px;
+}
+
+.row-third {
+  margin-right: 30px;
+}
+
+.box {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 1rem;
+  margin: 10px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  min-height: 13rem;
+  background-color: var(--accent-secondary);
+  box-shadow: var(--accent) 0px 0px 15px;
+}
+
+.button {
+  background-color: var(--accent);
+  width: fit-content;
+  height: fit-content;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: all 0.3s ease 0s;
+}
+
+.button .inner {
+  padding: 0px 25px;
+  justify-content: space-between;
+  width: 6rem;
+}
+
+.button:hover {
+  background-color: var(--button-hover-bg);
+  box-shadow: var(--text-primary) 0px 0px 4px;
+}
+
+.menu {
+  position: sticky;
+  top: calc(50% - 150px);
+  height: 160px;
+  list-style-type: none;
+  padding: 0 10px 0 4rem;
+  margin-top: 5rem;
+  border-right: solid 2px var(--accent);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
+.menu a {
+  color: var(--text-disabled);
+  text-decoration: none;
+  transition: color 0.5s ease;
+}
+
+.menu .active {
+  position: relative;
+  left: 10px;
+  color: var(--text-primary);
+}
+
+.menu a:hover {
+  color: var(--text-primary);
+}
+
+.table-content {
+  border-top: solid 4px var(--accent);
+  margin: 0 4rem 100px 50px;
+  line-height: 1;
+  width: 100%;
+}
+
+.checkmark {
+  margin: 15px 35px 0px 0px;
+  width: 6px;
+  height: 10px;
+  border: solid var(--text-secondary);
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.checks {
+  display: flex;
+  justify-content: space-between;
+  width: 210px;
+}
+
+.video {
+  height: 320px;
+  display: flex;
+  width: fit-content;
+}
+
+.video-title {
+  margin: 15px 0 0 0;
+  font-size: 12px;
+}
+
+.footer {
+  background-color: var(--accent);
+  height: 100px;
+}
+
+.footer-text {
+  margin-top: 80px;
+  font-size: 10px;
+  color: var(--text-disabled);
+}
+
+.text-disabled {
+  color: var(--text-disabled);
+}
+
+.hidden {
+  display: none;
+}
+
+:root {
+  --accent: #140e0e;
+  --accent-secondary: rgba(54, 41, 90, 0.3);
+  --button-hover-bg: rgba(47, 1, 139, 0.1);
+  --text-primary: white;
+  --text-secondary: #E6E6E6;
+  --text-disabled: #7b7b7b;
+  --discord: #7388da;
+  --paypal: #026fba;
+  --github: #242a2e;
+  --youtube: #ff0201;
+  font-family: 'Poppins', sans-serif;
+}

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>TrafficerMC - Botting Tool</title>
+  <link rel="shortcut icon" href="./files/icon.png">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+  <div id="container" class="bg">
+    <div class="main-container">
+      <div class="container">
+        <div>
+          <div class="flex center">
+            <img src="./files/icon.png" class="icon-big">
+            <h1>TrafficerMC</h1>
+          </div>
+          <p>Access Your Botting Arsenal Here!</p>
+          <p class="text-disabled">Best Free and Open Source Minecraft Botting Tool</p>
+          <div class="flex">
+            <a class="button" href="https://discord.gg/trafficermc-rattleshyper-935341227400904734">
+              <div class="inner flex center">
+                <img class="icon" src="./files/discord.svg">
+                <p class="tip-sm">Discord</p>
+              </div>
+            </a>
+            <a class="button space" href="https://github.com/RattlesHyper/TrafficerMC">
+              <div class="inner flex center">
+                <img class="icon" src="./files/github.svg">
+                <p class="tip-sm">GitHub</p>
+              </div>
+            </a>
+            <a class="button space" href="#features">
+              <div class="inner flex center">
+                <img class="icon" src="./files/info.svg">
+                <p class="tip-sm">Features</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="mu-8"></div>
+        <div class="hidden" id="download-title">
+          <div class="title">
+            <p>Downloads: </p>
+            <p class="pl-1" id="downloadcount">?</p>
+          </div>
+        </div>
+        <div class="options">
+          <div class="box">
+            <div>
+              <div class="flex center">
+                <img class="icon" src="./files/icon.png">
+                <p>TrafficerMC</p>
+              </div>
+              <p class="tip-sm">Everything you need to get started. It comes with all the essential features for your
+                basic botting needs.</p>
+            </div>
+            <a class="button" href="https://github.com/RattlesHyper/TrafficerMC/releases">
+              <div class="inner flex center">
+                <img class="icon" src="./files/github.svg">
+                <p class="tip-sm">Download</p>
+              </div>
+            </a>
+          </div>
+          <div class="box">
+            <div>
+              <div class="flex center">
+                <img class="icon" src="./files/icon-premium.png">
+                <p>TrafficerMC Premium</p>
+              </div>
+              <p class="tip-sm">Enjoy better stability and advanced botting capabilities. With enhanced performance and
+                exclusive features.</p>
+            </div>
+            <a class="button" href="https://discord.gg/trafficermc-rattleshyper-935341227400904734">
+              <div class="inner flex center">
+                <img class="icon" src="./files/discord.svg">
+                <p class="tip-sm">Contact</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="title">
+      <p class="title-text">Videos</p>
+    </div>
+    <div class="main-container">
+      <div class="container">
+        <div class="options">
+          <div class="box video">
+            <iframe width="450" height="300" src="https://www.youtube.com/embed/gQWrfHYThLE?si=3nyH9DD8NPUjvSgN"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <p class="video-title">TrafficerMC Premium v1.0 Preview</p>
+          </div>
+          <div class="box video">
+            <iframe width="450" height="300" src="https://www.youtube.com/embed/lD3poymjVAk?si=wNlnRj5zRbE4WLtY"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <p class="video-title">TrafficerMC v2.1 Usage Tutorial</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="title">
+      <p class="title-text">Feature List</p>
+    </div>
+    <div class="flex">
+      <div class="sticky">
+        <ul class="menu" id="menu">
+          <li>
+            <a class="active" href="#general">General</a>
+          </li>
+          <li>
+            <a href="#botting">Botting</a>
+          </li>
+          <li>
+            <a href="#scripting">Scripting</a>
+          </li>
+          <li>
+            <a href="#proxies">Proxies</a>
+          </li>
+          <li>
+            <a href="#webhooks">Webhooks</a>
+          </li>
+          <li>
+            <a href="#settings">Settings</a>
+          </li>
+        </ul>
+      </div>
+      <div class="table-content">
+        <div class="row" id="features">
+          <p class="row-first">Features</p>
+          <div class="checks row-third">
+            <p>Premium</p>
+            <p>Free</p>
+          </div>
+        </div>
+        <div class="row mu-4" id="general">
+          <p class="row-first">General</p>
+        </div>
+        <div class="row">
+          <p class="row-first">Name Generator</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">EasyMC</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">TheAltening</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Minimal Mode</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row mu-4" id="botting">
+          <p class="row-first">Botting</p>
+        </div>
+        <div class="row">
+          <p class="row-first">Chat</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Spam</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Chat Variables</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Hotbar</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Inventory</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Move</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Look</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Anti AFK</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">KillAura</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Interact</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Nuker</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Pathfinder</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row mu-4" id="scripting">
+          <p class="row-first">Scripting</p>
+        </div>
+        <div class="row">
+          <p class="row-first">Full Functionality</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row mu-4" id="proxies">
+          <p class="row-first">Proxies</p>
+        </div>
+        <div class="row">
+          <p class="row-first">Proxy Scrape</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Proxy Checker</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">SOCKS4</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">SOCKS5</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">HTTP</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row mu-4" id="webhooks">
+          <p class="row-first">Webhooks</p>
+        </div>
+        <div class="row">
+          <p class="row-first">Discord Webhook</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row mu-4" id="settings">
+          <p class="row-first">Settings</p>
+        </div>
+        <div class="row">
+          <p class="row-first">Linear Delay</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Auto Reconnect</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Map Image Viewer</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Accept Resource Pack</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+          </div>
+        </div>
+        <div class="row">
+          <p class="row-first">Selective Chat Logs</p>
+          <div class="checks">
+            <span class="checkmark"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="title">
+    <p class="footer-text">Copyright © 2024 RattlesHyper All Rights Reserved.</p>
+  </div>
+</body>
+<script src="./js/script.js"></script>
+
+</html>
